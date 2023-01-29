@@ -1,4 +1,4 @@
-package com.miso.dermoapp.presentation.core.home.viewModels
+package com.miso.dermoapp.ui.core.home.viewModels
 
 /****
  * Project: DermoApp
