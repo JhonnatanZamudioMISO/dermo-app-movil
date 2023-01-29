@@ -10,7 +10,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_redondo"
         android:supportsRtl="true"
-        android:theme="@style/Theme.DermoApp"
+        android:theme="@style/LaunchTheme"
         tools:targetApi="31">
         <activity
             android:name=".ui.core.home.views.Splash"
