@@ -1,5 +1,7 @@
 package com.miso.dermoapp.ui.core.home.viewModels
 
+import androidx.lifecycle.ViewModel
+
 /****
  * Project: DermoApp
  * From: com.miso.dermoapp.presentation.core.home.viewModels
@@ -7,5 +9,5 @@ package com.miso.dermoapp.ui.core.home.viewModels
  * All rights reserved 2023.
  ****/
 
-class MainActivityViewModel {
+class SplashViewModel: ViewModel() {
 }
