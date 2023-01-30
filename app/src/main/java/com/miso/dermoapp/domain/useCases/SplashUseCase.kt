@@ -1,5 +1,7 @@
 package com.miso.dermoapp.domain.useCases
 
+import com.miso.dermoapp.data.attributes.version.repository.VersionRepository
+
 /****
  * Project: DermoApp
  * From: com.miso.dermoapp.domain.useCases
@@ -7,8 +9,9 @@ package com.miso.dermoapp.domain.useCases
  * All rights reserved 2023.
  ****/
 
-class SplashUseCase {
-    fun getAppVersion():String {
-        return ""
+class SplashUseCase(val versionRepository: VersionRepository) {
+    suspend fun getAppVersion():String {
+        val version = versionRepository.queryLastVersionLocal()
+        return version.toString()
     }
 }
