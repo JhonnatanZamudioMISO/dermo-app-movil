@@ -1,6 +1,8 @@
 package com.miso.dermoapp.ui.core.home.viewModels
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.miso.dermoapp.domain.useCases.SplashUseCase
 
 /****
  * Project: DermoApp
@@ -10,4 +12,18 @@ import androidx.lifecycle.ViewModel
  ****/
 
 class SplashViewModel: ViewModel() {
+    val version = MutableLiveData<String>()
+    val splashUseCase  = SplashUseCase()
+
+    init {
+        getAppVersion()
+    }
+
+    fun setVersion(v:String){
+        version.value = v
+    }
+
+    fun getAppVersion(){
+        setVersion(splashUseCase.getAppVersion())
+    }
 }

@@ -7,5 +7,8 @@ package com.miso.dermoapp.domain.useCases
  * All rights reserved 2023.
  ****/
 
-class MainActivityUseCase {
+class SplashUseCase {
+    fun getAppVersion():String {
+        return ""
+    }
 }

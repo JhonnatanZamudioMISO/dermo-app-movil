@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">DermoApp</string>
     <string name="logo_dermoapp_fondo_transparente">Logo DermoApp fondo transparente</string>
+    <string name="cargando">Cargando</string>
 </resources>
