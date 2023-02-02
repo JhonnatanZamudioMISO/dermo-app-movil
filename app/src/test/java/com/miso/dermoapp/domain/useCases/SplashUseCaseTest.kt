@@ -148,6 +148,7 @@ class SplashScreenUseCaseTest {
     @Test
     fun `Caso 10`() {
         fakeAppUpdateManager.downloadStarts()
+        fakeAppUpdateManager.setUpdateAvailable(UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS)
         val result = splashUseCase.shouldBeUpdated(fakeAppUpdateManager)
         assertEquals(true,result)
     }

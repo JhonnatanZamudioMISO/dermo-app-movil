@@ -64,6 +64,8 @@ class SplashUseCase(val versionRepository: VersionRepository) {
         val appUpdateInfoTask = appUpdateManager.appUpdateInfo.result
         if (appUpdateInfoTask.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE) && appUpdateInfoTask.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE)
             isUpdate = true
+        else if (appUpdateInfoTask.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS)
+            isUpdate = true
         return isUpdate
     }
 }
