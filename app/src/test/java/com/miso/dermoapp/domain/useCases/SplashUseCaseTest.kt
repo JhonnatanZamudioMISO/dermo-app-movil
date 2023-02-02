@@ -9,6 +9,7 @@ import com.miso.dermoapp.data.attributes.version.datasource.VersionDataSourceLoc
 import com.miso.dermoapp.data.attributes.version.entitie.Version
 import com.miso.dermoapp.data.attributes.version.repository.VersionRepository
 import com.miso.dermoapp.data.room.DermoAppDB
+import io.github.serpro69.kfaker.Faker
 import kotlinx.coroutines.*
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
@@ -38,6 +39,20 @@ class SplashScreenUseCaseTest {
     private lateinit var versionDataSourceLocal: VersionDataSourceLocal
     private lateinit var versionRepository: VersionRepository
     private lateinit var splashUseCase: SplashUseCase
+    val faker = Faker()
+
+    private suspend fun createVersions(i: Int) {
+        for (x in 1..i) {
+            versionRepository.insertVersionLocal(
+                Version(
+                    0,
+                    x,
+                    "1.0.$x",
+                    Calendar.getInstance().time
+                )
+            )
+        }
+    }
 
     @Before
     fun setup() {
@@ -69,10 +84,8 @@ class SplashScreenUseCaseTest {
     @Test
     fun `Caso 2`(): Unit = runBlocking {
         launch(Dispatchers.Main) {
-            versionRepository.insertVersionLocal(Version(0,1,"1.0.0", Calendar.getInstance().time))
-            versionRepository.insertVersionLocal(Version(0,2,"1.0.1",Calendar.getInstance().time))
+            createVersions(4)
             val result = splashUseCase.getAppVersion()
-            versionRepository.clearVersionsLocal()
             assertEquals("Versión 1.0.1" ,result)
         }
     }
@@ -80,9 +93,8 @@ class SplashScreenUseCaseTest {
     @Test
     fun `Caso 3`(): Unit = runBlocking {
         launch(Dispatchers.Main) {
-            versionRepository.insertVersionLocal(Version(0,1,"1.0.0",Calendar.getInstance().time))
+            createVersions(1)
             val result = splashUseCase.getAppVersion()
-            versionRepository.clearVersionsLocal()
             assertEquals("Versión " + BuildConfig.VERSION_NAME ,result)
         }
     }

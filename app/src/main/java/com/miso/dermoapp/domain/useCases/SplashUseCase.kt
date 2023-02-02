@@ -14,31 +14,25 @@ import java.util.*
 
 class SplashUseCase(val versionRepository: VersionRepository) {
     suspend fun getAppVersion():String {
-        var versionName: String
-        if (versionRepository.queryLastVersionLocal().size == 1){
-            versionName= versionRepository.queryLastVersionLocal()[0].versionName
-            if (!versionName.equals(BuildConfig.VERSION_NAME)){
-                versionName = BuildConfig.VERSION_NAME
-                versionRepository.insertVersionLocal(
-                    Version(
-                        0,
-                        BuildConfig.VERSION_CODE,
-                        versionName,
-                        Calendar.getInstance().time
-                    )
-                )
-            }
-        } else {
-            versionName = BuildConfig.VERSION_NAME
-            versionRepository.insertVersionLocal(
-                Version(
-                    0,
-                    BuildConfig.VERSION_CODE,
-                    versionName,
-                    Calendar.getInstance().time
-                )
+        val versionQuery = versionRepository.queryLastVersionLocal()
+        val versionName =
+            if (versionQuery.size == 1 && versionQuery.equals(BuildConfig.VERSION_NAME))
+                versionRepository.queryLastVersionLocal()[0].versionName
+            else
+                insertAppVersionDatabase()
+        return "Versión $versionName"
+    }
+
+    private suspend fun insertAppVersionDatabase(): String {
+        val versionName = BuildConfig.VERSION_NAME
+        versionRepository.insertVersionLocal(
+            Version(
+                0,
+                BuildConfig.VERSION_CODE,
+                versionName,
+                Calendar.getInstance().time
             )
-        }
-        return "Versión " + versionName
+        )
+        return versionName
     }
 }
