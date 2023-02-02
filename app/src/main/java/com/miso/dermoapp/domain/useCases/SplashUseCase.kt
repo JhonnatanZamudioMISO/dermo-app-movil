@@ -42,6 +42,8 @@ class SplashUseCase(val versionRepository: VersionRepository) {
         var codePermission = CodePermissions.DEFAULT.code
         if (permission.equals(Manifest.permission.WRITE_EXTERNAL_STORAGE))
             codePermission = CodePermissions.WRITE_STORAGE.code
+        else if (permission.equals(Manifest.permission.CAMERA))
+            codePermission = CodePermissions.CAMERA.code
         return codePermission
     }
 }
