@@ -2,4 +2,8 @@
     <string name="app_name">DermoApp</string>
     <string name="logo_dermoapp_fondo_transparente">Logo DermoApp fondo transparente</string>
     <string name="cargando">Cargando</string>
+    <string name="rationale_write_storage">Esta aplicación necesita acceso a su archivos para que pueda enviar información</string>
+    <string name="rationale_camera">Esta aplicación necesita acceso a su cámara para que pueda tomar fotografías</string>
+    <string name="rationale_default">Esta aplicación requiere un permiso adicional</string>
+    <string name="permisos_denegados">Debe autorizar todos los permisos para continuar</string>
 </resources>

@@ -19,15 +19,17 @@ class SplashViewModel(versionRepository: VersionRepository): ViewModel() {
     val version = MutableLiveData<String>()
     private val splashUseCase = SplashUseCase(versionRepository)
     val loading = MutableLiveData<Boolean>()
+    val validatePermissions = MutableLiveData<Boolean>()
 
     init {
         GlobalScope.launch {
             loading.postValue(true)
             withContext(Dispatchers.IO) {
                 getAppVersion()
-                delay(1000)
+                validatePermissions.postValue(true)
+                //delay(1000)
             }
-            loading.postValue(false)
+            //loading.postValue(false)
         }
     }
 
