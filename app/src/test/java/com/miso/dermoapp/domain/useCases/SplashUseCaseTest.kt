@@ -10,7 +10,6 @@ import com.miso.dermoapp.data.attributes.version.entitie.Version
 import com.miso.dermoapp.data.attributes.version.repository.VersionRepository
 import com.miso.dermoapp.data.room.DermoAppDB
 import com.miso.dermoapp.domain.models.enumerations.CodePermissions
-import io.github.serpro69.kfaker.Faker
 import kotlinx.coroutines.*
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
@@ -22,7 +21,11 @@ import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import java.util.*
 import android.Manifest
+import com.google.android.play.core.appupdate.testing.FakeAppUpdateManager
+import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.UpdateAvailability
 import com.miso.dermoapp.R
+import org.mockito.Mockito
 
 /****
  * Project: DermoApp
@@ -45,7 +48,7 @@ class SplashScreenUseCaseTest {
     private val permissionWriteStorge = Manifest.permission.WRITE_EXTERNAL_STORAGE
     private val permissionCamera = Manifest.permission.CAMERA
     private val permissionInternet = Manifest.permission.INTERNET
-    val faker = Faker()
+    val fakeAppUpdateManager by lazy { Mockito.spy(FakeAppUpdateManager(context)) }
 
     private suspend fun createVersions(i: Int) {
         for (x in 1..i) {
@@ -133,5 +136,12 @@ class SplashScreenUseCaseTest {
     fun `Caso 8`() {
         val result = splashUseCase.getMessagePermission(permissionInternet, context)
         assertEquals(context.getString(R.string.rationale_default),result)
+    }
+
+    @Test
+    fun `Caso 9`() {
+        fakeAppUpdateManager.setUpdateAvailable(UpdateAvailability.UPDATE_AVAILABLE, AppUpdateType.IMMEDIATE)
+        val result = splashUseCase.shouldBeUpdated(fakeAppUpdateManager)
+        assertEquals(true,result)
     }
 }

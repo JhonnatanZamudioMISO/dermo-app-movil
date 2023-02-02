@@ -2,6 +2,7 @@ package com.miso.dermoapp.domain.useCases
 
 import android.Manifest
 import android.content.Context
+import com.google.android.play.core.appupdate.AppUpdateManager
 import com.miso.dermoapp.BuildConfig
 import com.miso.dermoapp.R
 import com.miso.dermoapp.data.attributes.version.entitie.Version
@@ -54,5 +55,9 @@ class SplashUseCase(val versionRepository: VersionRepository) {
             Manifest.permission.CAMERA -> context.getString(R.string.rationale_camera)
             else -> context.getString(R.string.rationale_default)
         }
+    }
+
+    fun shouldBeUpdated(appUpdateManager: AppUpdateManager): Boolean {
+        return false
     }
 }

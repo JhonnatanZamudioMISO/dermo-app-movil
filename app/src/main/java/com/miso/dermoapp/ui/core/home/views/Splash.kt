@@ -8,6 +8,8 @@ import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.*
+import com.google.android.play.core.appupdate.AppUpdateManager
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.miso.dermoapp.R
 import com.miso.dermoapp.databinding.ActivitySplashBinding
 import com.miso.dermoapp.domain.models.enumerations.CodePermissions
@@ -22,11 +24,13 @@ import pub.devrel.easypermissions.*
 class Splash : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
     private lateinit var viewModel: SplashViewModel
     private lateinit var binding: ActivitySplashBinding
+    private var appUpdateManager: AppUpdateManager? = null
     private val TAG = "SplashScreen"
     @OptIn(DelicateCoroutinesApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_DermoApp)
         super.onCreate(savedInstanceState)
+        appUpdateManager = AppUpdateManagerFactory.create(applicationContext)
         val viewModelFactory = SplashViewModelFactory.getInstance(this)
         viewModel = ViewModelProvider(this, viewModelFactory)[SplashViewModel::class.java]
         binding = DataBindingUtil.setContentView(this, R.layout.activity_splash)
@@ -45,30 +49,13 @@ class Splash : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
                 viewModel.hasPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
         })
 
-        viewModel.hasPermission.observe(this, {
-            when (it) {
-                true -> {
-                    viewModel.stateCode.postValue(true)
-                }
-                false -> EasyPermissions.requestPermissions(
-                    this,
-                    viewModel.messagePermission.value!!,
-                    viewModel.codPermission.value!!,
-                    viewModel.typePermission.value
-                )
-            }
-        })
-
-        viewModel.stateCode.observe(this, {
-            if (it.equals(true)) {
-                when (viewModel.codPermission.value) {
-                    CodePermissions.CAMERA.code -> viewModel.checkOnline(this)
-                    CodePermissions.WRITE_STORAGE.code -> viewModel.hasPermission(
-                        this,
-                        Manifest.permission.CAMERA
-                    )
-                }
-            }
+        viewModel.requestPermission.observe(this, {
+            EasyPermissions.requestPermissions(
+                this,
+                viewModel.messagePermission.value!!,
+                viewModel.codPermission.value!!,
+                viewModel.typePermission.value
+            )
         })
 
         viewModel.snackBarTextCloseApp.observe(this, {
@@ -82,7 +69,7 @@ class Splash : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
 
         viewModel.isConected.observe(this, {
             if (it.equals(true))
-            //co
+                viewModel.checkUpdate(appUpdateManager!!)
             else {
                 viewModel.loading.postValue(false)
                 viewModel.snackBarTextCloseApp.postValue(resources.getString(R.string.sin_conexion))
