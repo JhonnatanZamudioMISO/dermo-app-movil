@@ -83,7 +83,7 @@ class SplashScreenUseCaseTest {
             versionRepository.insertVersionLocal(Version(0,1,"1.0.0",Calendar.getInstance().time))
             val result = splashUseCase.getAppVersion()
             versionRepository.clearVersionsLocal()
-            assertEquals("Versión 1.0.1" ,result)
+            assertEquals("Versión " + BuildConfig.VERSION_NAME ,result)
         }
     }
 
