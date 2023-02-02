@@ -13,4 +13,7 @@
     <color name="blue_dark">#042E5C</color>
     <color name="yellow">#F2B90C</color>
     <color name="yellow_dark">#BF920A</color>
+    <color name="error">#944145</color>
+    <color name="info">#006E9A</color>
+    <color name="warning">#F0AD4E</color>
 </resources>

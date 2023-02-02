@@ -7,4 +7,5 @@
     <string name="rationale_default">Esta aplicación requiere un permiso adicional</string>
     <string name="permisos_denegados">Debe autorizar todos los permisos para continuar</string>
     <string name="sin_conexion">Debe tener internet para continuar</string>
+    <string name="cerrar">CERRAR</string>
 </resources>

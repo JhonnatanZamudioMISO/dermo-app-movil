@@ -6,12 +6,12 @@ import android.os.Bundle
 import android.util.Log
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.*
 import com.miso.dermoapp.R
 import com.miso.dermoapp.databinding.ActivitySplashBinding
 import com.miso.dermoapp.domain.models.enumerations.CodePermissions
+import com.miso.dermoapp.domain.models.enumerations.TypeSnackBar
 import com.miso.dermoapp.domain.models.utils.UtilsNetwork
 import com.miso.dermoapp.ui.core.home.viewModels.SplashViewModel
 import com.miso.dermoapp.ui.core.home.viewModels.SplashViewModelFactory
@@ -53,8 +53,7 @@ class Splash : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
                 if (it.equals(true))
                     validatePermission(
                         R.string.rationale_write_storage, CodePermissions.WRITE_STORAGE.code,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
-                    )
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE)
             }
         })
     }
@@ -66,8 +65,7 @@ class Splash : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
                     CodePermissions.CAMERA.code -> checkUpdate()
                     CodePermissions.WRITE_STORAGE.code -> validatePermission(
                         R.string.rationale_camera,
-                        CodePermissions.CAMERA.code, Manifest.permission.CAMERA
-                    )
+                        CodePermissions.CAMERA.code, Manifest.permission.CAMERA)
                 }
             }
             false -> EasyPermissions.requestPermissions(this, getString(message), code, permission)
@@ -92,10 +90,8 @@ class Splash : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
         //CustomSnackBar().showSnackBar("Hola", binding.layoutContain)
         else {
             viewModel.loading.postValue(false)
-            CustomSnackBar().showSnackBar(
-                resources.getString(R.string.sin_conexion),
-                binding.layoutContain
-            )
+            CustomSnackBar().showSnackBar(resources.getString(R.string.sin_conexion),
+                binding.layoutContain, TypeSnackBar.CLOSE_APP.code,this)
         }
     }
 
@@ -108,19 +104,19 @@ class Splash : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
     override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
         Log.d(TAG, "onPermissionsGranted:" + requestCode + ":" + perms.size)
         when (requestCode) {
-            CodePermissions.WRITE_STORAGE.code -> validatePermission(R.string.rationale_camera,
+            CodePermissions.WRITE_STORAGE.code -> validatePermission(
+                R.string.rationale_camera,
                 CodePermissions.CAMERA.code, Manifest.permission.CAMERA)
-            CodePermissions.CAMERA.code -> viewModel.loading.value = false
+            CodePermissions.CAMERA.code -> checkUpdate()
         }
     }
 
     override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
         Log.d(TAG, "onPermissionsDenied:" + requestCode + ":" + perms.size)
-        viewModel.loading.value = false
-        Toast.makeText(this, R.string.permisos_denegados,
-            Toast.LENGTH_LONG).show()
-        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+        viewModel.loading.postValue(false)
+        CustomSnackBar().showSnackBar(resources.getString(R.string.permisos_denegados),
+            binding.layoutContain, TypeSnackBar.CLOSE_APP.code, this)
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms))
             AppSettingsDialog.Builder(this).build().show()
-        }
     }
 }
