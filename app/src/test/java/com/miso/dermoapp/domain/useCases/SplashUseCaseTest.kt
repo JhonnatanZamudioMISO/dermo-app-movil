@@ -9,6 +9,7 @@ import com.miso.dermoapp.data.attributes.version.datasource.VersionDataSourceLoc
 import com.miso.dermoapp.data.attributes.version.entitie.Version
 import com.miso.dermoapp.data.attributes.version.repository.VersionRepository
 import com.miso.dermoapp.data.room.DermoAppDB
+import com.miso.dermoapp.domain.models.enumerations.CodePermissions
 import io.github.serpro69.kfaker.Faker
 import kotlinx.coroutines.*
 import kotlinx.coroutines.test.resetMain
@@ -20,6 +21,7 @@ import org.junit.Before
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import java.util.*
+import android.Manifest
 
 /****
  * Project: DermoApp
@@ -99,5 +101,10 @@ class SplashScreenUseCaseTest {
         }
     }
 
-
+    @Test
+    fun `Caso 4`() {
+        val permission = Manifest.permission.WRITE_EXTERNAL_STORAGE
+        val result = splashUseCase.getCodePermission(permission)
+        assertEquals(CodePermissions.WRITE_STORAGE.code,result)
+    }
 }

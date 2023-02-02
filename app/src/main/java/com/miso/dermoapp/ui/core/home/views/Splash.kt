@@ -12,13 +12,11 @@ import com.miso.dermoapp.R
 import com.miso.dermoapp.databinding.ActivitySplashBinding
 import com.miso.dermoapp.domain.models.enumerations.CodePermissions
 import com.miso.dermoapp.domain.models.enumerations.TypeSnackBar
-import com.miso.dermoapp.domain.models.utils.UtilsNetwork
 import com.miso.dermoapp.ui.core.home.viewModels.SplashViewModel
 import com.miso.dermoapp.ui.core.home.viewModels.SplashViewModelFactory
 import com.miso.dermoapp.ui.core.utils.CustomSnackBar
 import kotlinx.coroutines.*
-import pub.devrel.easypermissions.AppSettingsDialog
-import pub.devrel.easypermissions.EasyPermissions
+import pub.devrel.easypermissions.*
 
 @Suppress("COMPATIBILITY_WARNING", "DEPRECATION")
 class Splash : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
@@ -37,85 +35,93 @@ class Splash : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
         binding.vModel = viewModel
 
         viewModel.loading.observe(this, {
-                with(binding) {
-                    lifecycleScope.launch(Dispatchers.IO) {
-                        if (it.equals(true))
-                            startLoading(imageViewLoading)
-                        else
-                            stopLoading(imageViewLoading)
-                    }
-                }
-            },
-        )
+            lifecycleScope.launch(Dispatchers.IO) {
+                animationLoading(binding.imageViewLoading, it)
+            }
+        })
 
         viewModel.validatePermissions.observe(this, {
-            lifecycleScope.launch(Dispatchers.IO) {
-                if (it.equals(true))
-                    validatePermission(
-                        R.string.rationale_write_storage, CodePermissions.WRITE_STORAGE.code,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            if (it.equals(true))
+                viewModel.hasPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        })
+
+        viewModel.hasPermission.observe(this, {
+            when (it) {
+                true -> {
+                    viewModel.stateCode.postValue(true)
+                }
+                false -> EasyPermissions.requestPermissions(
+                    this,
+                    viewModel.messagePermission.value!!,
+                    viewModel.codPermission.value!!,
+                    viewModel.typePermission.value
+                )
+            }
+        })
+
+        viewModel.stateCode.observe(this, {
+            if (it.equals(true)) {
+                when (viewModel.codPermission.value) {
+                    CodePermissions.CAMERA.code -> viewModel.checkOnline(this)
+                    CodePermissions.WRITE_STORAGE.code -> viewModel.hasPermission(
+                        this,
+                        Manifest.permission.CAMERA
+                    )
+                }
+            }
+        })
+
+        viewModel.snackBarTextCloseApp.observe(this, {
+            CustomSnackBar().showSnackBar(
+                it,
+                binding.layoutContain,
+                TypeSnackBar.CLOSE_APP.code,
+                this
+            )
+        })
+
+        viewModel.isConected.observe(this, {
+            if (it.equals(true))
+            //co
+            else {
+                viewModel.loading.postValue(false)
+                viewModel.snackBarTextCloseApp.postValue(resources.getString(R.string.sin_conexion))
             }
         })
     }
 
-    private fun validatePermission(message: Int, code: Int, permission: String) {
-        when (hasPermission(permission)) {
-            true -> {
-                when (code) {
-                    CodePermissions.CAMERA.code -> checkUpdate()
-                    CodePermissions.WRITE_STORAGE.code -> validatePermission(
-                        R.string.rationale_camera,
-                        CodePermissions.CAMERA.code, Manifest.permission.CAMERA)
-                }
-            }
-            false -> EasyPermissions.requestPermissions(this, getString(message), code, permission)
-        }
+    private fun animationLoading(imageViewLoading: ImageView, state: Boolean) {
+        val animation = if (state)
+            R.anim.loading
+        else
+            R.anim.invisible
+        imageViewLoading.startAnimation(AnimationUtils.loadAnimation(this, animation))
     }
 
-    private fun hasPermission(permission: String): Boolean {
-        return EasyPermissions.hasPermissions(this, permission)
-    }
-    private fun stopLoading(imageViewLoading: ImageView) {
-        val animation = AnimationUtils.loadAnimation(this, R.anim.invisible)
-        imageViewLoading.startAnimation(animation)
-    }
-
-    private fun startLoading(imageViewLoading: ImageView) {
-        val animation = AnimationUtils.loadAnimation(this, R.anim.loading)
-        imageViewLoading.startAnimation(animation)
-    }
-
-    fun checkUpdate() {
-        if (UtilsNetwork().isOnline(this))
-        //CustomSnackBar().showSnackBar("Hola", binding.layoutContain)
-        else {
-            viewModel.loading.postValue(false)
-            CustomSnackBar().showSnackBar(resources.getString(R.string.sin_conexion),
-                binding.layoutContain, TypeSnackBar.CLOSE_APP.code,this)
-        }
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults,
-            this)
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
     }
 
     override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
         Log.d(TAG, "onPermissionsGranted:" + requestCode + ":" + perms.size)
         when (requestCode) {
-            CodePermissions.WRITE_STORAGE.code -> validatePermission(
-                R.string.rationale_camera,
-                CodePermissions.CAMERA.code, Manifest.permission.CAMERA)
-            CodePermissions.CAMERA.code -> checkUpdate()
+            CodePermissions.WRITE_STORAGE.code -> viewModel.hasPermission(
+                this,
+                Manifest.permission.CAMERA
+            )
+            CodePermissions.CAMERA.code -> viewModel.checkOnline(this)
         }
     }
 
     override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
         Log.d(TAG, "onPermissionsDenied:" + requestCode + ":" + perms.size)
         viewModel.loading.postValue(false)
-        CustomSnackBar().showSnackBar(resources.getString(R.string.permisos_denegados),
-            binding.layoutContain, TypeSnackBar.CLOSE_APP.code, this)
+        viewModel.snackBarTextCloseApp.postValue(resources.getString(R.string.permisos_denegados))
         if (EasyPermissions.somePermissionPermanentlyDenied(this, perms))
             AppSettingsDialog.Builder(this).build().show()
     }

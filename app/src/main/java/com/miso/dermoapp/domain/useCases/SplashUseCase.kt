@@ -35,4 +35,8 @@ class SplashUseCase(val versionRepository: VersionRepository) {
         )
         return versionName
     }
+
+    fun getCodePermission(permission: String): Int? {
+        return null
+    }
 }

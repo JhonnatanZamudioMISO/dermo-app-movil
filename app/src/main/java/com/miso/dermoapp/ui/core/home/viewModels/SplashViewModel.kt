@@ -4,8 +4,10 @@ import android.content.Context
 import androidx.lifecycle.*
 import com.miso.dermoapp.data.attributes.version.repository.VersionRepository
 import com.miso.dermoapp.domain.injectionOfDependencies.Injection
+import com.miso.dermoapp.domain.models.utils.UtilsNetwork
 import com.miso.dermoapp.domain.useCases.SplashUseCase
 import kotlinx.coroutines.*
+import pub.devrel.easypermissions.EasyPermissions
 
 /****
  * Project: DermoApp
@@ -20,6 +22,13 @@ class SplashViewModel(versionRepository: VersionRepository): ViewModel() {
     private val splashUseCase = SplashUseCase(versionRepository)
     val loading = MutableLiveData<Boolean>()
     val validatePermissions = MutableLiveData<Boolean>()
+    val snackBarTextCloseApp = MutableLiveData<String>()
+    val isConected = MutableLiveData<Boolean>()
+    val hasPermission = MutableLiveData<Boolean>()
+    val typePermission = MutableLiveData<String>()
+    val codPermission = MutableLiveData<Int>()
+    val messagePermission = MutableLiveData<String>()
+    val stateCode = MutableLiveData<Boolean>()
 
     init {
         GlobalScope.launch {
@@ -27,9 +36,7 @@ class SplashViewModel(versionRepository: VersionRepository): ViewModel() {
             withContext(Dispatchers.IO) {
                 getAppVersion()
                 validatePermissions.postValue(true)
-                //delay(1000)
             }
-            //loading.postValue(false)
         }
     }
 
@@ -41,6 +48,17 @@ class SplashViewModel(versionRepository: VersionRepository): ViewModel() {
         viewModelScope.launch {
             setVersion(splashUseCase.getAppVersion())
         }
+    }
+
+    fun checkOnline(context: Context) {
+        isConected.postValue(UtilsNetwork().isOnline(context))
+    }
+
+    fun hasPermission(context: Context, permission: String){
+        hasPermission.postValue(EasyPermissions.hasPermissions(context, permission))
+        typePermission.postValue(permission)
+        codPermission.postValue(splashUseCase.getCodePermission(permission))
+        messagePermission.postValue("splashUseCase.getMessagePermission(permission)")
     }
 }
 
