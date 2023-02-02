@@ -1,5 +1,6 @@
 package com.miso.dermoapp.domain.useCases
 
+import android.Manifest
 import com.miso.dermoapp.BuildConfig
 import com.miso.dermoapp.data.attributes.version.entitie.Version
 import com.miso.dermoapp.data.attributes.version.repository.VersionRepository
@@ -36,7 +37,10 @@ class SplashUseCase(val versionRepository: VersionRepository) {
         return versionName
     }
 
-    fun getCodePermission(permission: String): Int? {
-        return null
+    fun getCodePermission(permission: String): Int {
+        var codePermission = 0
+        if (permission.equals(Manifest.permission.WRITE_EXTERNAL_STORAGE))
+            codePermission = 1
+        return codePermission
     }
 }
