@@ -3,6 +3,8 @@ package com.miso.dermoapp.domain.useCases
 import android.Manifest
 import android.content.Context
 import com.google.android.play.core.appupdate.AppUpdateManager
+import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.UpdateAvailability
 import com.miso.dermoapp.BuildConfig
 import com.miso.dermoapp.R
 import com.miso.dermoapp.data.attributes.version.entitie.Version
@@ -58,6 +60,10 @@ class SplashUseCase(val versionRepository: VersionRepository) {
     }
 
     fun shouldBeUpdated(appUpdateManager: AppUpdateManager): Boolean {
-        return false
+        var isUpdate = false
+        val appUpdateInfoTask = appUpdateManager.appUpdateInfo.result
+        if (appUpdateInfoTask.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE) && appUpdateInfoTask.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE)
+            isUpdate = true
+        return isUpdate
     }
 }
