@@ -60,6 +60,6 @@ class SplashViewModelFactory(
     }
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return SplashViewModelFactory(versionRepository) as T
+        return SplashViewModel(versionRepository) as T
     }
 }

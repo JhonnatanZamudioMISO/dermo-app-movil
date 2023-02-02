@@ -6,6 +6,7 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.miso.dermoapp.BuildConfig
 import com.miso.dermoapp.data.attributes.version.datasource.VersionDataSourceLocal
+import com.miso.dermoapp.data.attributes.version.entitie.Version
 import com.miso.dermoapp.data.attributes.version.repository.VersionRepository
 import com.miso.dermoapp.data.room.DermoAppDB
 import kotlinx.coroutines.*
@@ -17,6 +18,7 @@ import org.junit.Assert.*
 import org.junit.Before
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
+import java.util.*
 
 /****
  * Project: DermoApp
@@ -61,6 +63,17 @@ class SplashScreenUseCaseTest {
         launch(Dispatchers.Main) {
             val result = splashUseCase.getAppVersion()
             assertEquals("Versión " + BuildConfig.VERSION_NAME, result)
+        }
+    }
+
+    @Test
+    fun `Caso 2`(): Unit = runBlocking {
+        launch(Dispatchers.Main) {
+            versionRepository.insertVersionLocal(Version(0,1,"1.0.0", Calendar.getInstance().time))
+            versionRepository.insertVersionLocal(Version(0,2,"1.0.1",Calendar.getInstance().time))
+            val result = splashUseCase.getAppVersion()
+            versionRepository.clearVersionsLocal()
+            assertEquals("Versión 1.0.1" ,result)
         }
     }
 
