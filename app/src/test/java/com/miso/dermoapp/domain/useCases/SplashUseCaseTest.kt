@@ -141,7 +141,8 @@ class SplashScreenUseCaseTest {
     @Test
     fun `Caso 9`() {
         fakeAppUpdateManager.setUpdateAvailable(UpdateAvailability.UPDATE_AVAILABLE, AppUpdateType.IMMEDIATE)
-        val result = splashUseCase.shouldBeUpdated(fakeAppUpdateManager)
+        val appUpdateInfoTask = fakeAppUpdateManager!!.appUpdateInfo
+        val result = splashUseCase.shouldBeUpdated(appUpdateInfoTask.result)
         assertEquals(true,result)
     }
 
@@ -149,7 +150,8 @@ class SplashScreenUseCaseTest {
     fun `Caso 10`() {
         fakeAppUpdateManager.downloadStarts()
         fakeAppUpdateManager.setUpdateAvailable(UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS)
-        val result = splashUseCase.shouldBeUpdated(fakeAppUpdateManager)
+        val appUpdateInfoTask = fakeAppUpdateManager!!.appUpdateInfo
+        val result = splashUseCase.shouldBeUpdated(appUpdateInfoTask.result)
         assertEquals(true,result)
     }
 }

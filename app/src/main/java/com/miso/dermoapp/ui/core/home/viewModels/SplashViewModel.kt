@@ -3,7 +3,7 @@ package com.miso.dermoapp.ui.core.home.viewModels
 import android.Manifest
 import android.content.Context
 import androidx.lifecycle.*
-import com.google.android.play.core.appupdate.AppUpdateManager
+import com.google.android.play.core.appupdate.AppUpdateInfo
 import com.miso.dermoapp.data.attributes.version.repository.VersionRepository
 import com.miso.dermoapp.domain.injectionOfDependencies.Injection
 import com.miso.dermoapp.domain.models.enumerations.CodePermissions
@@ -32,6 +32,7 @@ class SplashViewModel(versionRepository: VersionRepository): ViewModel() {
     val messagePermission = MutableLiveData<String>()
     val requestPermission = MutableLiveData<Boolean>()
     val startUpdateFlow = MutableLiveData<Boolean>()
+    val appUpdateInfoPlayStore = MutableLiveData<AppUpdateInfo>()
 
     init {
         GlobalScope.launch {
@@ -73,8 +74,9 @@ class SplashViewModel(versionRepository: VersionRepository): ViewModel() {
         }
     }
 
-    fun checkUpdate(appUpdateManager: AppUpdateManager) {
-        startUpdateFlow.postValue(splashUseCase.shouldBeUpdated(appUpdateManager))
+    fun checkUpdate(appUpdateInfo: AppUpdateInfo) {
+        appUpdateInfoPlayStore.value = appUpdateInfo
+        startUpdateFlow.postValue(splashUseCase.shouldBeUpdated(appUpdateInfo))
     }
 }
 

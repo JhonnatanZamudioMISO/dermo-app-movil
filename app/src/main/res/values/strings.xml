@@ -8,4 +8,10 @@
     <string name="permisos_denegados">Debe autorizar todos los permisos para continuar</string>
     <string name="sin_conexion">Debe tener internet para continuar</string>
     <string name="cerrar">CERRAR</string>
+    <string name="actualizacion_cancelada">¡Actualización cancelada por el usuario!</string>
+    <string name="actualizacion_exitosa">¡Actualización exitosa!</string>
+    <string name="actualizacion_fallida">¡Actualización fallida!</string>
+    <string name="on_permissions_granted">onPermissionsGranted:</string>
+    <string name="double_point">:</string>
+    <string name="permission_denied">onPermissionsDenied:</string>
 </resources>
