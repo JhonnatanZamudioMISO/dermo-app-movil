@@ -118,7 +118,7 @@ class SplashScreenUseCaseTest {
 
     @Test
     fun `Caso 6`() {
-        val result = splashUseCase.getMessagePermission(permissionWriteStorge)
+        val result = splashUseCase.getMessagePermission(permissionWriteStorge, context)
         assertEquals(context.getString(R.string.rationale_write_storage),result)
     }
 }

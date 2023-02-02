@@ -58,7 +58,7 @@ class SplashViewModel(versionRepository: VersionRepository): ViewModel() {
         hasPermission.postValue(EasyPermissions.hasPermissions(context, permission))
         typePermission.value = permission
         codPermission.value = splashUseCase.getCodePermission(permission)
-        messagePermission.value = splashUseCase.getMessagePermission(permission)
+        messagePermission.value = splashUseCase.getMessagePermission(permission, context)
     }
 }
 

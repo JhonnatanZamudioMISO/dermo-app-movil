@@ -1,7 +1,9 @@
 package com.miso.dermoapp.domain.useCases
 
 import android.Manifest
+import android.content.Context
 import com.miso.dermoapp.BuildConfig
+import com.miso.dermoapp.R
 import com.miso.dermoapp.data.attributes.version.entitie.Version
 import com.miso.dermoapp.data.attributes.version.repository.VersionRepository
 import com.miso.dermoapp.domain.models.enumerations.CodePermissions
@@ -46,7 +48,10 @@ class SplashUseCase(val versionRepository: VersionRepository) {
         }
     }
 
-    fun getMessagePermission(permission: String): String {
-        return ""
+    fun getMessagePermission(permission: String, context: Context): String {
+        var message = ""
+        if (permission.equals(Manifest.permission.WRITE_EXTERNAL_STORAGE))
+            message = context.getString(R.string.rationale_write_storage)
+        return message
     }
 }
