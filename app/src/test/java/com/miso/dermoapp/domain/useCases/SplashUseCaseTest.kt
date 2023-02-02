@@ -77,5 +77,15 @@ class SplashScreenUseCaseTest {
         }
     }
 
+    @Test
+    fun `Caso 3`(): Unit = runBlocking {
+        launch(Dispatchers.Main) {
+            versionRepository.insertVersionLocal(Version(0,1,"1.0.0",Calendar.getInstance().time))
+            val result = splashUseCase.getAppVersion()
+            versionRepository.clearVersionsLocal()
+            assertEquals("Versión 1.0.1" ,result)
+        }
+    }
+
 
 }
