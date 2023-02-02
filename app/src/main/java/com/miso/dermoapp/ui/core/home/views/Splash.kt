@@ -1,7 +1,6 @@
 package com.miso.dermoapp.ui.core.home.views
 
 import android.Manifest
-import android.content.ContentValues.TAG
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -13,15 +12,19 @@ import androidx.lifecycle.*
 import com.miso.dermoapp.R
 import com.miso.dermoapp.databinding.ActivitySplashBinding
 import com.miso.dermoapp.domain.models.enumerations.CodePermissions
+import com.miso.dermoapp.domain.models.utils.UtilsNetwork
 import com.miso.dermoapp.ui.core.home.viewModels.SplashViewModel
 import com.miso.dermoapp.ui.core.home.viewModels.SplashViewModelFactory
+import com.miso.dermoapp.ui.core.utils.CustomSnackBar
 import kotlinx.coroutines.*
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 
+@Suppress("COMPATIBILITY_WARNING", "DEPRECATION")
 class Splash : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
     private lateinit var viewModel: SplashViewModel
     private lateinit var binding: ActivitySplashBinding
+    private val TAG = "SplashScreen"
     @OptIn(DelicateCoroutinesApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_DermoApp)
@@ -29,26 +32,29 @@ class Splash : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
         val viewModelFactory = SplashViewModelFactory.getInstance(this)
         viewModel = ViewModelProvider(this, viewModelFactory)[SplashViewModel::class.java]
         binding = DataBindingUtil.setContentView(this, R.layout.activity_splash)
+
         binding.lifecycleOwner = this
         binding.vModel = viewModel
 
         viewModel.loading.observe(this, {
                 with(binding) {
                     lifecycleScope.launch(Dispatchers.IO) {
-                        if (it.equals(true)) {
+                        if (it.equals(true))
                             startLoading(imageViewLoading)
-                        } else {
+                        else
                             stopLoading(imageViewLoading)
-                        }
                     }
                 }
             },
         )
 
         viewModel.validatePermissions.observe(this, {
-            if(it.equals(true)){
-                validatePermission(R.string.rationale_write_storage, CodePermissions.WRITE_STORAGE.code,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            lifecycleScope.launch(Dispatchers.IO) {
+                if (it.equals(true))
+                    validatePermission(
+                        R.string.rationale_write_storage, CodePermissions.WRITE_STORAGE.code,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    )
             }
         })
     }
@@ -57,9 +63,11 @@ class Splash : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
         when (hasPermission(permission)) {
             true -> {
                 when (code) {
-                    CodePermissions.CAMERA.code ->  viewModel.loading.value = false
-                    CodePermissions.WRITE_STORAGE.code -> validatePermission(R.string.rationale_camera,
-                        CodePermissions.CAMERA.code, Manifest.permission.CAMERA)
+                    CodePermissions.CAMERA.code -> checkUpdate()
+                    CodePermissions.WRITE_STORAGE.code -> validatePermission(
+                        R.string.rationale_camera,
+                        CodePermissions.CAMERA.code, Manifest.permission.CAMERA
+                    )
                 }
             }
             false -> EasyPermissions.requestPermissions(this, getString(message), code, permission)
@@ -79,9 +87,19 @@ class Splash : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
         imageViewLoading.startAnimation(animation)
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>,
-                                            grantResults: IntArray
-    ) {
+    fun checkUpdate() {
+        if (UtilsNetwork().isOnline(this))
+        //CustomSnackBar().showSnackBar("Hola", binding.layoutContain)
+        else {
+            viewModel.loading.postValue(false)
+            CustomSnackBar().showSnackBar(
+                resources.getString(R.string.sin_conexion),
+                binding.layoutContain
+            )
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults,
             this)
