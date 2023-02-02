@@ -45,4 +45,8 @@ class SplashUseCase(val versionRepository: VersionRepository) {
             else -> CodePermissions.DEFAULT.code
         }
     }
+
+    fun getMessagePermission(permission: String): String {
+        return ""
+    }
 }

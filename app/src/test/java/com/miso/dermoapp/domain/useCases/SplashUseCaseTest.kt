@@ -22,6 +22,7 @@ import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import java.util.*
 import android.Manifest
+import com.miso.dermoapp.R
 
 /****
  * Project: DermoApp
@@ -41,6 +42,8 @@ class SplashScreenUseCaseTest {
     private lateinit var versionDataSourceLocal: VersionDataSourceLocal
     private lateinit var versionRepository: VersionRepository
     private lateinit var splashUseCase: SplashUseCase
+    private val permissionWriteStorge = Manifest.permission.WRITE_EXTERNAL_STORAGE
+    private val permissionCamera = Manifest.permission.CAMERA
     val faker = Faker()
 
     private suspend fun createVersions(i: Int) {
@@ -103,15 +106,19 @@ class SplashScreenUseCaseTest {
 
     @Test
     fun `Caso 4`() {
-        val permission = Manifest.permission.WRITE_EXTERNAL_STORAGE
-        val result = splashUseCase.getCodePermission(permission)
+        val result = splashUseCase.getCodePermission(permissionWriteStorge)
         assertEquals(CodePermissions.WRITE_STORAGE.code,result)
     }
 
     @Test
     fun `Caso 5`() {
-        val permission = Manifest.permission.CAMERA
-        val result = splashUseCase.getCodePermission(permission)
+        val result = splashUseCase.getCodePermission(permissionCamera)
         assertEquals(CodePermissions.CAMERA.code,result)
+    }
+
+    @Test
+    fun `Caso 6`() {
+        val result = splashUseCase.getMessagePermission(permissionWriteStorge)
+        assertEquals(context.getString(R.string.rationale_write_storage),result)
     }
 }
