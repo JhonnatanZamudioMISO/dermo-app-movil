@@ -14,19 +14,18 @@ import java.util.*
 
 class SplashUseCase(val versionRepository: VersionRepository) {
     suspend fun getAppVersion():String {
-        var versionName = ""
-        val version  = versionRepository.queryLastVersionLocal()
-        version.map { x ->
-            versionName = x.versionName
-        }
-        if (versionName.equals("")){
+        val versionName: String
+        if (versionRepository.queryLastVersionLocal().size == 1){
+            versionName= versionRepository.queryLastVersionLocal()[0].versionName
+        } else {
             versionName = BuildConfig.VERSION_NAME
             versionRepository.insertVersionLocal(
                 Version(
-                0,
-                BuildConfig.VERSION_CODE,
-                versionName,
-                Calendar.getInstance().time)
+                    0,
+                    BuildConfig.VERSION_CODE,
+                    versionName,
+                    Calendar.getInstance().time
+                )
             )
         }
         return "Versión " + versionName
