@@ -107,4 +107,11 @@ class SplashScreenUseCaseTest {
         val result = splashUseCase.getCodePermission(permission)
         assertEquals(CodePermissions.WRITE_STORAGE.code,result)
     }
+
+    @Test
+    fun `Caso 5`() {
+        val permission = Manifest.permission.CAMERA
+        val result = splashUseCase.getCodePermission(permission)
+        assertEquals(CodePermissions.CAMERA.code,result)
+    }
 }
