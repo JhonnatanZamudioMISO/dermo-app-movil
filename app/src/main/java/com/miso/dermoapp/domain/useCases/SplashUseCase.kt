@@ -39,11 +39,10 @@ class SplashUseCase(val versionRepository: VersionRepository) {
     }
 
     fun getCodePermission(permission: String): Int {
-        var codePermission = CodePermissions.DEFAULT.code
-        if (permission.equals(Manifest.permission.WRITE_EXTERNAL_STORAGE))
-            codePermission = CodePermissions.WRITE_STORAGE.code
-        else if (permission.equals(Manifest.permission.CAMERA))
-            codePermission = CodePermissions.CAMERA.code
-        return codePermission
+        return when (permission) {
+            Manifest.permission.WRITE_EXTERNAL_STORAGE -> CodePermissions.WRITE_STORAGE.code
+            Manifest.permission.CAMERA -> CodePermissions.CAMERA.code
+            else -> CodePermissions.DEFAULT.code
+        }
     }
 }
