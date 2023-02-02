@@ -49,11 +49,13 @@ class SplashUseCase(val versionRepository: VersionRepository) {
     }
 
     fun getMessagePermission(permission: String, context: Context): String {
-        var message = ""
+        val message: String
         if (permission.equals(Manifest.permission.WRITE_EXTERNAL_STORAGE))
             message = context.getString(R.string.rationale_write_storage)
         else if (permission.equals(Manifest.permission.CAMERA))
             message = context.getString(R.string.rationale_camera)
+        else
+            message = context.getString(R.string.rationale_default)
         return message
     }
 }
