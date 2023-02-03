@@ -47,6 +47,10 @@ class SelectLanguage : AppCompatActivity() {
             resources.updateConfiguration(config, null)
             goToChangeScreen(0,KeySharedPreferences.SPANISH.value)
         }
+        binding.btnSiguiente.setOnClickListener {
+            viewModel.saveDefaultLanguage(this)
+            goToChangeScreen(1,null)
+        }
     }
 
     private fun goToChangeScreen(screen: Int, value: String?) {
@@ -63,7 +67,7 @@ class SelectLanguage : AppCompatActivity() {
                     1 -> {
                         intent = Intent(this@SelectLanguage, Welcome::class.java)
                         startActivity(intent)
-
+                        overridePendingTransition(R.anim.left_in,R.anim.left_out)
                     }
                 }
                 finish()

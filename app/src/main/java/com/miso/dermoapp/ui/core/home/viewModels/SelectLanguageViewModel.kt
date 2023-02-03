@@ -1,9 +1,11 @@
 package com.miso.dermoapp.ui.core.home.viewModels
 
 import android.annotation.SuppressLint
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.miso.dermoapp.domain.useCases.SelectLanguageUseCase
 import kotlinx.coroutines.DelicateCoroutinesApi
 import java.util.*
 
@@ -16,8 +18,13 @@ import java.util.*
 
 class SelectLanguageViewModel (): ViewModel() {
     val language = MutableLiveData<String>()
+    private val selectLanguageUseCase = SelectLanguageUseCase()
     fun setLanguage(v:String){
         language.value = v
+    }
+
+    fun saveDefaultLanguage(context: Context){
+        selectLanguageUseCase.saveDefaultLanguage(context, language.value!!)
     }
 }
 
