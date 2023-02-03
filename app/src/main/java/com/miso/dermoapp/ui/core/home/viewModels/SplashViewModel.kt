@@ -33,12 +33,14 @@ class SplashViewModel(versionRepository: VersionRepository): ViewModel() {
     val requestPermission = MutableLiveData<Boolean>()
     val startUpdateFlow = MutableLiveData<Boolean>()
     val appUpdateInfoPlayStore = MutableLiveData<AppUpdateInfo>()
+    val configurationLanguage = MutableLiveData<Int>()
 
     init {
         GlobalScope.launch {
             loading.postValue(true)
             withContext(Dispatchers.IO) {
                 getAppVersion()
+                getDefaultLanguage()
                 validatePermissions.postValue(true)
             }
         }
@@ -77,6 +79,13 @@ class SplashViewModel(versionRepository: VersionRepository): ViewModel() {
     fun checkUpdate(appUpdateInfo: AppUpdateInfo) {
         appUpdateInfoPlayStore.value = appUpdateInfo
         startUpdateFlow.postValue(splashUseCase.shouldBeUpdated(appUpdateInfo))
+    }
+
+    fun setDefaultLanguage(v:Int){
+        configurationLanguage.value = v
+    }
+    fun getDefaultLanguage(){
+        setDefaultLanguage(splashUseCase.getDefaultLanguage())
     }
 }
 

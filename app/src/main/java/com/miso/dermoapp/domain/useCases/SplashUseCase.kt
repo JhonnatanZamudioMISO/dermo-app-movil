@@ -64,4 +64,8 @@ class SplashUseCase(val versionRepository: VersionRepository) {
                 appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE) ||
                 (appUpdateInfo.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS)
     }
+
+    fun getDefaultLanguage(): Int {
+        return -10
+    }
 }

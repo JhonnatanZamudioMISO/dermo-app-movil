@@ -83,7 +83,7 @@ class Splash : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
                         )
                     }
                 else
-                    goToSelectLanguage()
+                    validateLanguage()
             } else {
                 viewModel.loading.postValue(false)
                 viewModel.snackBarTextCloseApp.postValue(getString(R.string.sin_conexion))
@@ -94,8 +94,12 @@ class Splash : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
             if (it.equals(true))
                 starUpdateFlow()
             else
-                goToSelectLanguage()
+                validateLanguage()
         })
+    }
+
+    private fun validateLanguage() {
+
     }
 
     private fun goToSelectLanguage() {
