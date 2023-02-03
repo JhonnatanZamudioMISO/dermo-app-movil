@@ -11,6 +11,7 @@
     <color name="blue_clear">#4D94E1</color>
     <color name="blue">#096FDB</color>
     <color name="blue_dark">#042E5C</color>
+    <color name="blue_light">#66042E5C</color>
     <color name="yellow">#F2B90C</color>
     <color name="yellow_dark">#BF920A</color>
     <color name="error">#944145</color>

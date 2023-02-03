@@ -21,4 +21,10 @@
     <string name="caratula_1">Icono de un doctor</string>
     <string name="crearCuenta">Crear tu cuenta</string>
     <string name="IniciarSesion">Iniciar sesión</string>
+    <string name="Icono_back">Icono átras</string>
+    <string name="correo_electronico">Correo electrónico</string>
+    <string name="contraseña">Contraseña</string>
+    <string name="ver_u_ocultar_contra">Icono para ocultar contraseña</string>
+    <string name="confirmar_contraseña">Confirmar contraseña</string>
+    <string name="ocultar_confirmacion_contra">Icono para mostrar contraseña</string>
 </resources>
