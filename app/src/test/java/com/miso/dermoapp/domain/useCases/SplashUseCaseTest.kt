@@ -154,4 +154,10 @@ class SplashScreenUseCaseTest {
         val result = splashUseCase.shouldBeUpdated(appUpdateInfoTask.result)
         assertEquals(true,result)
     }
+
+    @Test
+    fun `Caso 11`() {
+        val result = splashUseCase.getDefaultLanguage(context)
+        assertEquals(0,result)
+    }
 }

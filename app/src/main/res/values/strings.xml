@@ -1,17 +1,20 @@
 <resources>
     <string name="app_name">DermoApp</string>
-    <string name="logo_dermoapp_fondo_transparente">Logo DermoApp fondo transparente</string>
-    <string name="cargando">Cargando</string>
-    <string name="rationale_write_storage">Esta aplicación necesita acceso a su archivos para que pueda enviar información</string>
-    <string name="rationale_camera">Esta aplicación necesita acceso a su cámara para que pueda tomar fotografías</string>
-    <string name="rationale_default">Esta aplicación requiere un permiso adicional</string>
-    <string name="permisos_denegados">Debe autorizar todos los permisos para continuar</string>
-    <string name="sin_conexion">Debe tener internet para continuar</string>
-    <string name="cerrar">CERRAR</string>
-    <string name="actualizacion_cancelada">¡Actualización cancelada por el usuario!</string>
-    <string name="actualizacion_exitosa">¡Actualización exitosa!</string>
-    <string name="actualizacion_fallida">¡Actualización fallida!</string>
+    <string name="logo_dermoapp_fondo_transparente">DermoApp logo transparent background</string>
+    <string name="cargando">Charging</string>
+    <string name="rationale_write_storage">This application needs access to your files so that it can send information</string>
+    <string name="rationale_camera">This app needs access to your camera so you can take pictures</string>
+    <string name="rationale_default">This app requires additional permission</string>
+    <string name="permisos_denegados">You must authorize all permissions to continue</string>
+    <string name="sin_conexion">You must have internet to continue</string>
+    <string name="cerrar">CLOSE</string>
+    <string name="actualizacion_cancelada">Update canceled by user!</string>
+    <string name="actualizacion_exitosa">Successful update!</string>
+    <string name="actualizacion_fallida">Update failed!</string>
     <string name="on_permissions_granted">onPermissionsGranted:</string>
     <string name="double_point">:</string>
     <string name="permission_denied">onPermissionsDenied:</string>
+    <string name="te_damos_la_bienvenida">We given you welcome</string>
+    <string name="ingles">English (United States)</string>
+    <string name="espanol">Spanish (Colombia)</string>
 </resources>

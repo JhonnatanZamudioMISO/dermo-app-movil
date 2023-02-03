@@ -10,7 +10,10 @@ import com.miso.dermoapp.R
 import com.miso.dermoapp.data.attributes.version.entitie.Version
 import com.miso.dermoapp.data.attributes.version.repository.VersionRepository
 import com.miso.dermoapp.domain.models.enumerations.CodePermissions
+import com.miso.dermoapp.domain.models.enumerations.KeySharedPreferences
+import com.miso.dermoapp.domain.models.utils.sharedPreferences
 import java.util.*
+
 
 /****
  * Project: DermoApp
@@ -63,5 +66,9 @@ class SplashUseCase(val versionRepository: VersionRepository) {
         return (appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE) &&
                 appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE) ||
                 (appUpdateInfo.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS)
+    }
+
+    fun getDefaultLanguage(context: Context): Int {
+        return sharedPreferences().get(context,KeySharedPreferences.IDIOMA.value).toInt()
     }
 }

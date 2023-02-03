@@ -1,8 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.core.home.views.SelectLanguage">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="vModel"
+            type="com.miso.dermoapp.ui.core.home.viewModels.SelectLanguageViewModel" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_contain"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background_lanch"
+        tools:context=".ui.core.home.views.SelectLanguage">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/textViewMsj1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:layout_marginBottom="130dp"
+            android:fontFamily="@font/helveticaltsdbold"
+            android:gravity="center"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:text="@string/te_damos_la_bienvenida"
+            android:textColor="#ffffff"
+            android:textSize="40sp"
+            app:layout_constraintBottom_toTopOf="@+id/Linea1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/Linea1"
+            android:layout_width="0dp"
+            android:layout_height="3dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:background="@color/yellow_dark"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.435" />
+
+        <TextView
+            android:id="@+id/textViewIngles"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:clickable="true"
+            android:drawableStart="@mipmap/escudo_estados_unidos"
+            android:gravity="center"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:text="@string/ingles"
+            android:textColor="#ffffff"
+            android:textSize="22sp"
+            android:fontFamily="@font/helveticaltstdroman"
+            app:layout_constraintBottom_toTopOf="@+id/Linea2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Linea1"
+            tools:ignore="UseCompatTextViewDrawableXml"
+            android:focusable="true" />
+
+        <LinearLayout
+            android:id="@+id/Linea2"
+            android:layout_width="0dp"
+            android:layout_height="3dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginRight="30dp"
+            android:background="@color/yellow_dark"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/textViewEspanol"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewIngles" />
+
+        <TextView
+            android:id="@+id/textViewEspanol"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:clickable="true"
+            android:drawableStart="@mipmap/escudo_colombia"
+            android:gravity="center"
+            android:paddingLeft="40dp"
+            android:fontFamily="@font/helveticaltstdroman"
+            android:paddingRight="40dp"
+            android:text="@string/espanol"
+            android:textColor="#ffffff"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toTopOf="@+id/Linea3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Linea2"
+            android:focusable="true"
+            tools:ignore="UseCompatTextViewDrawableXml" />
+
+        <LinearLayout
+            android:id="@+id/Linea3"
+            android:layout_width="0dp"
+            android:layout_height="3dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:background="@color/yellow_dark"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewEspanol" />
+
+        <Button
+            android:id="@+id/btnSiguiente"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:background="@drawable/button"
+            android:drawableEnd="@drawable/ic_arrow_forward"
+            android:gravity="center"
+            android:paddingEnd="10dp"
+            android:textAllCaps="false"
+            android:textColor="#ffffff"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.925"
+            tools:ignore="RtlSymmetry" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

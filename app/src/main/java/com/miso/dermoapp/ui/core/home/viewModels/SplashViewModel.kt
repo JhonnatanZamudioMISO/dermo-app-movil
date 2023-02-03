@@ -11,6 +11,7 @@ import com.miso.dermoapp.domain.models.utils.UtilsNetwork
 import com.miso.dermoapp.domain.useCases.SplashUseCase
 import kotlinx.coroutines.*
 import pub.devrel.easypermissions.EasyPermissions
+import java.util.*
 
 /****
  * Project: DermoApp
@@ -33,6 +34,7 @@ class SplashViewModel(versionRepository: VersionRepository): ViewModel() {
     val requestPermission = MutableLiveData<Boolean>()
     val startUpdateFlow = MutableLiveData<Boolean>()
     val appUpdateInfoPlayStore = MutableLiveData<AppUpdateInfo>()
+    val configurationLanguage = MutableLiveData<Int>()
 
     init {
         GlobalScope.launch {
@@ -77,6 +79,13 @@ class SplashViewModel(versionRepository: VersionRepository): ViewModel() {
     fun checkUpdate(appUpdateInfo: AppUpdateInfo) {
         appUpdateInfoPlayStore.value = appUpdateInfo
         startUpdateFlow.postValue(splashUseCase.shouldBeUpdated(appUpdateInfo))
+    }
+
+    fun setDefaultLanguage(v:Int){
+        configurationLanguage.value = v
+    }
+    fun getDefaultLanguage(context: Context){
+        setDefaultLanguage(splashUseCase.getDefaultLanguage(context))
     }
 }
 
