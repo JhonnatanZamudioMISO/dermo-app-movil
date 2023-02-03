@@ -99,12 +99,12 @@
             android:layout_marginBottom="15dp"
             android:layout_marginEnd="20dp"
             android:layout_marginStart="20dp"
-            app:layout_constraintBottom_toTopOf="@+id/buttonCollector"
+            app:layout_constraintBottom_toTopOf="@+id/ButtonLogIn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
-            android:id="@+id/buttonCollector"
+            android:id="@+id/ButtonLogIn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/helveticaltsdbold"

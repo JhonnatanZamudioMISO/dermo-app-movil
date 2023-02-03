@@ -16,7 +16,7 @@ import java.util.*
  * All rights reserved 2023.
  ****/
 
-class SelectLanguageViewModel (): ViewModel() {
+class SelectLanguageViewModel: ViewModel() {
     val language = MutableLiveData<String>()
     private val selectLanguageUseCase = SelectLanguageUseCase()
     fun setLanguage(v:String){
