@@ -17,4 +17,8 @@
     <string name="te_damos_la_bienvenida">Te damos la bienvenida</string>
     <string name="ingles">Inglés (Estados Unidos)</string>
     <string name="espanol">Español (Colombia)</string>
+    <string name="app_slogan">El sitio para acceder a los servicios de tele-consulta</string>
+    <string name="caratula_1">Icono de un doctor</string>
+    <string name="crearCuenta">Crear tu cuenta</string>
+    <string name="IniciarSesion">Iniciar sesión</string>
 </resources>
