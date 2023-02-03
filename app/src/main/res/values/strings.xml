@@ -14,4 +14,7 @@
     <string name="on_permissions_granted">onPermissionsGranted:</string>
     <string name="double_point">:</string>
     <string name="permission_denied">onPermissionsDenied:</string>
+    <string name="te_damos_la_bienvenida">Te damos la bienvenida</string>
+    <string name="ingles">Inglés (Estados Unidos)</string>
+    <string name="espanol">Español (Colombia)</string>
 </resources>
