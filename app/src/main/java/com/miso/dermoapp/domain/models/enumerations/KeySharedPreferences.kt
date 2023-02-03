@@ -8,5 +8,7 @@ package com.miso.dermoapp.domain.models.enumerations
  ****/
 
 enum class KeySharedPreferences(val value: String) {
-    IDIOMA("idioma")
+    IDIOMA("idioma"),
+    ENGLISH("ingles"),
+    SPANISH("español")
 }
