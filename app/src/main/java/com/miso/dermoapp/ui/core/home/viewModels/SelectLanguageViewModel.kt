@@ -1,9 +1,11 @@
 package com.miso.dermoapp.ui.core.home.viewModels
 
 import android.annotation.SuppressLint
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.coroutines.DelicateCoroutinesApi
+import java.util.*
 
 /****
  * Project: DermoApp
@@ -13,7 +15,10 @@ import kotlinx.coroutines.DelicateCoroutinesApi
  ****/
 
 class SelectLanguageViewModel (): ViewModel() {
-
+    val language = MutableLiveData<String>()
+    fun setLanguage(v:String){
+        language.value = v
+    }
 }
 
 

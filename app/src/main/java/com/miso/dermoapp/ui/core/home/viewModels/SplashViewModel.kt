@@ -11,6 +11,7 @@ import com.miso.dermoapp.domain.models.utils.UtilsNetwork
 import com.miso.dermoapp.domain.useCases.SplashUseCase
 import kotlinx.coroutines.*
 import pub.devrel.easypermissions.EasyPermissions
+import java.util.*
 
 /****
  * Project: DermoApp
@@ -40,7 +41,6 @@ class SplashViewModel(versionRepository: VersionRepository): ViewModel() {
             loading.postValue(true)
             withContext(Dispatchers.IO) {
                 getAppVersion()
-                getDefaultLanguage()
                 validatePermissions.postValue(true)
             }
         }
@@ -84,8 +84,8 @@ class SplashViewModel(versionRepository: VersionRepository): ViewModel() {
     fun setDefaultLanguage(v:Int){
         configurationLanguage.value = v
     }
-    fun getDefaultLanguage(){
-        setDefaultLanguage(splashUseCase.getDefaultLanguage())
+    fun getDefaultLanguage(context: Context){
+        setDefaultLanguage(splashUseCase.getDefaultLanguage(context))
     }
 }
 

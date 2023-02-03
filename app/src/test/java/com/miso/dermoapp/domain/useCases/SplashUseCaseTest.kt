@@ -157,7 +157,7 @@ class SplashScreenUseCaseTest {
 
     @Test
     fun `Caso 11`() {
-        val result = splashUseCase.getDefaultLanguage()
+        val result = splashUseCase.getDefaultLanguage(context)
         assertEquals(0,result)
     }
 }
