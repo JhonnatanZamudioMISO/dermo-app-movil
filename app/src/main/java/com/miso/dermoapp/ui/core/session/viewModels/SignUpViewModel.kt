@@ -69,7 +69,7 @@ class SignUpViewModel : ViewModel() {
         val userInfo = RequestUser(
             userAccount.value!!.email,
             UtilsSecurity().cipherData(userAccount.value!!.password)!!)
-        val resultUser = configurationUseCase.createUser(userInfo)
+        val resultUser = signUpUseCase.createUser(userInfo)
         if (resultUser == 0){
             val userLocal = User(
                 0,
