@@ -55,6 +55,10 @@ class SignUp : AppCompatActivity() {
             binding.editTextEmail.setBackgroundResource(it)
         })
 
+        viewModel.editTextPasswordDrawable.observe(this, {
+            binding.editTextPassword.setBackgroundResource(it)
+        })
+
         viewModel.buttonContinueEnable.observe(this, {
             binding.buttonContinue.isEnabled = it
         })

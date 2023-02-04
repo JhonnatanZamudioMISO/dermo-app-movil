@@ -26,6 +26,7 @@ class SignUpViewModel : ViewModel() {
     val errorPasswordConfirm = MutableLiveData<String>()
     val buttonContinueDrawable = MutableLiveData<Int>()
     val editTextEmailDrawable = MutableLiveData<Int>()
+    val editTextPasswordDrawable = MutableLiveData<Int>()
     val buttonContinueEnable = MutableLiveData<Boolean>()
     private val signUpUseCase = SignUpUseCase()
     val navigateToLogIn = MutableLiveData<Boolean>()
@@ -106,6 +107,7 @@ class SignUpViewModel : ViewModel() {
     private fun isValidLong(text: Editable?, code: Int, minValue: Int, validItem: MutableLiveData<Int>) {
         if (UtilsFields().isValidLong(text.toString(), minValue)) {
             setErrorText(code, ResponseErrorField.DEFAULT.label)
+            editTextPasswordDrawable.value = R.drawable.input_successful
             validItem.value = 1
             changeEnableButton()
         } else {
@@ -114,6 +116,7 @@ class SignUpViewModel : ViewModel() {
                 ResponseErrorField.ERROR_LONG_CHARACTERS.label + minValue + ResponseErrorField.ERROR_CHARACTERS.label
             )
             validItem.value = 0
+            editTextPasswordDrawable.value = R.drawable.input_error
             changeEnableButton()
         }
     }
