@@ -31,5 +31,6 @@ class Welcome : AppCompatActivity() {
         val intent = Intent(this@Welcome, SignUp::class.java)
         startActivity(intent)
         overridePendingTransition(R.anim.left_in, R.anim.left_out)
+        finish()
     }
 }

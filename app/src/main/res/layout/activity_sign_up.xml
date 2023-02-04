@@ -1,8 +1,274 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.core.session.views.SignUp">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <data>
+        <variable
+            name="vModel"
+            type="com.miso.dermoapp.ui.core.session.viewModels.SignUpViewModel" />
+        <variable
+            name="codeField"
+            type="com.miso.dermoapp.domain.models.enumerations.CodeField" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_contain"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@mipmap/background_sign_up"
+        tools:context=".ui.core.session.views.SignUp">
+
+        <ImageView
+            android:id="@+id/imageViewBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/ic_back_arrow"
+            android:contentDescription="@string/Icono_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="RtlCompat,RtlSymmetry" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/textViewTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/helveticaltsdbold"
+                android:gravity="center_horizontal"
+                android:text="@string/crearCuenta"
+                android:textColor="@color/blue_dark"
+                android:textSize="40sp"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_editor_absoluteX="0dp" />
+
+            <EditText
+                android:id="@+id/editTextEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="35dp"
+                android:layout_marginRight="20dp"
+                android:autofillHints="email"
+                android:background="@drawable/input"
+                android:drawableStart="@drawable/ic_mail"
+                android:drawablePadding="10dp"
+                android:fontFamily="@font/helveticaltstdroman"
+                android:afterTextChanged="@{(editable)->vModel.areFieldsEmpty(editable, codeField.EMAIL_FIELD.code)}"
+                android:gravity="center_vertical"
+                android:hint="@string/correo_electronico"
+                android:inputType="textEmailAddress"
+                android:maxLines="30"
+                android:paddingLeft="15dp"
+                android:paddingTop="15dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="15dp"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
+
+            <TextView
+                android:id="@+id/textViewEmailError"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="75dp"
+                android:fontFamily="@font/helveticaltstdroman"
+                android:gravity="center_horizontal"
+                android:textColor="@color/error"
+                android:textSize="13sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextEmail" />
+
+            <!--suppress AndroidUnknownAttribute -->
+            <EditText
+                android:id="@+id/editTextPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:autofillHints="password"
+                android:background="@drawable/input"
+                android:drawableStart="@drawable/ic_lock"
+                android:drawablePadding="10dp"
+                android:fontFamily="@font/helveticaltstdroman"
+                android:afterTextChanged="@{(editable)->vModel.areFieldsEmpty(editable, codeField.PASSWORD_FIELD.code)}"
+                android:gravity="center_vertical"
+                android:hint="@string/contraseña"
+                android:inputType="textPassword"
+                android:maxLines="30"
+                android:paddingLeft="15dp"
+                android:paddingTop="15dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="15dp"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextEmail" />
+
+
+            <TextView
+                android:id="@+id/textViewPasswordError"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="75dp"
+                android:fontFamily="@font/helveticaltstdroman"
+                android:gravity="center_horizontal"
+                android:textColor="@color/error"
+                android:textSize="13sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextPassword" />
+
+            <ImageView
+                android:id="@+id/imageViewShow"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="35dp"
+                android:background="@drawable/ic_eye_line"
+                android:contentDescription="@string/ver_u_ocultar_contra"
+                app:layout_constraintBottom_toBottomOf="@+id/editTextPassword"
+                android:onClick="@{() -> vModel.showPassword(codeField.PASSWORD_FIELD.code)}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/editTextPassword" />
+
+            <!--suppress AndroidUnknownAttribute -->
+            <EditText
+                android:id="@+id/editTextPasswordConfirm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:autofillHints="confirm password"
+                android:background="@drawable/input"
+                android:drawableStart="@drawable/ic_lock"
+                android:drawablePadding="10dp"
+                android:fontFamily="@font/helveticaltstdroman"
+                android:afterTextChanged="@{(editable)->vModel.areFieldsEmpty(editable, codeField.PASSWORD_CONFIRM_FIELD.code)}"
+                android:gravity="center_vertical"
+                android:hint="@string/confirmar_contraseña"
+                android:inputType="textPassword"
+                android:maxLines="30"
+                android:paddingLeft="15dp"
+                android:paddingTop="15dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="15dp"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextPassword" />
+
+            <TextView
+                android:id="@+id/textViewPasswordConfirmError"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="75dp"
+                android:fontFamily="@font/helveticaltstdroman"
+                android:gravity="center_horizontal"
+                android:textColor="@color/error"
+                android:textSize="13sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextPasswordConfirm" />
+
+            <ImageView
+                android:id="@+id/imageViewShowConfirm"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="35dp"
+                android:background="@drawable/ic_eye_line"
+                android:contentDescription="@string/ocultar_confirmacion_contra"
+                android:onClick="@{() -> vModel.showPassword(codeField.PASSWORD_CONFIRM_FIELD.code)}"
+                app:layout_constraintBottom_toBottomOf="@+id/editTextPasswordConfirm"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/editTextPasswordConfirm" />
+
+            <CheckBox
+                android:id="@+id/checkbox_meat"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/checkbox"
+                android:textColor="@color/blue_dark"
+                app:layout_constraintStart_toStartOf="@+id/editTextPasswordConfirm"
+                app:layout_constraintTop_toBottomOf="@+id/textViewPasswordConfirmError" />
+
+            <TextView
+                android:id="@+id/textViewTerminos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="80dp"
+                android:layout_marginEnd="20dp"
+                android:text="@string/terminos_y_condiciones"
+                android:textColor="@color/blue_dark"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="@+id/editTextPasswordConfirm"
+                app:layout_constraintStart_toStartOf="@+id/editTextPasswordConfirm"
+                app:layout_constraintTop_toTopOf="@+id/checkbox_meat" />
+
+            <Button
+                android:id="@+id/buttonContinue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="35dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/boton_oscuro_disabled"
+                android:onClick="@{() -> vModel.navigateToLogIn()}"
+                android:fontFamily="@font/helveticaltsdbold"
+                android:text="@string/continuar"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="22sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewTerminos" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginBottom="10dp"
+            android:alpha="0.7"
+            android:fontFamily="@font/helveticaltsdbold"
+            android:gravity="center_horizontal"
+            android:text="@string/ya_tienes_cuenta"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/textViewLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="9dp"
+            android:fontFamily="@font/helveticaltsdbold"
+            android:onClick="@{() -> vModel.navigateToLogIn()}"
+            android:gravity="center_horizontal"
+            android:text="@string/IniciarSesion"
+            android:textColor="@color/blue_dark"
+            android:textSize="23sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
