@@ -18,4 +18,5 @@
     <color name="error">#944145</color>
     <color name="info">#006E9A</color>
     <color name="warning">#F0AD4E</color>
+    <color name="success">#0A9E39</color>
 </resources>

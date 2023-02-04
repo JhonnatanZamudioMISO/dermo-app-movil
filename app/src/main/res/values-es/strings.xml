@@ -30,4 +30,10 @@
     <string name="terminos_y_condiciones">Al registrarse, acepta los términos y condiciones de uso.</string>
     <string name="continuar">Regístrate</string>
     <string name="ya_tienes_cuenta">¿Ya tienes un cuenta?</string>
+    <string name="el_campo_esta_vacio">El campo está vacío</string>
+    <string name="espacio">" "</string>
+    <string name="ingrese_un_correo_valido">Ingrese un correo valido</string>
+    <string name="debe_ser_mayor_a">"Debe ser mayor a "</string>
+    <string name="caracteres">" caracteres"</string>
+    <string name="las_contrasenas_no_coinciden">Las contraseñas no coinciden</string>
 </resources>

@@ -1,5 +1,12 @@
 package com.miso.dermoapp.domain.models.enumerations
 
+
+import android.content.Context
+import android.content.res.Configuration
+import com.miso.dermoapp.R
+import com.miso.dermoapp.domain.models.utils.sharedPreferences
+import java.util.*
+
 /****
  * Project: DermoApp
  * From: com.miso.dermoapp.domain.models.enumerations
@@ -7,11 +14,31 @@ package com.miso.dermoapp.domain.models.enumerations
  * All rights reserved 2023.
  ****/
 
-enum class ResponseErrorField (val value: String){
-    DEFAULT(""),
-    ERROR_EMPTY("El campo está vacío"),
-    ERROR_INVALID_MAIL("Ingresa un correo válido"),
-    ERROR_LONG_CHARACTERS("Debe ser mayor a "),
-    ERROR_CHARACTERS(" caracteres"),
-    ERROR_PASSWORD_DOESNT_MATCH("Las contraseñas no coinciden")
+@Suppress("DEPRECATION")
+enum class ResponseErrorField(private val labelId: Int){
+    DEFAULT(R.string.espacio),
+    ERROR_EMPTY(R.string.el_campo_esta_vacio),
+    ERROR_INVALID_MAIL(R.string.ingrese_un_correo_valido),
+    ERROR_LONG_CHARACTERS(R.string.debe_ser_mayor_a),
+    ERROR_CHARACTERS(R.string.caracteres),
+    ERROR_PASSWORD_DOESNT_MATCH(R.string.las_contrasenas_no_coinciden);
+
+    lateinit var label: String
+        private set
+
+    companion object {
+        fun initialize(context: Context) {
+            val config = Configuration()
+            when (sharedPreferences().get(context,KeySharedPreferences.IDIOMA.value).toInt()) {
+                1 -> {
+                    config.locale = Locale("en")
+                }
+                2 -> {
+                    config.locale = Locale("es")
+                }
+            }
+            context.resources.updateConfiguration(config, null)
+            for (value in ResponseErrorField.values()) value.label = context.getString(value.labelId)
+        }
+    }
 }

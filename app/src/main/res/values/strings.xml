@@ -30,4 +30,10 @@
     <string name="terminos_y_condiciones">By registering, you agree to the terms and conditions of use.</string>
     <string name="continuar">Sign up</string>
     <string name="ya_tienes_cuenta">Already have an account?</string>
+    <string name="el_campo_esta_vacio">The field is emptyo</string>
+    <string name="espacio">" "</string>
+    <string name="ingrese_un_correo_valido">Enter a valid email</string>
+    <string name="debe_ser_mayor_a">"Must be greater than "</string>
+    <string name="caracteres">" characters"</string>
+    <string name="las_contrasenas_no_coinciden">Passwords do not match</string>
 </resources>

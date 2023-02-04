@@ -25,6 +25,7 @@ class SignUpViewModel : ViewModel() {
     val errorPassword = MutableLiveData<String>()
     val errorPasswordConfirm = MutableLiveData<String>()
     val buttonContinueDrawable = MutableLiveData<Int>()
+    val editTextEmailDrawable = MutableLiveData<Int>()
     val buttonContinueEnable = MutableLiveData<Boolean>()
     private val signUpUseCase = SignUpUseCase()
     val navigateToLogIn = MutableLiveData<Boolean>()
@@ -36,11 +37,13 @@ class SignUpViewModel : ViewModel() {
     private var validEmail = MutableLiveData<Int>()
     private var validPassword = MutableLiveData<Int>()
     private var validPasswordConfirm = MutableLiveData<Int>()
+
+
     init {
         navigateToLogIn.value = false
-        errorEmail.value = ResponseErrorField.DEFAULT.value
-        errorPassword.value = ResponseErrorField.DEFAULT.value
-        errorPasswordConfirm.value = ResponseErrorField.DEFAULT.value
+        errorEmail.value = ResponseErrorField.DEFAULT.label
+        errorPassword.value = ResponseErrorField.DEFAULT.label
+        errorPasswordConfirm.value = ResponseErrorField.DEFAULT.label
         userAccount.value = UserAccountData("","","","", "")
         passwordCounter.value = 0
         passwordConfirmCounter.value = 0
@@ -52,7 +55,7 @@ class SignUpViewModel : ViewModel() {
     fun areFieldsEmpty(text: Editable?, field: Int) {
 
         if (UtilsFields().areFieldsEmpty(text.toString())) {
-            setErrorText(field, ResponseErrorField.ERROR_EMPTY.value)
+            setErrorText(field, ResponseErrorField.ERROR_EMPTY.label)
             when (field) {
                 CodeField.EMAIL_FIELD.code -> validEmail.value = 0
                 CodeField.PASSWORD_FIELD.code -> validPassword.value = 0
@@ -60,7 +63,7 @@ class SignUpViewModel : ViewModel() {
             }
             changeEnableButton()
         } else {
-            setErrorText(field, ResponseErrorField.DEFAULT.value)
+            setErrorText(field, ResponseErrorField.DEFAULT.label)
             when (field) {
                 CodeField.EMAIL_FIELD.code -> {
                     userAccount.value!!.email = text.toString()
@@ -87,13 +90,13 @@ class SignUpViewModel : ViewModel() {
 
     private fun arePasswordsEqual(confirmPassword: String, password: String) {
         if (signUpUseCase.arePasswordsEqual(confirmPassword, password)) {
-            setErrorText(CodeField.PASSWORD_CONFIRM_FIELD.code, ResponseErrorField.DEFAULT.value)
+            setErrorText(CodeField.PASSWORD_CONFIRM_FIELD.code, ResponseErrorField.DEFAULT.label)
             validPasswordConfirm.value = 1
             changeEnableButton()
         } else {
             setErrorText(
                 CodeField.PASSWORD_CONFIRM_FIELD.code,
-                ResponseErrorField.ERROR_PASSWORD_DOESNT_MATCH.value
+                ResponseErrorField.ERROR_PASSWORD_DOESNT_MATCH.label
             )
             validPasswordConfirm.value = 0
             changeEnableButton()
@@ -102,13 +105,13 @@ class SignUpViewModel : ViewModel() {
 
     private fun isValidLong(text: Editable?, code: Int, minValue: Int, validItem: MutableLiveData<Int>) {
         if (UtilsFields().isValidLong(text.toString(), minValue)) {
-            setErrorText(code, ResponseErrorField.DEFAULT.value)
+            setErrorText(code, ResponseErrorField.DEFAULT.label)
             validItem.value = 1
             changeEnableButton()
         } else {
             setErrorText(
                 code,
-                ResponseErrorField.ERROR_LONG_CHARACTERS.value + minValue + ResponseErrorField.ERROR_CHARACTERS.value
+                ResponseErrorField.ERROR_LONG_CHARACTERS.label + minValue + ResponseErrorField.ERROR_CHARACTERS.label
             )
             validItem.value = 0
             changeEnableButton()
@@ -117,11 +120,13 @@ class SignUpViewModel : ViewModel() {
 
     private fun isValidEmail(text: Editable?) {
         if (UtilsFields().isValidEmail(text.toString())) {
-            setErrorText(CodeField.EMAIL_FIELD.code, ResponseErrorField.DEFAULT.value)
+            setErrorText(CodeField.EMAIL_FIELD.code, ResponseErrorField.DEFAULT.label)
+            editTextEmailDrawable.value = R.drawable.input_successful
             validEmail.value = 1
             changeEnableButton()
         } else {
-            setErrorText(CodeField.EMAIL_FIELD.code, ResponseErrorField.ERROR_INVALID_MAIL.value)
+            setErrorText(CodeField.EMAIL_FIELD.code, ResponseErrorField.ERROR_INVALID_MAIL.label)
+            editTextEmailDrawable.value = R.drawable.input_error
             validEmail.value = 0
             changeEnableButton()
         }
