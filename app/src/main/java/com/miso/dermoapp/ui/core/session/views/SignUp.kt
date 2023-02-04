@@ -25,6 +25,7 @@ import java.util.*
 class SignUp : AppCompatActivity() {
     private lateinit var viewModel: SignUpViewModel
     private lateinit var binding: ActivitySignUpBinding
+    private lateinit var loadingDialog: LoadingDialog
 
     @OptIn(DelicateCoroutinesApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,7 +36,8 @@ class SignUp : AppCompatActivity() {
         binding = setContentView(this, R.layout.activity_sign_up)
         binding.lifecycleOwner = this
         binding.vModel = viewModel
-        val loadingDialog = LoadingDialog(this, getString(R.string.creaandoTuCuenta))
+        loadingDialog = LoadingDialog(this, getString(R.string.creaandoTuCuenta))
+
 
         binding.imageViewBack.setOnClickListener {
             onBackPressed()
@@ -115,7 +117,18 @@ class SignUp : AppCompatActivity() {
 
         viewModel.resultCreateUser.observe(this, {
             when(it){
-                0->loadingDialog.succesful()
+                0->{
+                    loadingDialog.succesful()
+                    viewModel.delay()
+                }
+                1->{
+                    loadingDialog.warning()
+                    viewModel.delay()
+                }
+                2->{
+                    loadingDialog.error()
+                    viewModel.delayError()
+                }
             }
         })
 
@@ -127,6 +140,16 @@ class SignUp : AppCompatActivity() {
                     viewModel.snackBarTextWarning.postValue(getString(R.string.sin_conexion))
                 }
             }
+        })
+
+        viewModel.validateChangeScreen.observe(this, {
+            if (it)
+                goToWelcome()
+        })
+
+        viewModel.validateRefreshScreen.observe(this, {
+            if (it)
+                loadingDialog.hideLoadingDialog()
         })
 
         viewModel.snackBarTextWarning.observe(this, {
@@ -152,9 +175,11 @@ class SignUp : AppCompatActivity() {
     }
 
     private fun goToWelcome() {
+        loadingDialog.hideLoadingDialog()
         val intent = Intent(this@SignUp, Welcome::class.java)
         startActivity(intent)
         overridePendingTransition(R.anim.fadein, R.anim.fadeout)
         finish()
     }
+
 }

@@ -19,8 +19,7 @@ import com.miso.dermoapp.domain.models.utils.UtilsFields
 import com.miso.dermoapp.domain.models.utils.UtilsNetwork
 import com.miso.dermoapp.domain.models.utils.UtilsSecurity
 import com.miso.dermoapp.domain.useCases.SignUpUseCase
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 /****
  * Project: DermoApp
@@ -53,6 +52,8 @@ class SignUpViewModel (userRepository: UserRepository): ViewModel() {
     val snackBarNavigate = MutableLiveData<Int>()
     val snackBarTextWarning = MutableLiveData<String>()
     val resultCreateUser = MutableLiveData<Int>()
+    val validateChangeScreen = MutableLiveData<Boolean>()
+    val validateRefreshScreen = MutableLiveData<Boolean>()
 
 
     init {
@@ -68,6 +69,8 @@ class SignUpViewModel (userRepository: UserRepository): ViewModel() {
         validPasswordConfirm.value = 0
         validTerms.value = false
         snackBarNavigate.value = CodeSnackBarCloseAction.NONE.code
+        validateChangeScreen.value = false
+        validateRefreshScreen.value = false
     }
 
     fun createUser(){
@@ -77,6 +80,26 @@ class SignUpViewModel (userRepository: UserRepository): ViewModel() {
                 UtilsSecurity().cipherData(userAccount.value!!.password)!!
             )
             resultCreateUser.value = signUpUseCase.createUser(userInfo)
+        }
+    }
+
+    @OptIn(DelicateCoroutinesApi::class)
+    fun delay(){
+        GlobalScope.launch {
+            withContext(Dispatchers.IO) {
+                delay(1500)
+            }
+            validateChangeScreen.postValue(true)
+        }
+    }
+
+    @OptIn(DelicateCoroutinesApi::class)
+    fun delayError(){
+        GlobalScope.launch {
+            withContext(Dispatchers.IO) {
+                delay(1500)
+            }
+            validateRefreshScreen.postValue(true)
         }
     }
 
