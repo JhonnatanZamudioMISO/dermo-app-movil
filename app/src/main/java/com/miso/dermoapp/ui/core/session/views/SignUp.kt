@@ -10,6 +10,7 @@ import com.miso.dermoapp.ui.core.session.viewModels.SignUpViewModel
 import com.miso.dermoapp.ui.core.session.viewModels.SignUpViewModelFactory
 import kotlinx.coroutines.DelicateCoroutinesApi
 
+@Suppress("DEPRECATION")
 class SignUp : AppCompatActivity() {
     private lateinit var viewModel: SignUpViewModel
     private lateinit var binding: ActivitySignUpBinding
@@ -21,5 +22,9 @@ class SignUp : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_sign_up)
         binding.lifecycleOwner = this
         binding.vModel = viewModel
+
+        binding.imageViewBack.setOnClickListener {
+            onBackPressed()
+        }
     }
 }
