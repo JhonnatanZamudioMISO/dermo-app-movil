@@ -1,5 +1,9 @@
 package com.miso.dermoapp.ui.core.session.viewModels
 
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import kotlinx.coroutines.DelicateCoroutinesApi
+
 /****
  * Project: DermoApp
  * From: com.miso.dermoapp.ui.core.session.viewModels
@@ -7,5 +11,22 @@ package com.miso.dermoapp.ui.core.session.viewModels
  * All rights reserved 2023.
  ****/
 
-class SignUpViewModel {
+class SignUpViewModel : ViewModel() {
+
+}
+
+@DelicateCoroutinesApi
+@Suppress("UNCHECKED_CAST")
+class SignUpViewModelFactory: ViewModelProvider.NewInstanceFactory() {
+    companion object {
+        @Volatile
+        private var instance: SignUpViewModelFactory? = null
+        fun getInstance(): SignUpViewModelFactory = instance ?: synchronized(this) {
+            instance ?: SignUpViewModelFactory()
+        }
+    }
+
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        return SignUpViewModel() as T
+    }
 }
