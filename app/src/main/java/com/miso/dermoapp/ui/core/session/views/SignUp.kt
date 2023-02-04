@@ -14,6 +14,7 @@ import com.miso.dermoapp.domain.models.enumerations.ResponseErrorField
 import com.miso.dermoapp.ui.core.home.views.Welcome
 import com.miso.dermoapp.ui.core.session.viewModels.SignUpViewModel
 import com.miso.dermoapp.ui.core.session.viewModels.SignUpViewModelFactory
+import com.miso.dermoapp.ui.core.utils.LoadingDialog
 import kotlinx.coroutines.DelicateCoroutinesApi
 import java.util.*
 
@@ -31,6 +32,7 @@ class SignUp : AppCompatActivity() {
         binding = setContentView(this, R.layout.activity_sign_up)
         binding.lifecycleOwner = this
         binding.vModel = viewModel
+        val loadingDialog = LoadingDialog(this, getString(R.string.creaandoTuCuenta))
 
         binding.imageViewBack.setOnClickListener {
             onBackPressed()
@@ -99,9 +101,25 @@ class SignUp : AppCompatActivity() {
         })
 
         viewModel.navigateToLogIn.observe(this, {
-            if (it == true)
-                goToWelcome()
+            if (it)
+                loadingDialog.startLoadingDialog()
+            /*if (viewModel.checkOnline(this))
+                viewModel.searchUser()
+            else {
+                viewModel.snackBarAction.value = 0
+            }*/
         })
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        val intent = Intent(
+            this@SignUp,
+            Welcome::class.java
+        )
+        startActivity(intent)
+        overridePendingTransition(R.anim.right_in, R.anim.right_out)
+        finish()
     }
 
     private fun goToWelcome() {

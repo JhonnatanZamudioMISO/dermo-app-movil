@@ -36,4 +36,5 @@
     <string name="debe_ser_mayor_a">"Must be greater than "</string>
     <string name="caracteres">" characters"</string>
     <string name="las_contrasenas_no_coinciden">Passwords do not match</string>
+    <string name="creaandoTuCuenta">Creating your account…</string>
 </resources>
