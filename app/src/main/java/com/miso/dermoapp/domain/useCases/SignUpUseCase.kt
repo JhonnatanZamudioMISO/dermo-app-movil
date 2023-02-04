@@ -23,16 +23,12 @@ class SignUpUseCase(private val userRepository: UserRepository) {
     }
 
     suspend fun createUser(user: RequestUser): Int{
-        /*val resultUser = userRepository.insertUserRemote(user)
-        if (resultUser.first().message!! == "El usuario fue creado exitosamente"){
-            if (user.statusUser== CodeStatusUser.ENABLED_USER.code){
-                return 0
-            } else if (user.statusUser== CodeStatusUser.UNVALIDATED_USER.code){
-                return 3
-            }
-        } else if (resultUser.first().message!! == "Email erroneo...") {
-            return 4
-        }*/
-        return 5
+        val resultUser = userRepository.insertUserRemote(user)
+        if (resultUser.description == "Cuenta creada exitosamente"){
+            return 0
+        } else if (resultUser.description == "El correo ingresado ya esta registrado") {
+            return 1
+        }
+        return 2
     }
 }
