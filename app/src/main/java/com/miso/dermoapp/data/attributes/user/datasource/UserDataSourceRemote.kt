@@ -2,6 +2,7 @@ package com.miso.dermoapp.data.attributes.user.datasource
 
 import com.miso.dermoapp.data.attributes.user.entitie.RequestUser
 import com.miso.dermoapp.data.attributes.user.entitie.ResponseUser
+import com.miso.dermoapp.data.retrofit.RetrofitHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
