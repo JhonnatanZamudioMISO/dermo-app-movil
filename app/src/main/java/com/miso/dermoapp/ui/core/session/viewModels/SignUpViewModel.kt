@@ -27,6 +27,7 @@ class SignUpViewModel : ViewModel() {
     val buttonContinueDrawable = MutableLiveData<Int>()
     val editTextEmailDrawable = MutableLiveData<Int>()
     val editTextPasswordDrawable = MutableLiveData<Int>()
+    val editTextPasswordConfirmDrawable = MutableLiveData<Int>()
     val buttonContinueEnable = MutableLiveData<Boolean>()
     private val signUpUseCase = SignUpUseCase()
     val navigateToLogIn = MutableLiveData<Boolean>()
@@ -93,6 +94,7 @@ class SignUpViewModel : ViewModel() {
         if (signUpUseCase.arePasswordsEqual(confirmPassword, password)) {
             setErrorText(CodeField.PASSWORD_CONFIRM_FIELD.code, ResponseErrorField.DEFAULT.label)
             validPasswordConfirm.value = 1
+            editTextPasswordConfirmDrawable.value = R.drawable.input_successful
             changeEnableButton()
         } else {
             setErrorText(
@@ -100,6 +102,7 @@ class SignUpViewModel : ViewModel() {
                 ResponseErrorField.ERROR_PASSWORD_DOESNT_MATCH.label
             )
             validPasswordConfirm.value = 0
+            editTextPasswordConfirmDrawable.value = R.drawable.input_error
             changeEnableButton()
         }
     }
