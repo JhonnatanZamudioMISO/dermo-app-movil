@@ -39,6 +39,7 @@ class SignUpViewModel : ViewModel() {
     private var validEmail = MutableLiveData<Int>()
     private var validPassword = MutableLiveData<Int>()
     private var validPasswordConfirm = MutableLiveData<Int>()
+    private var validTerms= MutableLiveData<Boolean>()
 
 
     init {
@@ -52,10 +53,15 @@ class SignUpViewModel : ViewModel() {
         validEmail.value = 0
         validPassword.value = 0
         validPasswordConfirm.value = 0
+        validTerms.value = false
+    }
+
+    fun setTerms(value: Boolean){
+        validTerms.value = value
+        changeEnableButton()
     }
 
     fun areFieldsEmpty(text: Editable?, field: Int) {
-
         if (UtilsFields().areFieldsEmpty(text.toString())) {
             setErrorText(field, ResponseErrorField.ERROR_EMPTY.label)
             when (field) {
@@ -142,7 +148,8 @@ class SignUpViewModel : ViewModel() {
         if (signUpUseCase.changeEnableButton(
                 validEmail.value!!,
                 validPassword.value!!,
-                validPasswordConfirm.value!!
+                validPasswordConfirm.value!!,
+                validTerms.value!!
             )
         ) {
             buttonContinueDrawable.value = R.drawable.boton_oscuro

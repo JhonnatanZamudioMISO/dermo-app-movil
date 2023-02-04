@@ -10,9 +10,9 @@ package com.miso.dermoapp.domain.useCases
 class SignUpUseCase {
 
     fun changeEnableButton(
-        email: Int, password: Int, confirmPassword: Int,
+        email: Int, password: Int, confirmPassword: Int, terms: Boolean
     ): Boolean {
-        return email == 1 && password == 1 && confirmPassword == 1
+        return email == 1 && password == 1 && confirmPassword == 1 && terms == true
     }
 
     fun arePasswordsEqual(password: String, confirmPassword: String): Boolean {

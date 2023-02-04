@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.method.PasswordTransformationMethod
+import android.widget.CheckBox
 import androidx.databinding.DataBindingUtil.setContentView
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
@@ -33,6 +34,12 @@ class SignUp : AppCompatActivity() {
 
         binding.imageViewBack.setOnClickListener {
             onBackPressed()
+        }
+
+        binding.checkboxMeat.setOnClickListener {
+            if (it is CheckBox) {
+                viewModel.setTerms(it.isChecked)
+            }
         }
 
         viewModel.errorEmail.observe(this, {
