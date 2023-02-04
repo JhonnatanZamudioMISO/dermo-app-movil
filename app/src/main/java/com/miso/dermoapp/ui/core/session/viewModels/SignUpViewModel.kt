@@ -1,5 +1,6 @@
 package com.miso.dermoapp.ui.core.session.viewModels
 
+import android.content.Context
 import android.text.Editable
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,8 +9,10 @@ import com.miso.dermoapp.R
 import com.miso.dermoapp.domain.models.entities.UserAccountData
 import com.miso.dermoapp.domain.models.enumerations.CodeField
 import com.miso.dermoapp.domain.models.enumerations.CodeLong
+import com.miso.dermoapp.domain.models.enumerations.CodeSnackBarCloseAction
 import com.miso.dermoapp.domain.models.enumerations.ResponseErrorField
 import com.miso.dermoapp.domain.models.utils.UtilsFields
+import com.miso.dermoapp.domain.models.utils.UtilsNetwork
 import com.miso.dermoapp.domain.useCases.SignUpUseCase
 import kotlinx.coroutines.DelicateCoroutinesApi
 
@@ -40,6 +43,9 @@ class SignUpViewModel : ViewModel() {
     private var validPassword = MutableLiveData<Int>()
     private var validPasswordConfirm = MutableLiveData<Int>()
     private var validTerms= MutableLiveData<Boolean>()
+    val snackBarAction = MutableLiveData<Int>()
+    val snackBarNavigate = MutableLiveData<Int>()
+    val snackBarTextWarning = MutableLiveData<String>()
 
 
     init {
@@ -54,6 +60,7 @@ class SignUpViewModel : ViewModel() {
         validPassword.value = 0
         validPasswordConfirm.value = 0
         validTerms.value = false
+        snackBarNavigate.value = CodeSnackBarCloseAction.NONE.code
     }
 
     fun setTerms(value: Boolean){
@@ -184,8 +191,9 @@ class SignUpViewModel : ViewModel() {
             }
         }
     }
-
-
+    fun checkOnline(context: Context): Boolean {
+        return UtilsNetwork().isOnline(context)
+    }
 }
 
 @DelicateCoroutinesApi

@@ -73,7 +73,8 @@ class Splash : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
                 it,
                 binding.layoutContain,
                 TypeSnackBar.CLOSE_APP.code,
-                this
+                this,
+                TypeSnackBar.CLOSE_APP.code
             )
         })
 

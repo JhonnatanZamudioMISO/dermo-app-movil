@@ -10,10 +10,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import com.miso.dermoapp.R
 import com.miso.dermoapp.databinding.ActivitySignUpBinding
+import com.miso.dermoapp.domain.models.enumerations.CodeSnackBarCloseAction
 import com.miso.dermoapp.domain.models.enumerations.ResponseErrorField
+import com.miso.dermoapp.domain.models.enumerations.TypeSnackBar
 import com.miso.dermoapp.ui.core.home.views.Welcome
 import com.miso.dermoapp.ui.core.session.viewModels.SignUpViewModel
 import com.miso.dermoapp.ui.core.session.viewModels.SignUpViewModelFactory
+import com.miso.dermoapp.ui.core.utils.CustomSnackBar
 import com.miso.dermoapp.ui.core.utils.LoadingDialog
 import kotlinx.coroutines.DelicateCoroutinesApi
 import java.util.*
@@ -103,11 +106,31 @@ class SignUp : AppCompatActivity() {
         viewModel.navigateToLogIn.observe(this, {
             if (it)
                 loadingDialog.startLoadingDialog()
-            /*if (viewModel.checkOnline(this))
-                viewModel.searchUser()
+            if (viewModel.checkOnline(this))
+                //viewModel.searchUser()
             else {
                 viewModel.snackBarAction.value = 0
-            }*/
+            }
+        })
+
+        viewModel.snackBarAction.observe(this, {
+            loadingDialog.hideLoadingDialog()
+            when (it){
+                0 -> {
+                    viewModel.snackBarNavigate.postValue(CodeSnackBarCloseAction.NONE.code)
+                    viewModel.snackBarTextWarning.postValue(getString(R.string.sin_conexion))
+                }
+            }
+        })
+
+        viewModel.snackBarTextWarning.observe(this, {
+            CustomSnackBar().showSnackBar(
+                it,
+                binding.constraintLayout,
+                TypeSnackBar.WARNING.code,
+                this,
+                viewModel.snackBarNavigate.value!!
+            )
         })
     }
 
