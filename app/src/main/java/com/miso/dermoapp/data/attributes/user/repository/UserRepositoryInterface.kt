@@ -11,5 +11,5 @@ import com.miso.dermoapp.data.attributes.user.entitie.ResponseUser
  ****/
 
 interface UserRepositoryInterface {
-    suspend fun insertUserRemote(requestUsers: RequestUser): List<ResponseUser>
+    suspend fun insertUserRemote(requestUsers: RequestUser): ResponseUser
 }

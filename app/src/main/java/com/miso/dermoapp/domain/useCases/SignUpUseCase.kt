@@ -1,6 +1,7 @@
 package com.miso.dermoapp.domain.useCases
 
 import com.miso.dermoapp.data.attributes.user.entitie.RequestUser
+import com.miso.dermoapp.data.attributes.user.repository.UserRepository
 
 /****
  * Project: DermoApp
@@ -22,7 +23,7 @@ class SignUpUseCase(private val userRepository: UserRepository) {
     }
 
     suspend fun createUser(user: RequestUser): Int{
-        val resultUser = userRepository.insertUserRemote(user)
+        /*val resultUser = userRepository.insertUserRemote(user)
         if (resultUser.first().message!! == "El usuario fue creado exitosamente"){
             if (user.statusUser== CodeStatusUser.ENABLED_USER.code){
                 return 0
@@ -31,7 +32,7 @@ class SignUpUseCase(private val userRepository: UserRepository) {
             }
         } else if (resultUser.first().message!! == "Email erroneo...") {
             return 4
-        }
+        }*/
         return 5
     }
 }

@@ -1,6 +1,8 @@
 package com.miso.dermoapp.domain.injectionOfDependencies
 
 import android.content.Context
+import com.miso.dermoapp.data.attributes.user.datasource.UserDataSourceRemote
+import com.miso.dermoapp.data.attributes.user.repository.UserRepository
 import com.miso.dermoapp.data.attributes.version.datasource.VersionDataSourceLocal
 import com.miso.dermoapp.data.attributes.version.repository.VersionRepository
 import com.miso.dermoapp.data.room.DermoAppDB
@@ -17,5 +19,10 @@ object Injection {
         val database = DermoAppDB.getInstance(context)
         val splashScreenDataSource = VersionDataSourceLocal.getInstance(database.versionDAO())
         return VersionRepository.getInstance(splashScreenDataSource)
+    }
+
+    fun providerUserRepository(): UserRepository {
+        val userDataSourceRemote = UserDataSourceRemote()
+        return UserRepository.getInstance(userDataSourceRemote)
     }
 }

@@ -6,7 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.miso.dermoapp.R
-import com.miso.dermoapp.data.attributes.user.entitie.RequestUser
+import com.miso.dermoapp.data.attributes.user.repository.UserRepository
+import com.miso.dermoapp.domain.injectionOfDependencies.Injection
 import com.miso.dermoapp.domain.models.entities.UserAccountData
 import com.miso.dermoapp.domain.models.enumerations.CodeField
 import com.miso.dermoapp.domain.models.enumerations.CodeLong
@@ -14,7 +15,6 @@ import com.miso.dermoapp.domain.models.enumerations.CodeSnackBarCloseAction
 import com.miso.dermoapp.domain.models.enumerations.ResponseErrorField
 import com.miso.dermoapp.domain.models.utils.UtilsFields
 import com.miso.dermoapp.domain.models.utils.UtilsNetwork
-import com.miso.dermoapp.domain.models.utils.UtilsSecurity
 import com.miso.dermoapp.domain.useCases.SignUpUseCase
 import kotlinx.coroutines.DelicateCoroutinesApi
 
@@ -25,7 +25,7 @@ import kotlinx.coroutines.DelicateCoroutinesApi
  * All rights reserved 2023.
  ****/
 
-class SignUpViewModel : ViewModel() {
+class SignUpViewModel (userRepository: UserRepository): ViewModel() {
     val errorEmail = MutableLiveData<String>()
     val errorPassword = MutableLiveData<String>()
     val errorPasswordConfirm = MutableLiveData<String>()
@@ -34,7 +34,7 @@ class SignUpViewModel : ViewModel() {
     val editTextPasswordDrawable = MutableLiveData<Int>()
     val editTextPasswordConfirmDrawable = MutableLiveData<Int>()
     val buttonContinueEnable = MutableLiveData<Boolean>()
-    private val signUpUseCase = SignUpUseCase()
+    private val signUpUseCase = SignUpUseCase(userRepository)
     val navigateToLogIn = MutableLiveData<Boolean>()
     var userAccount = MutableLiveData<UserAccountData>()
     var showPassword = MutableLiveData<Boolean>()
@@ -65,8 +65,8 @@ class SignUpViewModel : ViewModel() {
         snackBarNavigate.value = CodeSnackBarCloseAction.NONE.code
     }
 
-    suspend fun createUser(){
-        val userInfo = RequestUser(
+    fun createUser(){
+        /*val userInfo = RequestUser(
             userAccount.value!!.email,
             UtilsSecurity().cipherData(userAccount.value!!.password)!!)
         val resultUser = signUpUseCase.createUser(userInfo)
@@ -88,7 +88,7 @@ class SignUpViewModel : ViewModel() {
             navigateToDashboard.value = true
         } else {
             snackBarAction.value=resultUser
-        }
+        }*/
     }
 
     fun setTerms(value: Boolean){
@@ -226,16 +226,22 @@ class SignUpViewModel : ViewModel() {
 
 @DelicateCoroutinesApi
 @Suppress("UNCHECKED_CAST")
-class SignUpViewModelFactory: ViewModelProvider.NewInstanceFactory() {
+class SignUpViewModelFactory(
+    private val userRepository: UserRepository
+) : ViewModelProvider.NewInstanceFactory() {
+
     companion object {
         @Volatile
         private var instance: SignUpViewModelFactory? = null
-        fun getInstance(): SignUpViewModelFactory = instance ?: synchronized(this) {
-            instance ?: SignUpViewModelFactory()
-        }
+        fun getInstance(): SignUpViewModelFactory =
+            instance ?: synchronized(this) {
+                instance ?: SignUpViewModelFactory(
+                    Injection.providerUserRepository()
+                )
+            }
     }
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return SignUpViewModel() as T
+        return SignUpViewModel(userRepository) as T
     }
 }
