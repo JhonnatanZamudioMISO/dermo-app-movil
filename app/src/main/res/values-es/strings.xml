@@ -27,4 +27,7 @@
     <string name="ver_u_ocultar_contra">Icono para ocultar contraseña</string>
     <string name="confirmar_contraseña">Confirmar contraseña</string>
     <string name="ocultar_confirmacion_contra">Icono para mostrar contraseña</string>
+    <string name="terminos_y_condiciones">Al registrarse, acepta los términos y condiciones de uso.</string>
+    <string name="continuar">Regístrate</string>
+    <string name="ya_tienes_cuenta">¿Ya tienes un cuenta?</string>
 </resources>
