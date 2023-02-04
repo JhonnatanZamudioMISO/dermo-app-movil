@@ -107,7 +107,7 @@ class SignUp : AppCompatActivity() {
             if (it)
                 loadingDialog.startLoadingDialog()
             if (viewModel.checkOnline(this))
-                //viewModel.searchUser()
+                viewModel.createUser()
             else {
                 viewModel.snackBarAction.value = 0
             }

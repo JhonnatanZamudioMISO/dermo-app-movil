@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.miso.dermoapp.R
+import com.miso.dermoapp.data.attributes.user.entitie.RequestUser
 import com.miso.dermoapp.domain.models.entities.UserAccountData
 import com.miso.dermoapp.domain.models.enumerations.CodeField
 import com.miso.dermoapp.domain.models.enumerations.CodeLong
@@ -13,6 +14,7 @@ import com.miso.dermoapp.domain.models.enumerations.CodeSnackBarCloseAction
 import com.miso.dermoapp.domain.models.enumerations.ResponseErrorField
 import com.miso.dermoapp.domain.models.utils.UtilsFields
 import com.miso.dermoapp.domain.models.utils.UtilsNetwork
+import com.miso.dermoapp.domain.models.utils.UtilsSecurity
 import com.miso.dermoapp.domain.useCases.SignUpUseCase
 import kotlinx.coroutines.DelicateCoroutinesApi
 
@@ -61,6 +63,32 @@ class SignUpViewModel : ViewModel() {
         validPasswordConfirm.value = 0
         validTerms.value = false
         snackBarNavigate.value = CodeSnackBarCloseAction.NONE.code
+    }
+
+    suspend fun createUser(){
+        val userInfo = RequestUser(
+            userAccount.value!!.email,
+            UtilsSecurity().cipherData(userAccount.value!!.password)!!)
+        val resultUser = configurationUseCase.createUser(userInfo)
+        if (resultUser == 0){
+            val userLocal = User(
+                0,
+                userAccount.value!!.email,
+                true,
+                0,
+                userAccount.value!!.email,
+                userAccount.value!!.name,
+                typeDocumentsList[typeDocumentSelectedPosition.value!!].valor,
+                userAccount.value!!.identification,
+                userAccount.value!!.phone.replace(" ",""),
+                countriesList[countrySelectedPosition.value!!].pais,
+                userAccount.value!!.city
+            )
+            configurationUseCase.insertUserLocal(userLocal)
+            navigateToDashboard.value = true
+        } else {
+            snackBarAction.value=resultUser
+        }
     }
 
     fun setTerms(value: Boolean){
