@@ -2,6 +2,7 @@ package com.miso.dermoapp.ui.core.session.views
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.method.PasswordTransformationMethod
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.miso.dermoapp.R
@@ -26,9 +27,37 @@ class SignUp : AppCompatActivity() {
         binding.imageViewBack.setOnClickListener {
             onBackPressed()
         }
+
         viewModel.errorEmail.observe(this, {
             binding.textViewEmailError.text = it
         })
 
+        viewModel.errorPassword.observe(this, {
+            binding.textViewPasswordError.text = it
+        })
+
+        viewModel.errorPasswordConfirm.observe(this, {
+            binding.textViewPasswordConfirmError.text = it
+        })
+
+        viewModel.buttonContinueDrawable.observe(this, {
+            binding.buttonContinue.setBackgroundResource(it)
+        })
+
+        viewModel.buttonContinueEnable.observe(this, {
+            binding.buttonContinue.isEnabled = it
+        })
+
+        viewModel.showPassword.observe(this, {
+            if (it){
+                binding.editTextPassword.transformationMethod =
+                    PasswordTransformationMethod()
+                binding.imageViewShow.setBackgroundResource(R.drawable.ic_eye_line)
+            } else {
+                binding.editTextPassword.transformationMethod = null
+                binding.imageViewShow.setBackgroundResource(R.drawable.ic_eye)
+            }
+            binding.editTextPassword.setSelection(binding.editTextPassword.length())
+        })
     }
 }
