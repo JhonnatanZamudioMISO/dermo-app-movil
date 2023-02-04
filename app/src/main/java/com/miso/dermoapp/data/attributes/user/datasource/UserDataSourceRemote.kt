@@ -2,6 +2,7 @@ package com.miso.dermoapp.data.attributes.user.datasource
 
 import com.miso.dermoapp.data.attributes.user.entitie.RequestUser
 import com.miso.dermoapp.data.attributes.user.entitie.ResponseUser
+import com.miso.dermoapp.data.attributes.user.source.UserApiPatient
 import com.miso.dermoapp.data.retrofit.RetrofitHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -16,7 +17,7 @@ import kotlinx.coroutines.withContext
 class UserDataSourceRemote {
 
     private val retrofit = RetrofitHelper.getRetrofit()
-    private val response = retrofit.create(UserApiClient::class.java)
+    private val response = retrofit.create(UserApiPatient::class.java)
 
     suspend fun insertUser(requestUsers: RequestUser): ResponseUser {
         return withContext(Dispatchers.IO) {
