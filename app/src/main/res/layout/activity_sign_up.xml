@@ -7,6 +7,9 @@
         <variable
             name="vModel"
             type="com.miso.dermoapp.ui.core.session.viewModels.SignUpViewModel" />
+        <variable
+            name="codeField"
+            type="com.miso.dermoapp.domain.models.enumerations.CodeField" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -62,6 +65,7 @@
                 android:drawableStart="@drawable/ic_mail"
                 android:drawablePadding="10dp"
                 android:fontFamily="@font/helveticaltstdroman"
+                android:afterTextChanged="@{(editable)->vModel.areFieldsEmpty(editable, codeField.EMAIL_FIELD.code)}"
                 android:gravity="center_vertical"
                 android:hint="@string/correo_electronico"
                 android:inputType="textEmailAddress"
@@ -101,6 +105,7 @@
                 android:drawableStart="@drawable/ic_lock"
                 android:drawablePadding="10dp"
                 android:fontFamily="@font/helveticaltstdroman"
+                android:afterTextChanged="@{(editable)->vModel.areFieldsEmpty(editable, codeField.PASSWORD_FIELD.code)}"
                 android:gravity="center_vertical"
                 android:hint="@string/contraseña"
                 android:inputType="textPassword"
@@ -136,6 +141,7 @@
                 android:background="@drawable/ic_eye_line"
                 android:contentDescription="@string/ver_u_ocultar_contra"
                 app:layout_constraintBottom_toBottomOf="@+id/editTextPassword"
+                android:onClick="@{() -> vModel.showPassword(codeField.PASSWORD_FIELD.code)}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/editTextPassword" />
 
@@ -152,6 +158,7 @@
                 android:drawableStart="@drawable/ic_lock"
                 android:drawablePadding="10dp"
                 android:fontFamily="@font/helveticaltstdroman"
+                android:afterTextChanged="@{(editable)->vModel.areFieldsEmpty(editable, codeField.PASSWORD_CONFIRM_FIELD.code)}"
                 android:gravity="center_vertical"
                 android:hint="@string/confirmar_contraseña"
                 android:inputType="textPassword"
@@ -185,6 +192,7 @@
                 android:layout_marginEnd="35dp"
                 android:background="@drawable/ic_eye_line"
                 android:contentDescription="@string/ocultar_confirmacion_contra"
+                android:onClick="@{() -> vModel.showPassword(codeField.PASSWORD_CONFIRM_FIELD.code)}"
                 app:layout_constraintBottom_toBottomOf="@+id/editTextPasswordConfirm"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/editTextPasswordConfirm" />
@@ -222,6 +230,7 @@
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/boton_oscuro_disabled"
+                android:onClick="@{() -> vModel.navigateToLogIn()}"
                 android:fontFamily="@font/helveticaltsdbold"
                 android:text="@string/continuar"
                 android:textAllCaps="false"
@@ -253,6 +262,7 @@
             android:layout_marginEnd="30dp"
             android:layout_marginBottom="9dp"
             android:fontFamily="@font/helveticaltsdbold"
+            android:onClick="@{() -> vModel.navigateToLogIn()}"
             android:gravity="center_horizontal"
             android:text="@string/IniciarSesion"
             android:textColor="@color/blue_dark"

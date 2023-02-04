@@ -26,5 +26,9 @@ class SignUp : AppCompatActivity() {
         binding.imageViewBack.setOnClickListener {
             onBackPressed()
         }
+        viewModel.errorEmail.observe(this, {
+            binding.textViewEmailError.text = it
+        })
+
     }
 }
