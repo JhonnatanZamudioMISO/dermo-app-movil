@@ -18,8 +18,8 @@
         <item name="android:windowBackground">@drawable/background_lanch</item>
     </style>
 
-    <style name="CustomDialog" parent="android:Theme.Dialog">
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
+    <style name="CustomDialog" parent="android:Theme.NoTitleBar.Fullscreen">
+        <item name="android:paddingTop">50dp</item>
+        <item name="android:windowBackground">@color/black_85</item>
     </style>
 </resources>

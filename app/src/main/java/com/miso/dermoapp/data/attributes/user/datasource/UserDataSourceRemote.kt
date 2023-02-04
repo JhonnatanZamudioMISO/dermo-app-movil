@@ -6,6 +6,7 @@ import com.miso.dermoapp.data.attributes.user.source.UserApiPatient
 import com.miso.dermoapp.data.retrofit.RetrofitHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.util.*
 
 /****
  * Project: DermoApp
@@ -21,7 +22,7 @@ class UserDataSourceRemote {
 
     suspend fun insertUser(requestUsers: RequestUser): ResponseUser {
         return withContext(Dispatchers.IO) {
-            response.insertUser(requestUsers).body() ?: ResponseUser("Error inesperado","")
+            response.insertUser(UUID.randomUUID().toString(),requestUsers,).body() ?: ResponseUser("Error inesperado","")
         }
     }
 }

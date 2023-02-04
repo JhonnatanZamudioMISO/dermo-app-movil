@@ -52,6 +52,7 @@ class SignUpViewModel (userRepository: UserRepository): ViewModel() {
     val snackBarAction = MutableLiveData<Int>()
     val snackBarNavigate = MutableLiveData<Int>()
     val snackBarTextWarning = MutableLiveData<String>()
+    val resultCreateUser = MutableLiveData<Int>()
 
 
     init {
@@ -75,17 +76,7 @@ class SignUpViewModel (userRepository: UserRepository): ViewModel() {
                 userAccount.value!!.email,
                 UtilsSecurity().cipherData(userAccount.value!!.password)!!
             )
-            val resultUser = signUpUseCase.createUser(userInfo)
-            if (resultUser == 0) {
-                //navigateToDashboard.value = true
-                println("SE CREO EL USUARIO CORRECTAMENTE")
-            } else if (resultUser == 1) {
-                //snackBarAction.value=resultUser
-                println("EL CORREO YA TIENE UNA CUENTA ASOCIADA")
-            } else if (resultUser == 2) {
-                //snackBarAction.value=resultUser
-                println("ERRORCONSUMO: $resultUser")
-            }
+            resultCreateUser.value = signUpUseCase.createUser(userInfo)
         }
     }
 

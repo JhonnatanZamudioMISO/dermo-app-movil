@@ -10,6 +10,6 @@ import com.google.gson.annotations.SerializedName
  ****/
 
 data class RequestUser(
-    @SerializedName("account") val account: String,
-    @SerializedName("password_user") val passwordUser: String
+    @SerializedName("correo_electronico") val account: String,
+    @SerializedName("contrasena") val passwordUser: String
 )

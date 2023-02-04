@@ -13,7 +13,6 @@ import retrofit2.http.*
  ****/
 
 interface UserApiPatient {
-    @Headers("Content-Type: application/json")
     @POST("account/create")
-    suspend fun insertUser(@Body requestUser: RequestUser): Response<ResponseUser>
+    suspend fun insertUser(@Header("dermo-traceability-id") uuid: String,@Body requestUser: RequestUser): Response<ResponseUser>
 }

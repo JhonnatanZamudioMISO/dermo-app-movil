@@ -104,12 +104,18 @@ class SignUp : AppCompatActivity() {
         })
 
         viewModel.navigateToLogIn.observe(this, {
-            if (it)
+            if (it) {
                 loadingDialog.startLoadingDialog()
-            if (viewModel.checkOnline(this))
-                viewModel.createUser()
-            else {
-                viewModel.snackBarAction.value = 0
+                if (viewModel.checkOnline(this))
+                    viewModel.createUser()
+                else
+                    viewModel.snackBarAction.value = 0
+            }
+        })
+
+        viewModel.resultCreateUser.observe(this, {
+            when(it){
+                0->loadingDialog.succesful()
             }
         })
 

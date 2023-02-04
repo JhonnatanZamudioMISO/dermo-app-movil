@@ -19,6 +19,7 @@ import com.miso.dermoapp.R
 
 class LoadingDialog (val context: Context, val text: String) {
     private var dialog: AlertDialog? = null
+    private var dialogSuccess: AlertDialog? = null
 
     @SuppressLint("MissingInflatedId")
     fun startLoadingDialog() {
@@ -45,5 +46,16 @@ class LoadingDialog (val context: Context, val text: String) {
 
     fun hideLoadingDialog(){
         dialog?.dismiss()
+    }
+
+    fun succesful() {
+        hideLoadingDialog()
+        val builder = AlertDialog.Builder(context, R.style.CustomDialog)
+        val factory = LayoutInflater.from(context)
+        val loadingDialogView : View = factory.inflate(R.layout.dialog_success, null)
+        builder.setView(loadingDialogView)
+        builder.setCancelable(false)
+        dialog = builder.create()
+        dialog!!.show()
     }
 }
