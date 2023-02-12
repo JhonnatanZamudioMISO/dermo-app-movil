@@ -2,6 +2,7 @@ package com.miso.dermoapp.ui.core.session.views
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.method.PasswordTransformationMethod
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
@@ -35,6 +36,26 @@ class LogIn : AppCompatActivity() {
 
         viewModel.editTextEmailDrawable.observe(this, {
             binding.editTextEmail.setBackgroundResource(it)
+        })
+
+        viewModel.errorPassword.observe(this, {
+            binding.textViewPasswordError.text = it
+        })
+
+        viewModel.editTextPasswordDrawable.observe(this, {
+            binding.editTextPassword.setBackgroundResource(it)
+        })
+
+        viewModel.showPassword.observe(this, {
+            if (it){
+                binding.editTextPassword.transformationMethod =
+                    PasswordTransformationMethod()
+                binding.imageViewShow.setBackgroundResource(R.drawable.ic_eye_line)
+            } else {
+                binding.editTextPassword.transformationMethod = null
+                binding.imageViewShow.setBackgroundResource(R.drawable.ic_eye)
+            }
+            binding.editTextPassword.setSelection(binding.editTextPassword.length())
         })
 
     }

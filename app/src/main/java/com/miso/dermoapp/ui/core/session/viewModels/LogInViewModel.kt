@@ -9,6 +9,7 @@ import com.miso.dermoapp.data.attributes.user.repository.UserRepository
 import com.miso.dermoapp.domain.injectionOfDependencies.Injection
 import com.miso.dermoapp.domain.models.entities.UserAccountData
 import com.miso.dermoapp.domain.models.enumerations.CodeField
+import com.miso.dermoapp.domain.models.enumerations.CodeLong
 import com.miso.dermoapp.domain.models.enumerations.ResponseErrorField
 import com.miso.dermoapp.domain.models.utils.UtilsFields
 import com.miso.dermoapp.domain.useCases.LogInUseCase
@@ -31,6 +32,9 @@ class LogInViewModel(userRepository: UserRepository): ViewModel() {
     val buttonContinueEnable = MutableLiveData<Boolean>()
     var userAccount = MutableLiveData<UserAccountData>()
     val editTextEmailDrawable = MutableLiveData<Int>()
+    val editTextPasswordDrawable = MutableLiveData<Int>()
+    private var passwordCounter = MutableLiveData<Int>()
+    var showPassword = MutableLiveData<Boolean>()
 
     init {
         errorEmail.value = ResponseErrorField.DEFAULT.label
@@ -38,6 +42,7 @@ class LogInViewModel(userRepository: UserRepository): ViewModel() {
         validEmail.value = 0
         validPassword.value = 0
         userAccount.value = UserAccountData("","","","", "")
+        passwordCounter.value = 0
     }
     fun areFieldsEmpty(text: Editable?, field: Int) {
         if (UtilsFields().areFieldsEmpty(text.toString())) {
@@ -55,7 +60,7 @@ class LogInViewModel(userRepository: UserRepository): ViewModel() {
                     userAccount.value!!.id = text.toString()
                     isValidEmail(text)
                 }
-                /*CodeField.PASSWORD_FIELD.code -> {
+                CodeField.PASSWORD_FIELD.code -> {
                     userAccount.value!!.password = text.toString()
                     isValidLong(
                         text,
@@ -63,13 +68,25 @@ class LogInViewModel(userRepository: UserRepository): ViewModel() {
                         CodeLong.PASSWORD_FIELD.code,
                         validPassword
                     )
-                    arePasswordsEqual(userAccount.value!!.passwordConfirm,userAccount.value!!.password)
                 }
-                CodeField.PASSWORD_CONFIRM_FIELD.code -> {
-                    userAccount.value!!.passwordConfirm = text.toString()
-                    arePasswordsEqual(userAccount.value!!.passwordConfirm,userAccount.value!!.password)
-                }*/
             }
+        }
+    }
+
+    private fun isValidLong(text: Editable?, code: Int, minValue: Int, validItem: MutableLiveData<Int>) {
+        if (UtilsFields().isValidLong(text.toString(), minValue)) {
+            setErrorText(code, ResponseErrorField.DEFAULT.label)
+            editTextPasswordDrawable.value = R.drawable.input_successful
+            validItem.value = 1
+            changeEnableButton()
+        } else {
+            setErrorText(
+                code,
+                ResponseErrorField.ERROR_LONG_CHARACTERS.label + minValue + ResponseErrorField.ERROR_CHARACTERS.label
+            )
+            validItem.value = 0
+            editTextPasswordDrawable.value = R.drawable.input_error
+            changeEnableButton()
         }
     }
 
@@ -87,11 +104,22 @@ class LogInViewModel(userRepository: UserRepository): ViewModel() {
         }
     }
 
+    fun showPassword(field: Int){
+        when (field) {
+            CodeField.PASSWORD_FIELD.code -> {
+                passwordCounter.value = passwordCounter.value!! + 1
+                showPassword.value = UtilsFields().isNumberPair(passwordCounter.value!!)
+            }
+        }
+    }
+
+
     private fun setErrorText(field: Int, value: String) {
         when (field) {
             CodeField.EMAIL_FIELD.code -> errorEmail.value = value
             CodeField.PASSWORD_FIELD.code -> errorPassword.value = value
         }
+        changeEnableButton()
     }
 
     private fun changeEnableButton() {

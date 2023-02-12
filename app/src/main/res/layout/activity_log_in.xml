@@ -108,6 +108,7 @@
             android:fontFamily="@font/helveticaltstdroman"
             android:gravity="center_vertical"
             android:hint="@string/contraseña"
+            android:afterTextChanged="@{(editable)->vModel.areFieldsEmpty(editable, codeField.PASSWORD_FIELD.code)}"
             android:inputType="textPassword"
             android:maxLines="30"
             android:paddingLeft="15dp"
@@ -140,6 +141,7 @@
             android:layout_marginEnd="35dp"
             android:background="@drawable/ic_eye_line"
             android:contentDescription="@string/ver_u_ocultar_contra"
+            android:onClick="@{() -> vModel.showPassword(codeField.PASSWORD_FIELD.code)}"
             app:layout_constraintBottom_toBottomOf="@+id/editTextPassword"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/editTextPassword" />
