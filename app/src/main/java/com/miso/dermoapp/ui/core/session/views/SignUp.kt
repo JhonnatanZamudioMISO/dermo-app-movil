@@ -176,7 +176,7 @@ class SignUp : AppCompatActivity() {
 
     private fun goToWelcome() {
         loadingDialog.hideLoadingDialog()
-        val intent = Intent(this@SignUp, Welcome::class.java)
+        val intent = Intent(this@SignUp, LogIn::class.java)
         startActivity(intent)
         overridePendingTransition(R.anim.fadein, R.anim.fadeout)
         finish()

@@ -7,7 +7,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
-import java.util.concurrent.TimeUnit
 
 
 /****
@@ -35,11 +34,10 @@ object RetrofitHelper {
                 .addHeader("dermo-traceability-id", UUID.randomUUID().toString())
                 .method(original.method, original.body)
             val request: Request = requestBuild.build()
-            chain.proceed(request)
+                chain.proceed(request)
         }
-
         return Retrofit.Builder()
-            .baseUrl("http://dermoapp.us-east-1.elasticbeanstalk.com/")
+            .baseUrl("http://ec2-18-212-135-136.compute-1.amazonaws.com/")
             .addConverterFactory(GsonConverterFactory.create(gson))
             .client(httpClientBuilder.build())
             .build()
