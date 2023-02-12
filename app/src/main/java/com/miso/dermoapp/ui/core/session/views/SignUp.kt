@@ -111,7 +111,7 @@ class SignUp : AppCompatActivity() {
             }
         })
 
-        viewModel.signUp.observe(this, {
+        viewModel.navigateToSignUp.observe(this, {
             if (it) {
                 loadingDialog.startLoadingDialog()
                 if (viewModel.checkOnline(this))
