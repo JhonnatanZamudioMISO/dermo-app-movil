@@ -157,6 +157,7 @@
             android:background="@drawable/boton_oscuro_disabled"
             android:fontFamily="@font/helveticaltsdbold"
             android:text="@string/IniciarSesion"
+            android:onClick="@{() -> vModel.LogIn()}"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="22sp"

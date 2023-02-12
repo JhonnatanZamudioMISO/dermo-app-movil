@@ -8,9 +8,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import com.miso.dermoapp.R
 import com.miso.dermoapp.databinding.ActivityLogInBinding
+import com.miso.dermoapp.domain.models.enumerations.CodeSnackBarCloseAction
 import com.miso.dermoapp.domain.models.enumerations.ResponseErrorField
+import com.miso.dermoapp.domain.models.enumerations.TypeSnackBar
 import com.miso.dermoapp.ui.core.session.viewModels.LogInViewModel
 import com.miso.dermoapp.ui.core.session.viewModels.LogInViewModelFactory
+import com.miso.dermoapp.ui.core.utils.CustomSnackBar
 import com.miso.dermoapp.ui.core.utils.LoadingDialog
 import kotlinx.coroutines.DelicateCoroutinesApi
 
@@ -58,5 +61,42 @@ class LogIn : AppCompatActivity() {
             binding.editTextPassword.setSelection(binding.editTextPassword.length())
         })
 
+        viewModel.buttonContinueDrawable.observe(this, {
+            binding.buttonLogIn.setBackgroundResource(it)
+        })
+
+        viewModel.buttonContinueEnable.observe(this, {
+            binding.buttonLogIn.isEnabled = it
+        })
+
+        viewModel.navigateToLogIn.observe(this, {
+            if (it) {
+                loadingDialog.startLoadingDialog()
+                if (viewModel.checkOnline(this))
+                    //viewModel.createUser()
+                else
+                    viewModel.snackBarAction.value = 0
+            }
+        })
+
+        viewModel.snackBarAction.observe(this, {
+            loadingDialog.hideLoadingDialog()
+            when (it){
+                0 -> {
+                    viewModel.snackBarNavigate.postValue(CodeSnackBarCloseAction.NONE.code)
+                    viewModel.snackBarTextWarning.postValue(getString(R.string.sin_conexion))
+                }
+            }
+        })
+
+        viewModel.snackBarTextWarning.observe(this, {
+            CustomSnackBar().showSnackBar(
+                it,
+                binding.constraintLayout,
+                TypeSnackBar.WARNING.code,
+                this,
+                viewModel.snackBarNavigate.value!!
+            )
+        })
     }
 }

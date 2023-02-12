@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/warning"
         android:textSize="30sp"
-        android:gravity="center"
+        android:gravity="center_horizontal"
         android:text="@string/cuenta_ya_existente"
         android:fontFamily="@font/helveticaltsdbold"
         app:layout_constraintEnd_toEndOf="parent"

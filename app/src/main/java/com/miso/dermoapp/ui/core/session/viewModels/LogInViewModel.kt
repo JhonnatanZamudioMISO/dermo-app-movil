@@ -1,5 +1,6 @@
 package com.miso.dermoapp.ui.core.session.viewModels
 
+import android.content.Context
 import android.text.Editable
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,8 +11,10 @@ import com.miso.dermoapp.domain.injectionOfDependencies.Injection
 import com.miso.dermoapp.domain.models.entities.UserAccountData
 import com.miso.dermoapp.domain.models.enumerations.CodeField
 import com.miso.dermoapp.domain.models.enumerations.CodeLong
+import com.miso.dermoapp.domain.models.enumerations.CodeSnackBarCloseAction
 import com.miso.dermoapp.domain.models.enumerations.ResponseErrorField
 import com.miso.dermoapp.domain.models.utils.UtilsFields
+import com.miso.dermoapp.domain.models.utils.UtilsNetwork
 import com.miso.dermoapp.domain.useCases.LogInUseCase
 import kotlinx.coroutines.DelicateCoroutinesApi
 
@@ -35,6 +38,10 @@ class LogInViewModel(userRepository: UserRepository): ViewModel() {
     val editTextPasswordDrawable = MutableLiveData<Int>()
     private var passwordCounter = MutableLiveData<Int>()
     var showPassword = MutableLiveData<Boolean>()
+    val navigateToLogIn = MutableLiveData<Boolean>()
+    val snackBarAction = MutableLiveData<Int>()
+    val snackBarNavigate = MutableLiveData<Int>()
+    val snackBarTextWarning = MutableLiveData<String>()
 
     init {
         errorEmail.value = ResponseErrorField.DEFAULT.label
@@ -43,6 +50,8 @@ class LogInViewModel(userRepository: UserRepository): ViewModel() {
         validPassword.value = 0
         userAccount.value = UserAccountData("","","","", "")
         passwordCounter.value = 0
+        navigateToLogIn.value = false
+        snackBarNavigate.value = CodeSnackBarCloseAction.NONE.code
     }
     fun areFieldsEmpty(text: Editable?, field: Int) {
         if (UtilsFields().areFieldsEmpty(text.toString())) {
@@ -113,6 +122,9 @@ class LogInViewModel(userRepository: UserRepository): ViewModel() {
         }
     }
 
+    fun LogIn() {
+        navigateToLogIn.value = true
+    }
 
     private fun setErrorText(field: Int, value: String) {
         when (field) {
@@ -134,6 +146,10 @@ class LogInViewModel(userRepository: UserRepository): ViewModel() {
             buttonContinueDrawable.value = R.drawable.boton_oscuro_disabled
             buttonContinueEnable.value = false
         }
+    }
+
+    fun checkOnline(context: Context): Boolean {
+        return UtilsNetwork().isOnline(context)
     }
 }
 

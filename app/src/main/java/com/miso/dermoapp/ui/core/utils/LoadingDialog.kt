@@ -2,6 +2,7 @@ package com.miso.dermoapp.ui.core.utils
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.AnimationUtils
@@ -32,6 +33,7 @@ class LoadingDialog (val context: Context, val text: String) {
         val imageLoading = loadingDialogView.findViewById<ImageView>(R.id.imageViewLoading)
         animationLoading(imageLoading,true)
         textViewLoadingDialog.setText(text)
+        textViewLoadingDialog.gravity = Gravity.CENTER_HORIZONTAL
         builder.setView(loadingDialogView)
         builder.setCancelable(false)
         dialog = builder.create()
