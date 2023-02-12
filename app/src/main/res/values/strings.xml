@@ -40,4 +40,7 @@
     <string name="cuenta_creada_con_exito">Your account has been created successfully</string>
     <string name="cuenta_ya_existente">There is already an account with that email</string>
     <string name="error_inesperado">An error has occurred, please try again later</string>
+    <string name="hola">Hello!</string>
+    <string name="olvidocontra">Did you forget your password?</string>
+    <string name="no_estas_registrado">Still not registered?</string>
 </resources>

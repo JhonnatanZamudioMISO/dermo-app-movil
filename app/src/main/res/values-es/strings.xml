@@ -40,4 +40,7 @@
     <string name="cuenta_creada_con_exito">Tu cuenta ha sido creada con éxito</string>
     <string name="cuenta_ya_existente">Ya existe una cuenta con ese correo</string>
     <string name="error_inesperado">Se ha presentado un error, intenta más tarde</string>
+    <string name="hola">Hola!</string>
+    <string name="olvidocontra">¿Olvidaste tu contraseña?</string>
+    <string name="no_estas_registrado">¿Aún no estás registrado?</string>
 </resources>
