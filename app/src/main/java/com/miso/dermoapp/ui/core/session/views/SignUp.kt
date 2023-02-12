@@ -107,6 +107,12 @@ class SignUp : AppCompatActivity() {
 
         viewModel.navigateToLogIn.observe(this, {
             if (it) {
+                goToLogIn()
+            }
+        })
+
+        viewModel.signUp.observe(this, {
+            if (it) {
                 loadingDialog.startLoadingDialog()
                 if (viewModel.checkOnline(this))
                     viewModel.createUser()
@@ -144,7 +150,7 @@ class SignUp : AppCompatActivity() {
 
         viewModel.validateChangeScreen.observe(this, {
             if (it)
-                goToWelcome()
+                goToLogIn()
         })
 
         viewModel.validateRefreshScreen.observe(this, {
@@ -174,7 +180,7 @@ class SignUp : AppCompatActivity() {
         finish()
     }
 
-    private fun goToWelcome() {
+    private fun goToLogIn() {
         loadingDialog.hideLoadingDialog()
         val intent = Intent(this@SignUp, LogIn::class.java)
         startActivity(intent)

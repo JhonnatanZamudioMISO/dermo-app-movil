@@ -39,6 +39,7 @@ class SignUpViewModel (userRepository: UserRepository): ViewModel() {
     val buttonContinueEnable = MutableLiveData<Boolean>()
     private val signUpUseCase = SignUpUseCase(userRepository)
     val navigateToLogIn = MutableLiveData<Boolean>()
+    val signUp = MutableLiveData<Boolean>()
     var userAccount = MutableLiveData<UserAccountData>()
     var showPassword = MutableLiveData<Boolean>()
     var showPasswordConfirm = MutableLiveData<Boolean>()
@@ -58,6 +59,7 @@ class SignUpViewModel (userRepository: UserRepository): ViewModel() {
 
     init {
         navigateToLogIn.value = false
+        signUp.value = false
         errorEmail.value = ResponseErrorField.DEFAULT.label
         errorPassword.value = ResponseErrorField.DEFAULT.label
         errorPasswordConfirm.value = ResponseErrorField.DEFAULT.label
@@ -217,6 +219,10 @@ class SignUpViewModel (userRepository: UserRepository): ViewModel() {
 
     fun navigateToLogIn() {
         navigateToLogIn.value = true
+    }
+
+    fun signUp() {
+        signUp.value = true
     }
 
     fun showPassword(field: Int){
