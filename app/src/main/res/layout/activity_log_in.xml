@@ -68,6 +68,7 @@
             android:fontFamily="@font/helveticaltstdroman"
             android:gravity="center_vertical"
             android:hint="@string/correo_electronico"
+            android:afterTextChanged="@{(editable)->vModel.areFieldsEmpty(editable, codeField.EMAIL_FIELD.code)}"
             android:inputType="textEmailAddress"
             android:maxLines="30"
             android:paddingLeft="15dp"
