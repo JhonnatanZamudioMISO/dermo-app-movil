@@ -106,20 +106,25 @@ class LogIn : AppCompatActivity() {
             when(it){
                 CodeResponseLoginUser.INICIO_DE_SESION_EXITOSO.code->{
                     loadingDialog.succesful(R.string.credencialesValidas)
-                    viewModel.delay()
+                    viewModel.delayScreen(CodeResponseLoginUser.INICIO_DE_SESION_EXITOSO.code)
+                }
+                CodeResponseLoginUser.ERROR.code -> {
+                    loadingDialog.error()
+                    viewModel.delayScreen(CodeResponseLoginUser.ERROR.code)
                 }
             }
         })
 
         viewModel.validateChangeScreen.observe(this, {
-            if (it)
-                goToDashBoard()
+            when(it) {
+                CodeResponseLoginUser.INICIO_DE_SESION_EXITOSO.code -> goToScreen(Intent(this@LogIn, Dashboard::class.java))
+                CodeResponseLoginUser.ERROR.code -> loadingDialog.hideLoadingDialog()
+            }
         })
     }
 
-    private fun goToDashBoard() {
+    private fun goToScreen(intent: Intent) {
         loadingDialog.hideLoadingDialog()
-        val intent = Intent(this@LogIn, Dashboard::class.java)
         startActivity(intent)
         overridePendingTransition(R.anim.fadein, R.anim.fadeout)
         finish()

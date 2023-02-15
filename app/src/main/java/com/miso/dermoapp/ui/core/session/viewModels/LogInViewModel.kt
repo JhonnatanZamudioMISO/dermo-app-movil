@@ -11,10 +11,7 @@ import com.miso.dermoapp.data.attributes.user.entitie.RequestUser
 import com.miso.dermoapp.data.attributes.user.repository.UserRepository
 import com.miso.dermoapp.domain.injectionOfDependencies.Injection
 import com.miso.dermoapp.domain.models.entities.UserAccountData
-import com.miso.dermoapp.domain.models.enumerations.CodeField
-import com.miso.dermoapp.domain.models.enumerations.CodeLong
-import com.miso.dermoapp.domain.models.enumerations.CodeSnackBarCloseAction
-import com.miso.dermoapp.domain.models.enumerations.ResponseErrorField
+import com.miso.dermoapp.domain.models.enumerations.*
 import com.miso.dermoapp.domain.models.utils.UtilsFields
 import com.miso.dermoapp.domain.models.utils.UtilsNetwork
 import com.miso.dermoapp.domain.models.utils.UtilsSecurity
@@ -47,7 +44,7 @@ class LogInViewModel(userRepository: UserRepository): ViewModel() {
     val snackBarTextWarning = MutableLiveData<String>()
     val resultLoginUser = MutableLiveData<Int>()
     private val loginUseCase = LogInUseCase(userRepository)
-    val validateChangeScreen = MutableLiveData<Boolean>()
+    val validateChangeScreen = MutableLiveData<Int>()
 
     init {
         errorEmail.value = ResponseErrorField.DEFAULT.label
@@ -58,16 +55,16 @@ class LogInViewModel(userRepository: UserRepository): ViewModel() {
         passwordCounter.value = 0
         navigateToLogIn.value = false
         snackBarNavigate.value = CodeSnackBarCloseAction.NONE.code
-        validateChangeScreen.value = false
+        validateChangeScreen.value = -1
     }
 
     @OptIn(DelicateCoroutinesApi::class)
-    fun delay(){
+    fun delayScreen(code: Int){
         GlobalScope.launch {
             withContext(Dispatchers.IO) {
                 delay(1500)
             }
-            validateChangeScreen.postValue(true)
+            validateChangeScreen.postValue(code)
         }
     }
 
