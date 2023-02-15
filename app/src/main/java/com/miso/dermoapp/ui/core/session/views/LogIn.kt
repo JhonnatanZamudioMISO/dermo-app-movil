@@ -73,7 +73,7 @@ class LogIn : AppCompatActivity() {
             if (it) {
                 loadingDialog.startLoadingDialog()
                 if (viewModel.checkOnline(this))
-                    //viewModel.createUser()
+                    viewModel.loginUser()
                 else
                     viewModel.snackBarAction.value = 0
             }

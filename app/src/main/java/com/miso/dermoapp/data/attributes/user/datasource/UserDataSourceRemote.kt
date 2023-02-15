@@ -22,7 +22,13 @@ class UserDataSourceRemote {
 
     suspend fun insertUser(requestUsers: RequestUser): ResponseUser {
         return withContext(Dispatchers.IO) {
-            response.insertUser(UUID.randomUUID().toString(),requestUsers,).body() ?: ResponseUser("Error inesperado","")
+            response.insertUser(UUID.randomUUID().toString(),requestUsers).body() ?: ResponseUser("Error inesperado","")
+        }
+    }
+
+    suspend fun getUserByAccount(account: String, password: String): ResponseUser {
+        return withContext(Dispatchers.IO) {
+            response.getUserByAccount(UUID.randomUUID().toString(),account,password).body() ?: ResponseUser("Error inesperado","")
         }
     }
 }

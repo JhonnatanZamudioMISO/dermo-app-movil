@@ -5,7 +5,9 @@ import android.text.Editable
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.miso.dermoapp.R
+import com.miso.dermoapp.data.attributes.user.entitie.RequestUser
 import com.miso.dermoapp.data.attributes.user.repository.UserRepository
 import com.miso.dermoapp.domain.injectionOfDependencies.Injection
 import com.miso.dermoapp.domain.models.entities.UserAccountData
@@ -15,8 +17,10 @@ import com.miso.dermoapp.domain.models.enumerations.CodeSnackBarCloseAction
 import com.miso.dermoapp.domain.models.enumerations.ResponseErrorField
 import com.miso.dermoapp.domain.models.utils.UtilsFields
 import com.miso.dermoapp.domain.models.utils.UtilsNetwork
+import com.miso.dermoapp.domain.models.utils.UtilsSecurity
 import com.miso.dermoapp.domain.useCases.LogInUseCase
 import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.launch
 
 /****
  * Project: DermoApp
@@ -42,6 +46,8 @@ class LogInViewModel(userRepository: UserRepository): ViewModel() {
     val snackBarAction = MutableLiveData<Int>()
     val snackBarNavigate = MutableLiveData<Int>()
     val snackBarTextWarning = MutableLiveData<String>()
+    val resultLoginUser = MutableLiveData<Int>()
+    private val loginUseCase = LogInUseCase(userRepository)
 
     init {
         errorEmail.value = ResponseErrorField.DEFAULT.label
@@ -52,6 +58,16 @@ class LogInViewModel(userRepository: UserRepository): ViewModel() {
         passwordCounter.value = 0
         navigateToLogIn.value = false
         snackBarNavigate.value = CodeSnackBarCloseAction.NONE.code
+    }
+
+    fun loginUser(){
+        viewModelScope.launch {
+            val userInfo = RequestUser(
+                userAccount.value!!.email,
+                UtilsSecurity().cipherData(userAccount.value!!.password)!!
+            )
+            resultLoginUser.value = loginUseCase.loginUser(userInfo)
+        }
     }
     fun areFieldsEmpty(text: Editable?, field: Int) {
         if (UtilsFields().areFieldsEmpty(text.toString())) {
