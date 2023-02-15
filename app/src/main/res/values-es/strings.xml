@@ -44,4 +44,5 @@
     <string name="olvidocontra">¿Olvidaste tu contraseña?</string>
     <string name="no_estas_registrado">¿Aún no estás registrado?</string>
     <string name="validandoTusCredenciales">Validando tus credenciales…</string>
+    <string name="credencialesValidas">Credenciales válidas</string>
 </resources>

@@ -55,11 +55,13 @@ class LoadingDialog (val context: Context, val text: String) {
         dialogError?.dismiss()
     }
 
-    fun succesful() {
+    fun succesful(text: Int) {
         hideLoadingDialog()
         val builder = AlertDialog.Builder(context, R.style.CustomDialog)
         val factory = LayoutInflater.from(context)
         val loadingDialogView : View = factory.inflate(R.layout.dialog_success, null)
+        val textViewLoadingDialog = loadingDialogView.findViewById<TextView>(R.id.textViewLoadingDialog)
+        textViewLoadingDialog.setText(text)
         builder.setView(loadingDialogView)
         builder.setCancelable(false)
         dialogSuccess = builder.create()

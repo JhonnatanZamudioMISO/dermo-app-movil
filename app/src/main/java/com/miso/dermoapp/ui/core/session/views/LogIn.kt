@@ -1,5 +1,6 @@
 package com.miso.dermoapp.ui.core.session.views
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.method.PasswordTransformationMethod
@@ -8,9 +9,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import com.miso.dermoapp.R
 import com.miso.dermoapp.databinding.ActivityLogInBinding
+import com.miso.dermoapp.domain.models.enumerations.CodeResponseLoginUser
 import com.miso.dermoapp.domain.models.enumerations.CodeSnackBarCloseAction
 import com.miso.dermoapp.domain.models.enumerations.ResponseErrorField
 import com.miso.dermoapp.domain.models.enumerations.TypeSnackBar
+import com.miso.dermoapp.ui.core.dashboard.views.Dashboard
 import com.miso.dermoapp.ui.core.session.viewModels.LogInViewModel
 import com.miso.dermoapp.ui.core.session.viewModels.LogInViewModelFactory
 import com.miso.dermoapp.ui.core.utils.CustomSnackBar
@@ -98,5 +101,27 @@ class LogIn : AppCompatActivity() {
                 viewModel.snackBarNavigate.value!!
             )
         })
+
+        viewModel.resultLoginUser.observe(this, {
+            when(it){
+                CodeResponseLoginUser.INICIO_DE_SESION_EXITOSO.code->{
+                    loadingDialog.succesful(R.string.credencialesValidas)
+                    viewModel.delay()
+                }
+            }
+        })
+
+        viewModel.validateChangeScreen.observe(this, {
+            if (it)
+                goToDashBoard()
+        })
+    }
+
+    private fun goToDashBoard() {
+        loadingDialog.hideLoadingDialog()
+        val intent = Intent(this@LogIn, Dashboard::class.java)
+        startActivity(intent)
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout)
+        finish()
     }
 }

@@ -19,8 +19,7 @@ import com.miso.dermoapp.domain.models.utils.UtilsFields
 import com.miso.dermoapp.domain.models.utils.UtilsNetwork
 import com.miso.dermoapp.domain.models.utils.UtilsSecurity
 import com.miso.dermoapp.domain.useCases.LogInUseCase
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 /****
  * Project: DermoApp
@@ -48,6 +47,7 @@ class LogInViewModel(userRepository: UserRepository): ViewModel() {
     val snackBarTextWarning = MutableLiveData<String>()
     val resultLoginUser = MutableLiveData<Int>()
     private val loginUseCase = LogInUseCase(userRepository)
+    val validateChangeScreen = MutableLiveData<Boolean>()
 
     init {
         errorEmail.value = ResponseErrorField.DEFAULT.label
@@ -58,6 +58,17 @@ class LogInViewModel(userRepository: UserRepository): ViewModel() {
         passwordCounter.value = 0
         navigateToLogIn.value = false
         snackBarNavigate.value = CodeSnackBarCloseAction.NONE.code
+        validateChangeScreen.value = false
+    }
+
+    @OptIn(DelicateCoroutinesApi::class)
+    fun delay(){
+        GlobalScope.launch {
+            withContext(Dispatchers.IO) {
+                delay(1500)
+            }
+            validateChangeScreen.postValue(true)
+        }
     }
 
     fun loginUser(){

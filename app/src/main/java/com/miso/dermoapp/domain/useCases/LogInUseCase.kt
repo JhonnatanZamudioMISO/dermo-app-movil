@@ -2,6 +2,8 @@ package com.miso.dermoapp.domain.useCases
 
 import com.miso.dermoapp.data.attributes.user.entitie.RequestUser
 import com.miso.dermoapp.data.attributes.user.repository.UserRepository
+import com.miso.dermoapp.domain.models.enumerations.CodeResponseLoginUser
+import com.miso.dermoapp.domain.models.enumerations.MessageResponseLoginUser
 
 /****
  * Project: DermoApp
@@ -17,14 +19,13 @@ class LogInUseCase(private val userRepository: UserRepository) {
 
     suspend fun loginUser(user: RequestUser): Int{
         val resultUser = userRepository.getUserByAccountRemote(user.account,user.passwordUser)
-        println("SE IMPRIME RESULTADO: " + resultUser)
-        /*if (resultUser.description == "Cuenta creada exitosamente"){
-            return 0
-        } else if (resultUser.description == "El correo ingresado ya esta registrado") {
-            return 1
+        if (resultUser.description == MessageResponseLoginUser.INICIO_DE_SESION_EXITOSO.value){
+            return CodeResponseLoginUser.INICIO_DE_SESION_EXITOSO.code
+        } else if (resultUser.description == MessageResponseLoginUser.LA_CUENTA_NO_EXISTE.value) {
+            return CodeResponseLoginUser.LA_CUENTA_NO_EXISTE.code
+        } else if (resultUser.description == MessageResponseLoginUser.CREDENCIALES_INVALIDAS.value) {
+            return CodeResponseLoginUser.CREDENCIALES_INVALIDAS.code
         }
-        println("EERORCONSUMO: " +resultUser.description)
-         */
-        return 2
+        return CodeResponseLoginUser.ERROR.code
     }
 }

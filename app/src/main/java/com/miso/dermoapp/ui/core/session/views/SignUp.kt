@@ -124,7 +124,7 @@ class SignUp : AppCompatActivity() {
         viewModel.resultCreateUser.observe(this, {
             when(it){
                 0->{
-                    loadingDialog.succesful()
+                    loadingDialog.succesful(R.string.cuenta_creada_con_exito)
                     viewModel.delay()
                 }
                 1->{
