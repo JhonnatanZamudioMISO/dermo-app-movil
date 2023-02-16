@@ -45,6 +45,7 @@ class LogInViewModel(userRepository: UserRepository): ViewModel() {
     val resultLoginUser = MutableLiveData<Int>()
     private val loginUseCase = LogInUseCase(userRepository)
     val validateChangeScreen = MutableLiveData<Int>()
+    val navigateToSignUp = MutableLiveData<Boolean>()
 
     init {
         errorEmail.value = ResponseErrorField.DEFAULT.label
@@ -56,6 +57,11 @@ class LogInViewModel(userRepository: UserRepository): ViewModel() {
         navigateToLogIn.value = false
         snackBarNavigate.value = CodeSnackBarCloseAction.NONE.code
         validateChangeScreen.value = -1
+        navigateToSignUp.value = false
+    }
+
+    fun navigateToSignUp() {
+        navigateToSignUp.value = true
     }
 
     @OptIn(DelicateCoroutinesApi::class)

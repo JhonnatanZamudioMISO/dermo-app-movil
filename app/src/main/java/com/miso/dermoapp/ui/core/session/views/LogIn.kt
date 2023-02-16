@@ -84,6 +84,11 @@ class LogIn : AppCompatActivity() {
             }
         })
 
+        viewModel.navigateToSignUp.observe(this, {
+            if (it)
+                goToScreen(Intent(this@LogIn,SignUp::class.java))
+        })
+
         viewModel.snackBarAction.observe(this, {
             loadingDialog.hideLoadingDialog()
             when (it){

@@ -202,6 +202,7 @@
             android:fontFamily="@font/helveticaltsdbold"
             android:gravity="center_horizontal"
             android:text="@string/continuar"
+            android:onClick="@{() -> vModel.navigateToSignUp()}"
             android:textColor="@color/blue_dark"
             android:textSize="23sp"
             app:layout_constraintBottom_toBottomOf="parent"
