@@ -64,4 +64,10 @@ class SignUpUseCaseTest {
         val result = signUpUseCase.changeEnableButton(0,1,0,false)
         Assert.assertEquals(false, result)
     }
+
+    @Test
+    fun `Caso 04`() {
+        val result = signUpUseCase.changeEnableButton(0,1,0,true)
+        Assert.assertEquals(false, result)
+    }
 }
