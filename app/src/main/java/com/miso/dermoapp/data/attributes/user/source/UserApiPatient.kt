@@ -15,4 +15,7 @@ import retrofit2.http.*
 interface UserApiPatient {
     @POST("account/create")
     suspend fun insertUser(@Header("dermo-traceability-id") uuid: String,@Body requestUser: RequestUser): Response<ResponseUser>
+
+    @GET("account/login")
+    suspend fun getUserByAccount(@Header("dermo-traceability-id") uuid: String,@Query("correoElectronico") account: String,@Query("contrasena") password: String): Response<ResponseUser>
 }

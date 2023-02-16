@@ -9,6 +9,7 @@ import com.miso.dermoapp.R
 import com.miso.dermoapp.databinding.ActivityWelcomeBinding
 import com.miso.dermoapp.ui.core.home.viewModels.WelcomeViewModel
 import com.miso.dermoapp.ui.core.home.viewModels.WelcomeViewModelFactory
+import com.miso.dermoapp.ui.core.session.views.LogIn
 import com.miso.dermoapp.ui.core.session.views.SignUp
 import kotlinx.coroutines.DelicateCoroutinesApi
 
@@ -24,11 +25,17 @@ class Welcome : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_welcome)
         binding.lifecycleOwner = this
         binding.vModel = viewModel
-        binding.ButtonCreateAccount.setOnClickListener { goToSignUp() }
+        viewModel.navigateToSignUp.observe(this,{
+            if (it)
+                goToChangeScreen(Intent(this@Welcome, SignUp::class.java))
+        })
+        viewModel.navigateToLogIn.observe(this,{
+            if (it)
+                goToChangeScreen(Intent(this@Welcome, LogIn::class.java))
+        })
     }
 
-    private fun goToSignUp() {
-        val intent = Intent(this@Welcome, SignUp::class.java)
+    private fun goToChangeScreen(intent: Intent) {
         startActivity(intent)
         overridePendingTransition(R.anim.left_in, R.anim.left_out)
         finish()

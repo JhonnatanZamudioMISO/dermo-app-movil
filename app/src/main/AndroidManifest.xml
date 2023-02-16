@@ -12,7 +12,6 @@
 
     <application
         android:name="androidx.multidex.MultiDexApplication"
-        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -21,7 +20,18 @@
         android:roundIcon="@mipmap/ic_redondo"
         android:supportsRtl="true"
         android:theme="@style/LaunchTheme"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.core.dashboard.views.Dashboard"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"/>
+        <activity
+            android:name=".ui.core.session.views.LogIn"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".ui.core.session.views.SignUp"
             android:exported="false"

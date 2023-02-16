@@ -22,7 +22,6 @@ object RetrofitHelper {
         val gson = GsonBuilder()
             .setDateFormat("yyyy-MM-dd HH:mm:ss")
             .create()
-        println("UUID: " + UUID.randomUUID().toString())
 
         val logging = HttpLoggingInterceptor()
         logging.setLevel(HttpLoggingInterceptor.Level.BODY)
@@ -35,11 +34,14 @@ object RetrofitHelper {
                 .addHeader("dermo-traceability-id", UUID.randomUUID().toString())
                 .method(original.method, original.body)
             val request: Request = requestBuild.build()
-            chain.proceed(request)
+                chain.proceed(request)
         }
+        httpClientBuilder.connectTimeout(60, TimeUnit.SECONDS)
+        httpClientBuilder.readTimeout(60, TimeUnit.SECONDS)
+        httpClientBuilder.writeTimeout(60, TimeUnit.SECONDS)
 
         return Retrofit.Builder()
-            .baseUrl("http://dermoapp.us-east-1.elasticbeanstalk.com/")
+            .baseUrl("http://dermoappmovil-env.eba-vqrznmv9.us-east-1.elasticbeanstalk.com/")
             .addConverterFactory(GsonConverterFactory.create(gson))
             .client(httpClientBuilder.build())
             .build()
