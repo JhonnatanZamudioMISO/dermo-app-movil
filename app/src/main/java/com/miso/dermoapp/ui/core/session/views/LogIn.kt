@@ -11,6 +11,7 @@ import com.miso.dermoapp.R
 import com.miso.dermoapp.databinding.ActivityLogInBinding
 import com.miso.dermoapp.domain.models.enumerations.*
 import com.miso.dermoapp.ui.core.dashboard.views.Dashboard
+import com.miso.dermoapp.ui.core.home.views.Welcome
 import com.miso.dermoapp.ui.core.session.viewModels.LogInViewModel
 import com.miso.dermoapp.ui.core.session.viewModels.LogInViewModelFactory
 import com.miso.dermoapp.ui.core.utils.CustomSnackBar
@@ -32,6 +33,10 @@ class LogIn : AppCompatActivity() {
         binding.lifecycleOwner = this
         binding.vModel = viewModel
         loadingDialog = LoadingDialog(this, getString(R.string.validandoTusCredenciales))
+
+        binding.imageViewBack.setOnClickListener {
+            onBackPressed()
+        }
 
         viewModel.errorEmail.observe(this, {
             binding.textViewEmailError.text = it
@@ -130,6 +135,17 @@ class LogIn : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        val intent = Intent(
+            this@LogIn,
+            Welcome::class.java
+        )
+        startActivity(intent)
+        overridePendingTransition(R.anim.right_in, R.anim.right_out)
+        finish()
     }
 
     private fun goToScreen(intent: Intent) {
