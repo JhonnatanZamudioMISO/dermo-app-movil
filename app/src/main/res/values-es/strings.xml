@@ -46,4 +46,5 @@
     <string name="validandoTusCredenciales">Validando tus credenciales…</string>
     <string name="credencialesValidas">Credenciales válidas</string>
     <string name="noExisteUnaCuenta">No existe una cuenta con este correo</string>
+    <string name="credencialesInvalidas">Las credenciales son inválidas</string>
 </resources>

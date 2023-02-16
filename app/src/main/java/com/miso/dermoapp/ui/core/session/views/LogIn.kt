@@ -9,10 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import com.miso.dermoapp.R
 import com.miso.dermoapp.databinding.ActivityLogInBinding
-import com.miso.dermoapp.domain.models.enumerations.CodeResponseLoginUser
-import com.miso.dermoapp.domain.models.enumerations.CodeSnackBarCloseAction
-import com.miso.dermoapp.domain.models.enumerations.ResponseErrorField
-import com.miso.dermoapp.domain.models.enumerations.TypeSnackBar
+import com.miso.dermoapp.domain.models.enumerations.*
 import com.miso.dermoapp.ui.core.dashboard.views.Dashboard
 import com.miso.dermoapp.ui.core.session.viewModels.LogInViewModel
 import com.miso.dermoapp.ui.core.session.viewModels.LogInViewModelFactory
@@ -106,16 +103,31 @@ class LogIn : AppCompatActivity() {
             when(it){
                 CodeResponseLoginUser.INICIO_DE_SESION_EXITOSO.code-> loadingDialog.succesful(R.string.credencialesValidas)
                 CodeResponseLoginUser.ERROR.code -> loadingDialog.error()
-                CodeResponseLoginUser.LA_CUENTA_NO_EXISTE.code -> loadingDialog.warning("No existe una cuenta con este correo")
+                CodeResponseLoginUser.LA_CUENTA_NO_EXISTE.code -> loadingDialog.warning(getString(R.string.noExisteUnaCuenta))
+                CodeResponseLoginUser.CREDENCIALES_INVALIDAS.code -> loadingDialog.warning(getString(R.string.credencialesInvalidas))
             }
             viewModel.delayScreen(it)
         })
 
         viewModel.validateChangeScreen.observe(this, {
             when(it) {
-                CodeResponseLoginUser.INICIO_DE_SESION_EXITOSO.code -> goToScreen(Intent(this@LogIn, Dashboard::class.java))
+                CodeResponseLoginUser.INICIO_DE_SESION_EXITOSO.code -> goToScreen(
+                    Intent(
+                        this@LogIn,
+                        Dashboard::class.java
+                    )
+                )
                 CodeResponseLoginUser.ERROR.code -> loadingDialog.hideLoadingDialog()
-                CodeResponseLoginUser.LA_CUENTA_NO_EXISTE.code -> goToScreen(Intent(this@LogIn, SignUp::class.java))
+                CodeResponseLoginUser.LA_CUENTA_NO_EXISTE.code -> goToScreen(
+                    Intent(
+                        this@LogIn,
+                        SignUp::class.java
+                    )
+                )
+                CodeResponseLoginUser.CREDENCIALES_INVALIDAS.code -> {
+                    loadingDialog.hideLoadingDialog()
+                    binding.editTextPassword.setText("")
+                }
             }
         })
     }

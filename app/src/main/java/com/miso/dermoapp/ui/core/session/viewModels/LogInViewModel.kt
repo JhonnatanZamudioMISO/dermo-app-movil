@@ -80,6 +80,7 @@ class LogInViewModel(userRepository: UserRepository): ViewModel() {
     fun areFieldsEmpty(text: Editable?, field: Int) {
         if (UtilsFields().areFieldsEmpty(text.toString())) {
             setErrorText(field, ResponseErrorField.ERROR_EMPTY.label)
+            editTextPasswordDrawable.value = R.drawable.input_error
             when (field) {
                 CodeField.EMAIL_FIELD.code -> validEmail.value = 0
                 CodeField.PASSWORD_FIELD.code -> validPassword.value = 0
