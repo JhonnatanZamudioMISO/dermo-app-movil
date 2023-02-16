@@ -45,4 +45,5 @@
     <string name="no_estas_registrado">¿Aún no estás registrado?</string>
     <string name="validandoTusCredenciales">Validando tus credenciales…</string>
     <string name="credencialesValidas">Credenciales válidas</string>
+    <string name="noExisteUnaCuenta">No existe una cuenta con este correo</string>
 </resources>

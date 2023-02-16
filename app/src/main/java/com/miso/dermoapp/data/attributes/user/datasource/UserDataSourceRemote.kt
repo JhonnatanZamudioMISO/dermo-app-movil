@@ -4,6 +4,7 @@ import com.miso.dermoapp.data.attributes.user.entitie.RequestUser
 import com.miso.dermoapp.data.attributes.user.entitie.ResponseUser
 import com.miso.dermoapp.data.attributes.user.source.UserApiPatient
 import com.miso.dermoapp.data.retrofit.RetrofitHelper
+import com.miso.dermoapp.domain.models.enumerations.MessageResponseLoginUser
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.util.*
@@ -22,13 +23,27 @@ class UserDataSourceRemote {
 
     suspend fun insertUser(requestUsers: RequestUser): ResponseUser {
         return withContext(Dispatchers.IO) {
-            response.insertUser(UUID.randomUUID().toString(),requestUsers).body() ?: ResponseUser("Error inesperado","")
+            val result = response.insertUser(UUID.randomUUID().toString(),requestUsers)
+            if (result.code() == 201)
+                return@withContext ResponseUser(result.body()!!.description,result.body()!!.created_at)
+            else if (result.code() == 400)
+                return@withContext ResponseUser("El correo ingresado ya esta registrado","")
+            else
+                return@withContext ResponseUser("Error inesperado","")
         }
     }
 
     suspend fun getUserByAccount(account: String, password: String): ResponseUser {
         return withContext(Dispatchers.IO) {
-            response.getUserByAccount(UUID.randomUUID().toString(),account,password).body() ?: ResponseUser("Error inesperado","")
+            val result = response.getUserByAccount(UUID.randomUUID().toString(),account,password)
+            if (result.code() == 200)
+                return@withContext ResponseUser(result.body()!!.description,result.body()!!.created_at)
+            else if (result.code() == 404)
+                return@withContext ResponseUser(MessageResponseLoginUser.LA_CUENTA_NO_EXISTE.value,"")
+            else if (result.code() == 401)
+                return@withContext ResponseUser(MessageResponseLoginUser.CREDENCIALES_INVALIDAS.value,"")
+            else
+                return@withContext ResponseUser("Error inesperado","")
         }
     }
 }

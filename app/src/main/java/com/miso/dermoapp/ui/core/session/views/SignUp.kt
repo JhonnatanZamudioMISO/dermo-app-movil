@@ -128,7 +128,7 @@ class SignUp : AppCompatActivity() {
                     viewModel.delay()
                 }
                 1->{
-                    loadingDialog.warning()
+                    loadingDialog.warning(getString(R.string.cuenta_ya_existente))
                     viewModel.delay()
                 }
                 2->{

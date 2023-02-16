@@ -104,21 +104,18 @@ class LogIn : AppCompatActivity() {
 
         viewModel.resultLoginUser.observe(this, {
             when(it){
-                CodeResponseLoginUser.INICIO_DE_SESION_EXITOSO.code->{
-                    loadingDialog.succesful(R.string.credencialesValidas)
-                    viewModel.delayScreen(CodeResponseLoginUser.INICIO_DE_SESION_EXITOSO.code)
-                }
-                CodeResponseLoginUser.ERROR.code -> {
-                    loadingDialog.error()
-                    viewModel.delayScreen(CodeResponseLoginUser.ERROR.code)
-                }
+                CodeResponseLoginUser.INICIO_DE_SESION_EXITOSO.code-> loadingDialog.succesful(R.string.credencialesValidas)
+                CodeResponseLoginUser.ERROR.code -> loadingDialog.error()
+                CodeResponseLoginUser.LA_CUENTA_NO_EXISTE.code -> loadingDialog.warning("No existe una cuenta con este correo")
             }
+            viewModel.delayScreen(it)
         })
 
         viewModel.validateChangeScreen.observe(this, {
             when(it) {
                 CodeResponseLoginUser.INICIO_DE_SESION_EXITOSO.code -> goToScreen(Intent(this@LogIn, Dashboard::class.java))
                 CodeResponseLoginUser.ERROR.code -> loadingDialog.hideLoadingDialog()
+                CodeResponseLoginUser.LA_CUENTA_NO_EXISTE.code -> goToScreen(Intent(this@LogIn, SignUp::class.java))
             }
         })
     }

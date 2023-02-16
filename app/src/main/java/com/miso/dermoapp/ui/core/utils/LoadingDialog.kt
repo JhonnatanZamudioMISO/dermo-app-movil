@@ -68,11 +68,13 @@ class LoadingDialog (val context: Context, val text: String) {
         dialogSuccess!!.show()
     }
 
-    fun warning() {
+    fun warning(text: String) {
         hideLoadingDialog()
         val builder = AlertDialog.Builder(context, R.style.CustomDialog)
         val factory = LayoutInflater.from(context)
         val loadingDialogView : View = factory.inflate(R.layout.dialog_warning, null)
+        val textViewLoadingDialog = loadingDialogView.findViewById<TextView>(R.id.textViewLoadingDialog)
+        textViewLoadingDialog.setText(text)
         builder.setView(loadingDialogView)
         builder.setCancelable(false)
         dialogWarning = builder.create()
