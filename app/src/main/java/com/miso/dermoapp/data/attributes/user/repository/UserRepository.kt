@@ -25,4 +25,8 @@ class UserRepository (private val userDataSourceRemote: UserDataSourceRemote) : 
     override suspend fun insertUserRemote(requestUsers: RequestUser): ResponseUser {
         return userDataSourceRemote.insertUser(requestUsers)
     }
+
+    override suspend fun getUserByAccountRemote(account: String, password: String): ResponseUser {
+        return userDataSourceRemote.getUserByAccount(account,password)
+    }
 }

@@ -2,6 +2,7 @@ package com.miso.dermoapp.ui.core.utils
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.AnimationUtils
@@ -32,6 +33,7 @@ class LoadingDialog (val context: Context, val text: String) {
         val imageLoading = loadingDialogView.findViewById<ImageView>(R.id.imageViewLoading)
         animationLoading(imageLoading,true)
         textViewLoadingDialog.setText(text)
+        textViewLoadingDialog.gravity = Gravity.CENTER_HORIZONTAL
         builder.setView(loadingDialogView)
         builder.setCancelable(false)
         dialog = builder.create()
@@ -53,22 +55,26 @@ class LoadingDialog (val context: Context, val text: String) {
         dialogError?.dismiss()
     }
 
-    fun succesful() {
+    fun succesful(text: Int) {
         hideLoadingDialog()
         val builder = AlertDialog.Builder(context, R.style.CustomDialog)
         val factory = LayoutInflater.from(context)
         val loadingDialogView : View = factory.inflate(R.layout.dialog_success, null)
+        val textViewLoadingDialog = loadingDialogView.findViewById<TextView>(R.id.textViewLoadingDialog)
+        textViewLoadingDialog.setText(text)
         builder.setView(loadingDialogView)
         builder.setCancelable(false)
         dialogSuccess = builder.create()
         dialogSuccess!!.show()
     }
 
-    fun warning() {
+    fun warning(text: String) {
         hideLoadingDialog()
         val builder = AlertDialog.Builder(context, R.style.CustomDialog)
         val factory = LayoutInflater.from(context)
         val loadingDialogView : View = factory.inflate(R.layout.dialog_warning, null)
+        val textViewLoadingDialog = loadingDialogView.findViewById<TextView>(R.id.textViewLoadingDialog)
+        textViewLoadingDialog.setText(text)
         builder.setView(loadingDialogView)
         builder.setCancelable(false)
         dialogWarning = builder.create()

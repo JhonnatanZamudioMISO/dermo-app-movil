@@ -1,6 +1,7 @@
 package com.miso.dermoapp.ui.core.home.viewModels
 
 import android.annotation.SuppressLint
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -13,6 +14,21 @@ import kotlinx.coroutines.DelicateCoroutinesApi
  ****/
 
 class WelcomeViewModel: ViewModel() {
+    val navigateToLogIn = MutableLiveData<Boolean>()
+    val navigateToSignUp = MutableLiveData<Boolean>()
+
+    init {
+        navigateToLogIn.value = false
+        navigateToSignUp.value = false
+    }
+
+    fun navigateToLogIn() {
+        navigateToLogIn.value = true
+    }
+
+    fun navigateToSignUp() {
+        navigateToSignUp.value = true
+    }
 
 }
 
