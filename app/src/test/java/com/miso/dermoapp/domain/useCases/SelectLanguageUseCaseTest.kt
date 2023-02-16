@@ -46,4 +46,10 @@ class SelectLanguageUseCaseTest {
         selectLanguageUseCase.saveDefaultLanguage(context, CodeSharedPreferences.SPANISH.code)
         Assert.assertEquals(CodeSharedPreferences.SPANISH.code, sharedPreferences().get(context,KeySharedPreferences.IDIOMA.value))
     }
+
+    @Test
+    fun `Caso 02`() {
+        selectLanguageUseCase.saveDefaultLanguage(context, CodeSharedPreferences.ENGLISH.code)
+        Assert.assertEquals(CodeSharedPreferences.ENGLISH.code, sharedPreferences().get(context,KeySharedPreferences.IDIOMA.value))
+    }
 }
