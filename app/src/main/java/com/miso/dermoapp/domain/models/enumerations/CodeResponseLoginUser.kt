@@ -11,5 +11,7 @@ enum class CodeResponseLoginUser (val code: Int) {
     INICIO_DE_SESION_EXITOSO(0x0),
     LA_CUENTA_NO_EXISTE(0x1),
     CREDENCIALES_INVALIDAS(0x2),
-    ERROR(0x3)
+    ERROR(0x3),
+    PERFIL_DE_USUARIO(0x4),
+    PERFIL_DERMATOLOGICO(0x5)
 }

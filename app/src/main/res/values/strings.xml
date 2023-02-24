@@ -47,4 +47,6 @@
     <string name="credencialesValidas">Valid credentials</string>
     <string name="noExisteUnaCuenta">There is no account with this email</string>
     <string name="credencialesInvalidas">The credentials are invalid</string>
+    <string name="bienvenido_a_dermoapp">Welcome to DermoApp</string>
+    <string name="para_continuar_se_requiere_conocer_tu_perfil_por_favor_ingresa_los_siguientes_datos">To continue it is required to know your profile, please enter the following information:</string>
 </resources>
