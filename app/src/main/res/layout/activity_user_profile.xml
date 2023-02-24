@@ -70,7 +70,139 @@
                 app:layout_constraintTop_toBottomOf="@+id/textViewTitle"
                 tools:ignore="RtlHardcoded" />
 
+            <EditText
+                android:id="@+id/editTextName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="35dp"
+                android:layout_marginRight="20dp"
+                android:autofillHints="name"
+                android:background="@drawable/input"
+                android:drawableStart="@drawable/ic_name"
+                android:drawablePadding="10dp"
+                android:fontFamily="@font/helveticaltstdroman"
+                android:gravity="center_vertical"
+                android:hint="@string/nombre"
+                android:inputType="textPersonName"
+                android:maxLines="30"
+                android:paddingLeft="15dp"
+                android:paddingTop="15dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="15dp"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewSubTitle" />
+
+            <TextView
+                android:id="@+id/textViewNameError"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="75dp"
+                android:fontFamily="@font/helveticaltstdroman"
+                android:gravity="center_horizontal"
+                android:textColor="@color/error"
+                android:textSize="13sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextName" />
+
+            <EditText
+                android:id="@+id/editTextAge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/input"
+                android:drawableStart="@drawable/ic_age"
+                android:drawablePadding="10dp"
+                android:autofillHints="none"
+                android:fontFamily="@font/helveticaltstdroman"
+                android:gravity="center_vertical"
+                android:hint="@string/edad_a_os"
+                android:inputType="number"
+                android:maxLines="30"
+                android:paddingLeft="15dp"
+                android:paddingTop="15dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="15dp"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextName" />
+
+            <TextView
+                android:id="@+id/textViewAgeError"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="75dp"
+                android:fontFamily="@font/helveticaltstdroman"
+                android:gravity="center_horizontal"
+                android:textColor="@color/error"
+                android:textSize="13sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextAge" />
+
+            <AutoCompleteTextView
+                android:id="@+id/textViewCity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:autofillHints="city"
+                android:background="@drawable/input"
+                android:drawableStart="@drawable/ic_location_city"
+                android:drawablePadding="10dp"
+                android:fontFamily="@font/helveticaltstdroman"
+                android:gravity="start"
+                android:hint="@string/ciudad_o_municipio"
+                android:maxLines="30"
+                android:paddingLeft="15dp"
+                android:paddingTop="15dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="15dp"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextAge"
+                tools:ignore="RtlSymmetry,TextFields"/>
+
+            <TextView
+                android:id="@+id/textViewCityError"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="75dp"
+                android:fontFamily="@font/helveticaltstdroman"
+                android:gravity="center_horizontal"
+                android:textColor="@color/error"
+                android:textSize="13sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewCity" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <Button
+            android:id="@+id/buttonContinue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/boton_oscuro_disabled"
+            android:fontFamily="@font/helveticaltsdbold"
+            android:text="@string/continue_dos"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
