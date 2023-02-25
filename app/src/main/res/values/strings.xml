@@ -53,4 +53,5 @@
     <string name="edad_a_os">Age (years)</string>
     <string name="ciudad_o_municipio">City</string>
     <string name="continue_dos">Continue</string>
+    <string name="laEdadDebeSerMayorACero">You must be of legal age</string>
 </resources>

@@ -53,4 +53,5 @@
     <string name="edad_a_os">Edad (años)</string>
     <string name="ciudad_o_municipio">Ciudad</string>
     <string name="continue_dos">Continuar</string>
+    <string name="laEdadDebeSerMayorACero">Debe ser mayor de edad</string>
 </resources>

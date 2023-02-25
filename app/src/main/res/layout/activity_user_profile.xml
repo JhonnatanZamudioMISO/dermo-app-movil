@@ -121,6 +121,7 @@
                 android:drawablePadding="10dp"
                 android:autofillHints="none"
                 android:fontFamily="@font/helveticaltstdroman"
+                android:afterTextChanged="@{(editable)->vModel.areFieldsEmpty(editable, codeField.AGE_FIELD.code)}"
                 android:gravity="center_vertical"
                 android:hint="@string/edad_a_os"
                 android:inputType="number"

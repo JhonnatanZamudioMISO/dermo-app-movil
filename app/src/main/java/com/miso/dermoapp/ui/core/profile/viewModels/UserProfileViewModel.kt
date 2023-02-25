@@ -34,6 +34,7 @@ class UserProfileViewModel(cityRepository: CityRepository): ViewModel() {
     val buttonContinueEnable = MutableLiveData<Boolean>()
     var userProfle = MutableLiveData<UserProfileData>()
     val editTextNameDrawable = MutableLiveData<Int>()
+    val editTextAgeDrawable = MutableLiveData<Int>()
 
     init {
         errorName.value = ResponseErrorField.DEFAULT.label
@@ -47,50 +48,39 @@ class UserProfileViewModel(cityRepository: CityRepository): ViewModel() {
 
     fun areFieldsEmpty(text: Editable?, field: Int) {
         if (UtilsFields().areFieldsEmpty(text.toString())) {
-            setErrorText(field, ResponseErrorField.ERROR_EMPTY.label)
+            setErrorText(field, ResponseErrorField.ERROR_EMPTY.label, R.drawable.input_error, 0)
             when (field) {
                 CodeField.NAME_FIELD.code -> validName.value = 0
                 CodeField.AGE_FIELD.code -> validAge.value = 0
                 CodeField.CITY_FIELD.code -> validCity.value = 0
             }
-            changeEnableButton()
         } else {
-            setErrorText(field, ResponseErrorField.DEFAULT.label)
+            setErrorText(field, ResponseErrorField.DEFAULT.label, R.drawable.input_successful, 1)
             when (field) {
                 CodeField.NAME_FIELD.code -> {
                     userProfle.value!!.name = text.toString()
                     isValidName(text,3)
                 }
-                /*CodeField.PASSWORD_FIELD.code -> {
-                    userAccount.value!!.password = text.toString()
-                    isValidLong(
-                        text,
-                        CodeField.PASSWORD_FIELD.code,
-                        CodeLong.PASSWORD_FIELD.code,
-                        validPassword
-                    )
-                    arePasswordsEqual(userAccount.value!!.passwordConfirm,userAccount.value!!.password)
+                CodeField.AGE_FIELD.code -> {
+                    userProfle.value!!.age = text.toString()
+                    isValidAge(text)
                 }
-                CodeField.PASSWORD_CONFIRM_FIELD.code -> {
-                    userAccount.value!!.passwordConfirm = text.toString()
-                    arePasswordsEqual(userAccount.value!!.passwordConfirm,userAccount.value!!.password)
-                }*/
             }
         }
     }
 
+    private fun isValidAge(text: Editable?) {
+        if (UtilsFields().isMajorZero(text.toString()))
+            setErrorText(CodeField.AGE_FIELD.code,ResponseErrorField.DEFAULT.label,R.drawable.input_successful,1)
+        else
+            setErrorText(CodeField.AGE_FIELD.code,ResponseErrorField.ERROR_AGE_MAJOR_ZERO.label,R.drawable.input_error,0)
+    }
+
     private fun isValidName(text: Editable?,minValue: Int) {
-        if (UtilsFields().isValidLong(text.toString(),minValue)) {
-            setErrorText(CodeField.NAME_FIELD.code, ResponseErrorField.DEFAULT.label)
-            editTextNameDrawable.value = R.drawable.input_successful
-            validName.value = 1
-            changeEnableButton()
-        } else {
-            setErrorText(CodeField.NAME_FIELD.code, ResponseErrorField.ERROR_LONG_CHARACTERS.label + minValue + ResponseErrorField.ERROR_CHARACTERS.label)
-            editTextNameDrawable.value = R.drawable.input_error
-            validName.value = 0
-            changeEnableButton()
-        }
+        if (UtilsFields().isValidLong(text.toString(),minValue))
+            setErrorText(CodeField.NAME_FIELD.code, ResponseErrorField.DEFAULT.label,R.drawable.input_successful,1)
+        else
+            setErrorText(CodeField.NAME_FIELD.code, ResponseErrorField.ERROR_LONG_CHARACTERS.label + minValue + ResponseErrorField.ERROR_CHARACTERS.label, R.drawable.input_error, 0)
     }
 
     private fun changeEnableButton() {
@@ -103,12 +93,21 @@ class UserProfileViewModel(cityRepository: CityRepository): ViewModel() {
         }
     }
 
-    private fun setErrorText(field: Int, value: String) {
+    private fun setErrorText(field: Int, value: String, status: Int, state: Int) {
         when (field) {
-            CodeField.NAME_FIELD.code -> errorName.value = value
-            CodeField.AGE_FIELD.code -> errorAge.value = value
+            CodeField.NAME_FIELD.code -> {
+                errorName.value = value
+                editTextNameDrawable.value = status
+                validName.value = state
+            }
+            CodeField.AGE_FIELD.code -> {
+                errorAge.value = value
+                editTextAgeDrawable.value = status
+                validAge.value = state
+            }
             CodeField.CITY_FIELD.code -> errorCity.value = value
         }
+        changeEnableButton()
     }
 }
 

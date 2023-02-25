@@ -25,4 +25,8 @@ class UtilsFields {
     fun isNumberPair(number: Int): Boolean {
         return number % 2 == 0
     }
+
+    fun isMajorZero(text: String): Boolean {
+        return text.toInt() >= 18
+    }
 }

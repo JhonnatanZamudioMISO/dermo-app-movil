@@ -30,6 +30,10 @@ class UserProfile : AppCompatActivity() {
             binding.textViewNameError.text = it
         })
 
+        viewModel.errorAge.observe(this, {
+            binding.textViewAgeError.text = it
+        })
+
         viewModel.buttonContinueDrawable.observe(this, {
             binding.buttonContinue.setBackgroundResource(it)
         })
@@ -40,6 +44,10 @@ class UserProfile : AppCompatActivity() {
 
         viewModel.editTextNameDrawable.observe(this, {
             binding.editTextName.setBackgroundResource(it)
+        })
+
+        viewModel.editTextAgeDrawable.observe(this, {
+            binding.editTextAge.setBackgroundResource(it)
         })
 
     }
