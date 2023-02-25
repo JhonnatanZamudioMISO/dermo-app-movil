@@ -82,6 +82,7 @@
                 android:drawableStart="@drawable/ic_name"
                 android:drawablePadding="10dp"
                 android:fontFamily="@font/helveticaltstdroman"
+                android:afterTextChanged="@{(editable)->vModel.areFieldsEmpty(editable, codeField.NAME_FIELD.code)}"
                 android:gravity="center_vertical"
                 android:hint="@string/nombre"
                 android:inputType="textPersonName"
