@@ -54,4 +54,5 @@
     <string name="ciudad_o_municipio">City</string>
     <string name="continue_dos">Continue</string>
     <string name="laEdadDebeSerMayorACero">You must be of legal age</string>
+    <string name="invalidaCiudad">Select a city from the list</string>
 </resources>

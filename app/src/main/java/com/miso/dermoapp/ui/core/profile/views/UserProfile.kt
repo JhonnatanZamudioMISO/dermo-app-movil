@@ -2,6 +2,7 @@ package com.miso.dermoapp.ui.core.profile.views
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
@@ -26,12 +27,20 @@ class UserProfile : AppCompatActivity() {
         binding.lifecycleOwner = this
         binding.vModel = viewModel
 
+        viewModel.citiesList.observe(this, {
+                citiesList -> binding.textViewCity.setAdapter(ArrayAdapter(this@UserProfile, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,citiesList[0].data))
+        })
+
         viewModel.errorName.observe(this, {
             binding.textViewNameError.text = it
         })
 
         viewModel.errorAge.observe(this, {
             binding.textViewAgeError.text = it
+        })
+
+        viewModel.errorCity.observe(this, {
+            binding.textViewCityError.text = it
         })
 
         viewModel.buttonContinueDrawable.observe(this, {
@@ -48,6 +57,10 @@ class UserProfile : AppCompatActivity() {
 
         viewModel.editTextAgeDrawable.observe(this, {
             binding.editTextAge.setBackgroundResource(it)
+        })
+
+        viewModel.autocompleteCityDrawable.observe(this, {
+            binding.textViewCity.setBackgroundResource(it)
         })
 
     }

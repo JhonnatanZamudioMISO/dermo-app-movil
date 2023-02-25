@@ -5,7 +5,9 @@ import android.text.Editable
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.miso.dermoapp.R
+import com.miso.dermoapp.data.attributes.city.entitie.ResponseCities
 import com.miso.dermoapp.data.attributes.city.repository.CityRepository
 import com.miso.dermoapp.domain.injectionOfDependencies.Injection
 import com.miso.dermoapp.domain.models.entities.UserProfileData
@@ -14,6 +16,7 @@ import com.miso.dermoapp.domain.models.enumerations.ResponseErrorField
 import com.miso.dermoapp.domain.models.utils.UtilsFields
 import com.miso.dermoapp.domain.useCases.UserProfileUseCase
 import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.launch
 
 /****
  * Project: DermoApp
@@ -35,6 +38,8 @@ class UserProfileViewModel(cityRepository: CityRepository): ViewModel() {
     var userProfle = MutableLiveData<UserProfileData>()
     val editTextNameDrawable = MutableLiveData<Int>()
     val editTextAgeDrawable = MutableLiveData<Int>()
+    val autocompleteCityDrawable = MutableLiveData<Int>()
+    val citiesList: MutableLiveData<ArrayList<ResponseCities>> = MutableLiveData<ArrayList<ResponseCities>>()
 
     init {
         errorName.value = ResponseErrorField.DEFAULT.label
@@ -44,6 +49,14 @@ class UserProfileViewModel(cityRepository: CityRepository): ViewModel() {
         validAge.value = 0
         validCity.value = 0
         userProfle.value = UserProfileData("","","")
+        getDataCitiesByCodeCountry()
+    }
+
+    fun getDataCitiesByCodeCountry() {
+        viewModelScope.launch {
+            citiesList.value =
+                ArrayList(userProfileUseCase.getDataCitiesByCodeCountry("Colombia"))
+        }
     }
 
     fun areFieldsEmpty(text: Editable?, field: Int) {
@@ -65,8 +78,19 @@ class UserProfileViewModel(cityRepository: CityRepository): ViewModel() {
                     userProfle.value!!.age = text.toString()
                     isValidAge(text)
                 }
+                CodeField.CITY_FIELD.code -> {
+                    userProfle.value!!.city = text.toString()
+                    isValidCity(text.toString())
+                }
             }
         }
+    }
+
+    private fun isValidCity(city: String) {
+        if (userProfileUseCase.isCityInList(city, citiesList.value!!))
+            setErrorText(CodeField.CITY_FIELD.code, ResponseErrorField.DEFAULT.label,R.drawable.input_successful,1)
+        else
+            setErrorText(CodeField.CITY_FIELD.code, ResponseErrorField.ERROR_INVALID_CITY.label,R.drawable.input_error,0)
     }
 
     private fun isValidAge(text: Editable?) {
@@ -105,7 +129,11 @@ class UserProfileViewModel(cityRepository: CityRepository): ViewModel() {
                 editTextAgeDrawable.value = status
                 validAge.value = state
             }
-            CodeField.CITY_FIELD.code -> errorCity.value = value
+            CodeField.CITY_FIELD.code -> {
+                errorCity.value = value
+                autocompleteCityDrawable.value = status
+                validCity.value = state
+            }
         }
         changeEnableButton()
     }

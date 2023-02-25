@@ -22,7 +22,8 @@ enum class ResponseErrorField(private val labelId: Int){
     ERROR_LONG_CHARACTERS(R.string.debe_ser_mayor_a),
     ERROR_CHARACTERS(R.string.caracteres),
     ERROR_PASSWORD_DOESNT_MATCH(R.string.las_contrasenas_no_coinciden),
-    ERROR_AGE_MAJOR_ZERO(R.string.laEdadDebeSerMayorACero);
+    ERROR_AGE_MAJOR_ZERO(R.string.laEdadDebeSerMayorACero),
+    ERROR_INVALID_CITY(R.string.invalidaCiudad);
 
     lateinit var label: String
         private set

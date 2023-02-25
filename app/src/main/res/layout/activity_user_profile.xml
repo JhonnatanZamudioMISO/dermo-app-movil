@@ -162,6 +162,7 @@
                 android:fontFamily="@font/helveticaltstdroman"
                 android:gravity="start"
                 android:hint="@string/ciudad_o_municipio"
+                android:afterTextChanged="@{(editable)->vModel.areFieldsEmpty(editable, codeField.CITY_FIELD.code)}"
                 android:maxLines="30"
                 android:paddingLeft="15dp"
                 android:paddingTop="15dp"

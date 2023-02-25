@@ -1,5 +1,6 @@
 package com.miso.dermoapp.domain.useCases
 
+import com.miso.dermoapp.data.attributes.city.entitie.ResponseCities
 import com.miso.dermoapp.data.attributes.city.repository.CityRepository
 
 /****
@@ -9,8 +10,23 @@ import com.miso.dermoapp.data.attributes.city.repository.CityRepository
  * All rights reserved 2023.
  ****/
 
-class UserProfileUseCase(cityRepository: CityRepository) {
+class UserProfileUseCase(val cityRepository: CityRepository) {
     fun changeEnableButton(name: Int, age: Int, city: Int): Boolean {
         return name == 1 && age == 1 && city == 1
+    }
+
+    suspend fun getDataCitiesByCodeCountry(country: String): List<ResponseCities> {
+        return cityRepository.getDataCitiesByCodeCountry(country).sortedBy { myObject -> myObject.pais }
+    }
+
+    fun isCityInList(text: String, citiesList: ArrayList<ResponseCities>): Boolean{
+        var cityFounded = false
+        for(id in citiesList[0].data.indices){
+            if (citiesList[0].data[id] == text){
+                cityFounded = true
+                break
+            }
+        }
+        return cityFounded
     }
 }
