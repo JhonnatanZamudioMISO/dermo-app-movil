@@ -1,6 +1,9 @@
 package com.miso.dermoapp.domain.injectionOfDependencies
 
 import android.content.Context
+import com.miso.dermoapp.data.attributes.city.datasource.CityDataSourceLocal
+import com.miso.dermoapp.data.attributes.city.repository.CityRepository
+import com.miso.dermoapp.data.attributes.city.source.CityJSON
 import com.miso.dermoapp.data.attributes.user.datasource.UserDataSourceRemote
 import com.miso.dermoapp.data.attributes.user.repository.UserRepository
 import com.miso.dermoapp.data.attributes.version.datasource.VersionDataSourceLocal
@@ -24,5 +27,11 @@ object Injection {
     fun providerUserRepository(): UserRepository {
         val userDataSourceRemote = UserDataSourceRemote()
         return UserRepository.getInstance(userDataSourceRemote)
+    }
+
+    fun providerCityRepository(context:Context): CityRepository {
+        val citiesJSON = CityJSON(context)
+        val citiesDataSourceLocal = CityDataSourceLocal(citiesJSON)
+        return CityRepository.getInstance(citiesDataSourceLocal)
     }
 }
