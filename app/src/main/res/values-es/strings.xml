@@ -51,6 +51,6 @@
     <string name="para_continuar_se_requiere_conocer_tu_perfil_por_favor_ingresa_los_siguientes_datos">Para continuar se requiere conocer tu perfil, por favor ingresa los siguientes datos:</string>
     <string name="nombre">Nombre</string>
     <string name="edad_a_os">Edad (años)</string>
-    <string name="ciudad_o_municipio">Ciudad o municipio</string>
+    <string name="ciudad_o_municipio">Ciudad</string>
     <string name="continue_dos">Continuar</string>
 </resources>

@@ -1,5 +1,8 @@
 package com.miso.dermoapp.ui.core.profile.viewModels
 
+import androidx.lifecycle.ViewModel
+import com.miso.dermoapp.data.attributes.city.repository.CityRepository
+
 /****
  * Project: DermoApp
  * From: com.miso.dermoapp.ui.core.profile.viewModels
@@ -7,5 +10,5 @@ package com.miso.dermoapp.ui.core.profile.viewModels
  * All rights reserved 2023.
  ****/
 
-class UserProfileViewModel {
+class UserProfileViewModel(cityRepository: CityRepository): ViewModel() {
 }
