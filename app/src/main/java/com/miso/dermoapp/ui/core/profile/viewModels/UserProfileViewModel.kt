@@ -12,8 +12,10 @@ import com.miso.dermoapp.data.attributes.city.repository.CityRepository
 import com.miso.dermoapp.domain.injectionOfDependencies.Injection
 import com.miso.dermoapp.domain.models.entities.UserProfileData
 import com.miso.dermoapp.domain.models.enumerations.CodeField
+import com.miso.dermoapp.domain.models.enumerations.CodeSnackBarCloseAction
 import com.miso.dermoapp.domain.models.enumerations.ResponseErrorField
 import com.miso.dermoapp.domain.models.utils.UtilsFields
+import com.miso.dermoapp.domain.models.utils.UtilsNetwork
 import com.miso.dermoapp.domain.useCases.UserProfileUseCase
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.launch
@@ -40,6 +42,10 @@ class UserProfileViewModel(cityRepository: CityRepository): ViewModel() {
     val editTextAgeDrawable = MutableLiveData<Int>()
     val autocompleteCityDrawable = MutableLiveData<Int>()
     val citiesList: MutableLiveData<ArrayList<ResponseCities>> = MutableLiveData<ArrayList<ResponseCities>>()
+    val navigateToDermatologicalProfile = MutableLiveData<Boolean>()
+    val snackBarAction = MutableLiveData<Int>()
+    val snackBarNavigate = MutableLiveData<Int>()
+    val snackBarTextWarning = MutableLiveData<String>()
 
     init {
         errorName.value = ResponseErrorField.DEFAULT.label
@@ -50,6 +56,16 @@ class UserProfileViewModel(cityRepository: CityRepository): ViewModel() {
         validCity.value = 0
         userProfle.value = UserProfileData("","","")
         getDataCitiesByCodeCountry()
+        navigateToDermatologicalProfile.value = false
+        snackBarNavigate.value = CodeSnackBarCloseAction.NONE.code
+    }
+
+    fun checkOnline(context: Context): Boolean {
+        return UtilsNetwork().isOnline(context)
+    }
+
+    fun continueProcess() {
+        navigateToDermatologicalProfile.value = true
     }
 
     fun getDataCitiesByCodeCountry() {
