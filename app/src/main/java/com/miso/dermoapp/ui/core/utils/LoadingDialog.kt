@@ -1,15 +1,22 @@
 package com.miso.dermoapp.ui.core.utils
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.AnimationUtils
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import com.miso.dermoapp.R
+import com.miso.dermoapp.domain.models.enumerations.KeySharedPreferences
+import com.miso.dermoapp.domain.models.utils.sharedPreferences
+import com.miso.dermoapp.ui.core.home.views.Welcome
+
 
 /****
  * Project: DermoApp
@@ -23,6 +30,7 @@ class LoadingDialog (val context: Context, val text: String) {
     private var dialogSuccess: AlertDialog? = null
     private var dialogWarning: AlertDialog? = null
     private var dialogError: AlertDialog? = null
+    private var dialogCerrarSesion: AlertDialog? = null
 
     @SuppressLint("MissingInflatedId")
     fun startLoadingDialog() {
@@ -40,6 +48,34 @@ class LoadingDialog (val context: Context, val text: String) {
         dialog!!.show()
     }
 
+    fun cerrarSesion(titulo: String, msg: String) {
+        val builder = AlertDialog.Builder(context,R.style.CustomDialog)
+        val factory = LayoutInflater.from(context)
+        val loadingDialogView : View = factory.inflate(R.layout.cerrar_sesion, null)
+        val textViewLoadingDialog = loadingDialogView.findViewById<TextView>(R.id.textViewTittle)
+        val textViewMessage = loadingDialogView.findViewById<TextView>(R.id.textViewMensaje)
+        val buttonPositive = loadingDialogView.findViewById<Button>(R.id.buttonSi)
+        val buttonNegative = loadingDialogView.findViewById<Button>(R.id.buttonNo)
+        textViewLoadingDialog.setText(titulo)
+        textViewMessage.setText(msg)
+        builder.setView(loadingDialogView)
+        builder.setCancelable(false)
+        dialogCerrarSesion = builder.create()
+        dialogCerrarSesion!!.show()
+        buttonNegative.setOnClickListener {
+            dialogCerrarSesion?.dismiss()
+        }
+        buttonPositive.setOnClickListener {
+            val intent= Intent(context, Welcome::class.java)
+            context.startActivity(intent)
+            (context as Activity).overridePendingTransition(
+                R.anim.right_in, R.anim.right_out
+            )
+            context.finish()
+            sharedPreferences().set(context, KeySharedPreferences.STATUS_PROFILE.value,"0")
+        }
+    }
+
     private fun animationLoading(imageViewLoading: ImageView, state: Boolean) {
         val animation = if (state)
             R.anim.loading
@@ -53,6 +89,7 @@ class LoadingDialog (val context: Context, val text: String) {
         dialogSuccess?.dismiss()
         dialogWarning?.dismiss()
         dialogError?.dismiss()
+        dialogCerrarSesion?.dismiss()
     }
 
     fun succesful(text: Int) {

@@ -47,4 +47,18 @@
     <string name="credencialesValidas">Valid credentials</string>
     <string name="noExisteUnaCuenta">There is no account with this email</string>
     <string name="credencialesInvalidas">The credentials are invalid</string>
+    <string name="bienvenido_a_dermoapp">Welcome to DermoApp</string>
+    <string name="para_continuar_se_requiere_conocer_tu_perfil_por_favor_ingresa_los_siguientes_datos">To continue it is required to know your profile, please enter the following information:</string>
+    <string name="nombre">Name</string>
+    <string name="edad_a_os">Age (years)</string>
+    <string name="ciudad_o_municipio">City</string>
+    <string name="continue_dos">Continue</string>
+    <string name="laEdadDebeSerMayorACero">You must be of legal age</string>
+    <string name="invalidaCiudad">Select a city from the list</string>
+    <string name="configurandoTuPerfilDeUsuario">Setting up your user profile…</string>
+    <string name="configuracionExitosa">Successful configuration</string>
+    <string name="importante">IMPORTANT</string>
+    <string name="cerrarSesion">Are you sure you want to log out?</string>
+    <string name="no">NOT</string>
+    <string name="si">YES</string>
 </resources>

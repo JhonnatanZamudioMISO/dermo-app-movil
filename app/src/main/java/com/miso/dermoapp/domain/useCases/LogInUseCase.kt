@@ -1,9 +1,12 @@
 package com.miso.dermoapp.domain.useCases
 
+import android.content.Context
 import com.miso.dermoapp.data.attributes.user.entitie.RequestUser
 import com.miso.dermoapp.data.attributes.user.repository.UserRepository
 import com.miso.dermoapp.domain.models.enumerations.CodeResponseLoginUser
+import com.miso.dermoapp.domain.models.enumerations.KeySharedPreferences
 import com.miso.dermoapp.domain.models.enumerations.MessageResponseLoginUser
+import com.miso.dermoapp.domain.models.utils.sharedPreferences
 
 /****
  * Project: DermoApp
@@ -27,5 +30,12 @@ class LogInUseCase(private val userRepository: UserRepository) {
             return CodeResponseLoginUser.CREDENCIALES_INVALIDAS.code
         }
         return CodeResponseLoginUser.ERROR.code
+    }
+
+    fun getStatusProfile(context: Context): Int {
+        if (sharedPreferences().get(context, KeySharedPreferences.STATUS_PROFILE.value).toInt()== 0)
+            return CodeResponseLoginUser.PERFIL_DE_USUARIO.code
+        else
+            return sharedPreferences().get(context, KeySharedPreferences.STATUS_PROFILE.value).toInt()
     }
 }
