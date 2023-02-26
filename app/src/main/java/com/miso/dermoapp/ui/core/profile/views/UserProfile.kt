@@ -1,9 +1,9 @@
 package com.miso.dermoapp.ui.core.profile.views
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
@@ -18,6 +18,7 @@ import com.miso.dermoapp.ui.core.profile.viewModels.UserProfileViewModelFactory
 import com.miso.dermoapp.ui.core.utils.CustomSnackBar
 import com.miso.dermoapp.ui.core.utils.LoadingDialog
 import kotlinx.coroutines.DelicateCoroutinesApi
+
 
 @Suppress("COMPATIBILITY_WARNING", "DEPRECATION")
 class UserProfile : AppCompatActivity() {
@@ -35,6 +36,10 @@ class UserProfile : AppCompatActivity() {
         binding.lifecycleOwner = this
         binding.vModel = viewModel
         loadingDialog = LoadingDialog(this, getString(R.string.configurandoTuPerfilDeUsuario))
+
+        binding.imageViewBack.setOnClickListener {
+            onBackPressed()
+        }
 
         viewModel.citiesList.observe(this, {
                 citiesList -> binding.textViewCity.setAdapter(ArrayAdapter(this@UserProfile, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,citiesList[0].data))
@@ -130,4 +135,8 @@ class UserProfile : AppCompatActivity() {
         finish()
     }
 
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        loadingDialog.cerrarSesion(getResources().getString(R.string.importante), getResources().getString(R.string.cerrarSesion))
+    }
 }

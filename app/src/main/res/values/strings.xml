@@ -57,4 +57,8 @@
     <string name="invalidaCiudad">Select a city from the list</string>
     <string name="configurandoTuPerfilDeUsuario">Setting up your user profile…</string>
     <string name="configuracionExitosa">Successful configuration</string>
+    <string name="importante">IMPORTANT</string>
+    <string name="cerrarSesion">Are you sure you want to log out?</string>
+    <string name="no">NOT</string>
+    <string name="si">YES</string>
 </resources>
