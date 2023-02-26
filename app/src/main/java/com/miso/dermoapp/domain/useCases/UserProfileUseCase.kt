@@ -1,7 +1,12 @@
 package com.miso.dermoapp.domain.useCases
 
+import android.content.Context
 import com.miso.dermoapp.data.attributes.city.entitie.ResponseCities
 import com.miso.dermoapp.data.attributes.city.repository.CityRepository
+import com.miso.dermoapp.domain.models.entities.UserProfileData
+import com.miso.dermoapp.domain.models.enumerations.CodeResponseLoginUser
+import com.miso.dermoapp.domain.models.enumerations.KeySharedPreferences
+import com.miso.dermoapp.domain.models.utils.sharedPreferences
 
 /****
  * Project: DermoApp
@@ -28,5 +33,14 @@ class UserProfileUseCase(val cityRepository: CityRepository) {
             }
         }
         return cityFounded
+    }
+
+    fun setDataProfile(context: Context, userProfle: UserProfileData?): Int {
+        if (sharedPreferences().set(context, KeySharedPreferences.NAME.value, userProfle!!.name) == true &&
+        sharedPreferences().set(context, KeySharedPreferences.AGE.value, userProfle.age) == true &&
+        sharedPreferences().set(context, KeySharedPreferences.CITY.value, userProfle.city) == true )
+            return CodeResponseLoginUser.PERFIL_DERMATOLOGICO.code
+        else
+            return CodeResponseLoginUser.ERROR.code
     }
 }

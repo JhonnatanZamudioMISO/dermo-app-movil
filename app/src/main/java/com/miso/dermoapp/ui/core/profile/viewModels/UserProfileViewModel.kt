@@ -17,8 +17,7 @@ import com.miso.dermoapp.domain.models.enumerations.ResponseErrorField
 import com.miso.dermoapp.domain.models.utils.UtilsFields
 import com.miso.dermoapp.domain.models.utils.UtilsNetwork
 import com.miso.dermoapp.domain.useCases.UserProfileUseCase
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 /****
  * Project: DermoApp
@@ -46,6 +45,9 @@ class UserProfileViewModel(cityRepository: CityRepository): ViewModel() {
     val snackBarAction = MutableLiveData<Int>()
     val snackBarNavigate = MutableLiveData<Int>()
     val snackBarTextWarning = MutableLiveData<String>()
+    val validateChangeScreen = MutableLiveData<Int>()
+    val resultUserProfile = MutableLiveData<Int>()
+
 
     init {
         errorName.value = ResponseErrorField.DEFAULT.label
@@ -58,6 +60,27 @@ class UserProfileViewModel(cityRepository: CityRepository): ViewModel() {
         getDataCitiesByCodeCountry()
         navigateToDermatologicalProfile.value = false
         snackBarNavigate.value = CodeSnackBarCloseAction.NONE.code
+        validateChangeScreen.value = -1
+    }
+
+    @OptIn(DelicateCoroutinesApi::class)
+    fun saveDataProfile(context: Context){
+        GlobalScope.launch {
+            withContext(Dispatchers.IO) {
+                delay(500)
+            }
+            resultUserProfile.postValue(userProfileUseCase.setDataProfile(context,userProfle.value))
+        }
+    }
+
+    @OptIn(DelicateCoroutinesApi::class)
+    fun delayScreen(code: Int){
+        GlobalScope.launch {
+            withContext(Dispatchers.IO) {
+                delay(1500)
+            }
+            validateChangeScreen.postValue(code)
+        }
     }
 
     fun checkOnline(context: Context): Boolean {

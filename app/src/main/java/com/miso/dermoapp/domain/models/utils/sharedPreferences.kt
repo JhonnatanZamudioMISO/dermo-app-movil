@@ -20,11 +20,16 @@ class sharedPreferences {
         return sharedPreferences.getString(dato, CodeSharedPreferences.DEFAULT.code).toString()
     }
 
-    fun set(context: Context, clave: String, valor: String) {
-        val sharedPreferences = context.getSharedPreferences("SESION", MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        editor.putString(clave, valor)
-        editor.apply()
+    fun set(context: Context, clave: String, valor: String): Boolean {
+        return try {
+            val sharedPreferences = context.getSharedPreferences("SESION", MODE_PRIVATE)
+            val editor = sharedPreferences.edit()
+            editor.putString(clave, valor)
+            editor.apply()
+            true
+        } catch (e: Exception) {
+            false
+        }
     }
 
 }

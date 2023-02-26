@@ -1,5 +1,6 @@
 package com.miso.dermoapp.ui.core.profile.views
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
@@ -8,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import com.miso.dermoapp.R
 import com.miso.dermoapp.databinding.ActivityUserProfileBinding
+import com.miso.dermoapp.domain.models.enumerations.CodeResponseLoginUser
 import com.miso.dermoapp.domain.models.enumerations.CodeSnackBarCloseAction
 import com.miso.dermoapp.domain.models.enumerations.ResponseErrorField
 import com.miso.dermoapp.domain.models.enumerations.TypeSnackBar
@@ -74,7 +76,7 @@ class UserProfile : AppCompatActivity() {
             if (it) {
                 loadingDialog.startLoadingDialog()
                 if (viewModel.checkOnline(this))
-                    //viewModel.createUser()
+                    viewModel.saveDataProfile(this)
                 else
                     viewModel.snackBarAction.value = 0
             }
@@ -99,5 +101,33 @@ class UserProfile : AppCompatActivity() {
             )
         })
 
+        viewModel.resultUserProfile.observe(this, {
+            when(it){
+                CodeResponseLoginUser.PERFIL_DERMATOLOGICO.code-> loadingDialog.succesful(R.string.configuracionExitosa)
+                CodeResponseLoginUser.ERROR.code -> loadingDialog.error()
+            }
+            viewModel.delayScreen(it)
+        })
+
+        viewModel.validateChangeScreen.observe(this, {
+            when(it) {
+                CodeResponseLoginUser.ERROR.code -> loadingDialog.hideLoadingDialog()
+                CodeResponseLoginUser.PERFIL_DERMATOLOGICO.code -> goToScreen(
+                    Intent(
+                        this@UserProfile,
+                        UserDematologicalProfile::class.java
+                    )
+                )
+            }
+        })
+
     }
+
+    private fun goToScreen(intent: Intent) {
+        loadingDialog.hideLoadingDialog()
+        startActivity(intent)
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout)
+        finish()
+    }
+
 }

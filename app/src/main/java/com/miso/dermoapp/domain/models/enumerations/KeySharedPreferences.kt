@@ -11,5 +11,8 @@ enum class KeySharedPreferences(val value: String) {
     IDIOMA("idioma"),
     ENGLISH("ingles"),
     SPANISH("español"),
-    STATUS_PROFILE("perfil")
+    STATUS_PROFILE("perfil"),
+    NAME("nombre"),
+    AGE("edad"),
+    CITY("ciudad")
 }

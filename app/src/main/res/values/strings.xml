@@ -56,4 +56,5 @@
     <string name="laEdadDebeSerMayorACero">You must be of legal age</string>
     <string name="invalidaCiudad">Select a city from the list</string>
     <string name="configurandoTuPerfilDeUsuario">Setting up your user profile…</string>
+    <string name="configuracionExitosa">Successful configuration</string>
 </resources>
