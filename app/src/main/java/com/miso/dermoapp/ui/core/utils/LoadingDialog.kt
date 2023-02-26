@@ -13,6 +13,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import com.miso.dermoapp.R
+import com.miso.dermoapp.domain.models.enumerations.KeySharedPreferences
+import com.miso.dermoapp.domain.models.utils.sharedPreferences
 import com.miso.dermoapp.ui.core.home.views.Welcome
 
 
@@ -70,6 +72,7 @@ class LoadingDialog (val context: Context, val text: String) {
                 R.anim.right_in, R.anim.right_out
             )
             context.finish()
+            sharedPreferences().set(context, KeySharedPreferences.STATUS_PROFILE.value,"0")
         }
     }
 

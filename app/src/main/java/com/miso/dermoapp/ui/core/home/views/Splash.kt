@@ -18,12 +18,11 @@ import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.model.AppUpdateType
 import com.miso.dermoapp.R
 import com.miso.dermoapp.databinding.ActivitySplashBinding
-import com.miso.dermoapp.domain.models.enumerations.CodeActivityForResult
-import com.miso.dermoapp.domain.models.enumerations.CodePermissions
-import com.miso.dermoapp.domain.models.enumerations.KeySharedPreferences
-import com.miso.dermoapp.domain.models.enumerations.TypeSnackBar
+import com.miso.dermoapp.domain.models.enumerations.*
 import com.miso.dermoapp.ui.core.home.viewModels.SplashViewModel
 import com.miso.dermoapp.ui.core.home.viewModels.SplashViewModelFactory
+import com.miso.dermoapp.ui.core.profile.views.UserDematologicalProfile
+import com.miso.dermoapp.ui.core.profile.views.UserProfile
 import com.miso.dermoapp.ui.core.utils.CustomSnackBar
 import kotlinx.coroutines.*
 import pub.devrel.easypermissions.*
@@ -135,8 +134,20 @@ class Splash : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
                         startActivity(intent)
                     }
                     1 -> {
-                        intent = Intent(this@Splash, Welcome::class.java)
-                        startActivity(intent)
+                        when (viewModel.validateStatusProfile(this@Splash)) {
+                            0 -> {
+                                intent = Intent(this@Splash, Welcome::class.java)
+                                startActivity(intent)
+                            }
+                            CodeResponseLoginUser.PERFIL_DE_USUARIO.code -> {
+                                intent = Intent(this@Splash, UserProfile::class.java)
+                                startActivity(intent)
+                            }
+                            CodeResponseLoginUser.PERFIL_DERMATOLOGICO.code -> {
+                                intent = Intent(this@Splash, UserDematologicalProfile::class.java)
+                                startActivity(intent)
+                            }
+                        }
                     }
                 }
                 overridePendingTransition(R.anim.fadein, R.anim.fadeout)

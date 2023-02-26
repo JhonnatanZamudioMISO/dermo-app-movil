@@ -46,6 +46,10 @@ class SplashViewModel(versionRepository: VersionRepository): ViewModel() {
         }
     }
 
+    fun validateStatusProfile(context: Context): Int {
+        return splashUseCase.getStatusProfile(context)
+    }
+
     fun setVersion(v:String){
         version.value = v
     }

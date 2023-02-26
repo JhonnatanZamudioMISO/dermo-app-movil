@@ -38,7 +38,8 @@ class UserProfileUseCase(val cityRepository: CityRepository) {
     fun setDataProfile(context: Context, userProfle: UserProfileData?): Int {
         if (sharedPreferences().set(context, KeySharedPreferences.NAME.value, userProfle!!.name) == true &&
         sharedPreferences().set(context, KeySharedPreferences.AGE.value, userProfle.age) == true &&
-        sharedPreferences().set(context, KeySharedPreferences.CITY.value, userProfle.city) == true )
+        sharedPreferences().set(context, KeySharedPreferences.CITY.value, userProfle.city) == true &&
+            sharedPreferences().set(context, KeySharedPreferences.STATUS_PROFILE.value, CodeResponseLoginUser.PERFIL_DERMATOLOGICO.code.toString())== true)
             return CodeResponseLoginUser.PERFIL_DERMATOLOGICO.code
         else
             return CodeResponseLoginUser.ERROR.code
