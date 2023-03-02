@@ -1,11 +1,16 @@
 package com.miso.dermoapp.ui.core.profile.viewModels
 
 import android.content.Context
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
+import com.miso.dermoapp.data.attributes.typeKin.entitie.ResponseKinType
 import com.miso.dermoapp.data.attributes.typeKin.repository.TypeKinRepository
 import com.miso.dermoapp.domain.injectionOfDependencies.Injection
+import com.miso.dermoapp.domain.useCases.UserDermatologicalUseCase
 import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.launch
 
 /****
  * Project: DermoApp
@@ -15,6 +20,19 @@ import kotlinx.coroutines.DelicateCoroutinesApi
  ****/
 
 class UserDermatologicalProfileViewModel(typeKinRepository: TypeKinRepository): ViewModel() {
+    val typeKinSelectedPosition = MutableLiveData<Int>()
+    lateinit var typeKinsList: List<ResponseKinType>
+    private val userDermatologicalUseCase = UserDermatologicalUseCase(typeKinRepository)
+
+    init {
+        getKinTypeSpinner()
+    }
+
+    private fun getKinTypeSpinner() {
+        viewModelScope.launch {
+            typeKinsList = userDermatologicalUseCase.getDataTypeKin()
+        }
+    }
 }
 
 @DelicateCoroutinesApi

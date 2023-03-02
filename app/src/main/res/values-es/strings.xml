@@ -67,4 +67,5 @@
     <string name="imagen_tipo_de_piel">Imagen tipo de piel</string>
     <string name="configurandoPerfilDermatologico">Agregando perfil dermatológico…</string>
     <string name="seleccion_tipo_piel">Tipo de piel</string>
+    <string name="separador">&#160;-&#160;</string>
 </resources>
