@@ -26,5 +26,26 @@ class UserDematologicalProfile : AppCompatActivity() {
         binding.lifecycleOwner = this
         binding.vModel = viewModel
         loadingDialog = LoadingDialog(this, getString(R.string.configurandoPerfilDermatologico))
+
+        binding.buttonTypeOfKin.setOnClickListener {
+            createDialogSpinner(viewModel.typeDocumentsList, CodeTypeSpinner.TYPE_DOCUMENT.code)
+        }
+    }
+
+    private fun createDialogSpinner(dataList: List<Any>, code: Int) {
+        val dialog = ListDialog(
+            dataList,
+            code,
+            object : CustomSpinnerAdapter.CustomActionSpinner {
+                override fun onItemSelected(position: Int) {
+                    when (code) {
+                        CodeTypeSpinner.COUNTRIES.code -> viewModel.countrySelectedPosition.value =
+                            position
+                        CodeTypeSpinner.TYPE_DOCUMENT.code -> viewModel.typeDocumentSelectedPosition.value =
+                            position
+                    }
+                }
+            })
+        dialog.show(this.supportFragmentManager, tag)
     }
 }
