@@ -66,4 +66,5 @@
     <string name="agregar_foto">Add photo&#160;&#160;</string>
     <string name="imagen_tipo_de_piel">Image skin type</string>
     <string name="configurandoPerfilDermatologico">Adding dermatological profile…</string>
+    <string name="seleccion_tipo_piel">Type of kin</string>
 </resources>

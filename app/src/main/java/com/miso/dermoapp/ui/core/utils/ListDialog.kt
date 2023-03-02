@@ -1,5 +1,20 @@
 package com.miso.dermoapp.ui.core.utils
 
+import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.app.Dialog
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.WindowManager
+import androidx.fragment.app.DialogFragment
+import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.miso.dermoapp.R
+import com.miso.dermoapp.databinding.DialogListBinding
+import com.miso.dermoapp.domain.models.utils.UtilsDialog
+
 /****
  * Project: DermoApp
  * From: com.miso.dermoapp.ui.core.utils
@@ -19,6 +34,7 @@ class ListDialog(
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
+    @SuppressLint("UseGetLayoutInflater")
     @Suppress("UNCHECKED_CAST")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         mBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.dialog_list, null, false)
@@ -27,7 +43,7 @@ class ListDialog(
         alertDialog.setTitle(UtilsDialog().getIdTitle(code))
         val dialog = alertDialog.create()
         dialog?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
-        val adapter = CustomSpinnerAdapter(data as List<ResponseCountries>,code)
+        val adapter = CustomSpinnerAdapter(data,code)
         val layoutManager = LinearLayoutManager(context)
         mBinding?.rvItems?.layoutManager = layoutManager
         mBinding?.rvItems?.adapter = adapter
