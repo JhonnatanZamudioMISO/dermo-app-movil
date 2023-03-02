@@ -65,4 +65,5 @@
     <string name="adicionalmente_dermoapp_requiere_conocer_tu_tipo_de_piel_y_una_foto_de_tu_estado_actual">Adicionalmente DermoApp requiere conocer tu tipo de piel y una foto de tu estado actual</string>
     <string name="agregar_foto">Agregar foto&#160;&#160;</string>
     <string name="imagen_tipo_de_piel">Imagen tipo de piel</string>
+    <string name="configurandoPerfilDermatologico">Agregando perfil dermatológico…</string>
 </resources>
