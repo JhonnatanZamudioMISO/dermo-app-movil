@@ -1,6 +1,11 @@
 package com.miso.dermoapp.ui.core.profile.viewModels
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import com.miso.dermoapp.data.attributes.typeKin.repository.TypeKinRepository
+import com.miso.dermoapp.domain.injectionOfDependencies.Injection
+import kotlinx.coroutines.DelicateCoroutinesApi
 
 /****
  * Project: DermoApp
@@ -9,5 +14,27 @@ import androidx.lifecycle.ViewModel
  * All rights reserved 2023.
  ****/
 
-class UserDermatologicalProfileViewModel: ViewModel() {
+class UserDermatologicalProfileViewModel(typeKinRepository: TypeKinRepository): ViewModel() {
+}
+
+@DelicateCoroutinesApi
+@Suppress("UNCHECKED_CAST")
+class UserDermatologicalProfileViewModelFactory(
+    private val typeKinRepository: TypeKinRepository
+) : ViewModelProvider.NewInstanceFactory() {
+
+    companion object {
+        @Volatile
+        private var instance: UserDermatologicalProfileViewModelFactory? = null
+        fun getInstance(context: Context): UserDermatologicalProfileViewModelFactory =
+            instance ?: synchronized(this) {
+                instance ?: UserDermatologicalProfileViewModelFactory(
+                    Injection.providerTypeKinRepository(context)
+                )
+            }
+    }
+
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        return UserDermatologicalProfileViewModel(typeKinRepository) as T
+    }
 }
