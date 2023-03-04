@@ -1,14 +1,17 @@
 package com.miso.dermoapp.ui.core.profile.viewModels
 
 import android.content.Context
+import android.graphics.Bitmap
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.miso.dermoapp.R
+import com.miso.dermoapp.data.attributes.profileDermatological.entitie.RequestProfileDermatological
 import com.miso.dermoapp.data.attributes.typeKin.entitie.ResponseKinType
 import com.miso.dermoapp.data.attributes.typeKin.repository.TypeKinRepository
 import com.miso.dermoapp.domain.injectionOfDependencies.Injection
+import com.miso.dermoapp.domain.models.entities.UserProfileDermatological
 import com.miso.dermoapp.domain.models.enumerations.CodeSnackBarCloseAction
 import com.miso.dermoapp.domain.models.utils.UtilsNetwork
 import com.miso.dermoapp.domain.useCases.UserDermatologicalUseCase
@@ -27,7 +30,6 @@ class UserDermatologicalProfileViewModel(typeKinRepository: TypeKinRepository): 
     lateinit var typeKinsList: List<ResponseKinType>
     private val userDermatologicalUseCase = UserDermatologicalUseCase(typeKinRepository)
     val statusPhoto = MutableLiveData<Boolean>()
-    val email = MutableLiveData<String>()
     val buttonContinueDrawable = MutableLiveData<Int>()
     val buttonContinueEnable = MutableLiveData<Boolean>()
     private var validTipoDePiel = MutableLiveData<Int>()
@@ -36,7 +38,8 @@ class UserDermatologicalProfileViewModel(typeKinRepository: TypeKinRepository): 
     val snackBarAction = MutableLiveData<Int>()
     val snackBarNavigate = MutableLiveData<Int>()
     val snackBarTextWarning = MutableLiveData<String>()
-
+    var userProfileDermatological = MutableLiveData<UserProfileDermatological>()
+    val resultCreateProfileDermatological = MutableLiveData<Int>()
 
     init {
         getKinTypeSpinner()
@@ -45,10 +48,15 @@ class UserDermatologicalProfileViewModel(typeKinRepository: TypeKinRepository): 
         validFoto.value = 0
         navigateToDashboard.value = false
         snackBarNavigate.value = CodeSnackBarCloseAction.NONE.code
+        userProfileDermatological.value = UserProfileDermatological("","","","","","")
+        changeEnableButton()
     }
 
     fun getEmail(context: Context){
-        email.postValue(userDermatologicalUseCase.getEmail(context))
+        userProfileDermatological.value!!.email = userDermatologicalUseCase.getEmail(context)
+        userProfileDermatological.value!!.name = userDermatologicalUseCase.getName(context)
+        userProfileDermatological.value!!.age = userDermatologicalUseCase.getAge(context)
+        userProfileDermatological.value!!.city = userDermatologicalUseCase.getCity(context)
     }
 
     private fun getKinTypeSpinner() {
@@ -61,8 +69,9 @@ class UserDermatologicalProfileViewModel(typeKinRepository: TypeKinRepository): 
         statusPhoto.value = true
     }
 
-    fun validateSpinner () {
+    fun validateSpinner (typeSkin: String) {
         validTipoDePiel.value = 1
+        userProfileDermatological.value!!.typeKin = typeSkin
         changeEnableButton()
     }
 
@@ -80,8 +89,9 @@ class UserDermatologicalProfileViewModel(typeKinRepository: TypeKinRepository): 
         }
     }
 
-    fun validatePhoto() {
+    fun validatePhoto(bitmap: Bitmap) {
         validFoto.value = 1
+        userProfileDermatological.value!!.photoTypeKin = userDermatologicalUseCase.getBase64Photo(bitmap)
         changeEnableButton()
     }
 
@@ -90,7 +100,22 @@ class UserDermatologicalProfileViewModel(typeKinRepository: TypeKinRepository): 
     }
 
     fun checkOnline(context: Context): Boolean {
+        getEmail(context)
         return UtilsNetwork().isOnline(context)
+    }
+
+    fun createProfileDermatological() {
+        viewModelScope.launch {
+            val userProfile = RequestProfileDermatological(
+                userProfileDermatological.value!!.email,
+                userProfileDermatological.value!!.name,
+                userProfileDermatological.value!!.age,
+                userProfileDermatological.value!!.city,
+                userProfileDermatological.value!!.typeKin,
+                userProfileDermatological.value!!.photoTypeKin
+            )
+            resultCreateProfileDermatological.value = userDermatologicalUseCase.createProfile(userProfile)
+        }
     }
 }
 

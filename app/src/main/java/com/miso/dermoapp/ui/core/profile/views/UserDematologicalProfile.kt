@@ -61,7 +61,9 @@ class UserDematologicalProfile : AppCompatActivity() {
                     getString(R.string.espacio) + viewModel.typeKinsList[it].abbreviate + getString(
                         R.string.separador
                     ) + viewModel.typeKinsList[it].description
-                viewModel.validateSpinner()
+                viewModel.validateSpinner(viewModel.typeKinsList[it].abbreviate + getString(
+                    R.string.separador
+                ) + viewModel.typeKinsList[it].description)
             }
         }
 
@@ -82,7 +84,7 @@ class UserDematologicalProfile : AppCompatActivity() {
             if (it) {
                 loadingDialog.startLoadingDialog()
                 if (viewModel.checkOnline(this))
-                    //viewModel.loginUser()
+                    viewModel.createProfileDermatological()
                 else
                     viewModel.snackBarAction.value = 0
             }
@@ -116,7 +118,7 @@ class UserDematologicalProfile : AppCompatActivity() {
             val myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath())
             binding.imageViewPhoto.setBackgroundResource(R.drawable.ic_eye)
             binding.imageViewPhoto.setImageBitmap(myBitmap)
-            viewModel.validatePhoto()
+            viewModel.validatePhoto(myBitmap)
         }
     }
 

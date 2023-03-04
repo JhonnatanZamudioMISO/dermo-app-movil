@@ -184,6 +184,7 @@ class LogInViewModel(userRepository: UserRepository): ViewModel() {
     }
 
     fun checkOnline(context: Context): Boolean {
+
         return UtilsNetwork().isOnline(context)
     }
 }
