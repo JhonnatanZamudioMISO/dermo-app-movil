@@ -7,6 +7,7 @@ import com.miso.dermoapp.data.attributes.profileDermatological.entitie.RequestPr
 import com.miso.dermoapp.data.attributes.profileDermatological.repository.ProfileDermatologicalRepository
 import com.miso.dermoapp.data.attributes.typeKin.entitie.ResponseKinType
 import com.miso.dermoapp.data.attributes.typeKin.repository.TypeKinRepository
+import com.miso.dermoapp.domain.models.enumerations.CodeResponseLoginUser
 import com.miso.dermoapp.domain.models.enumerations.KeySharedPreferences
 import com.miso.dermoapp.domain.models.utils.sharedPreferences
 import java.io.ByteArrayOutputStream
@@ -54,11 +55,8 @@ class UserDermatologicalUseCase(private val typeKinRepository: TypeKinRepository
 
     suspend fun createProfile(profile: RequestProfileDermatological): Int {
         val resultProfile = profileRepository.insertCreateProfileRemote(profile)
-        /*if (resultUser.description == "Cuenta creada exitosamente"){
-            return 0
-        } else if (resultUser.description == "El correo ingresado ya esta registrado") {
-            return 1
-        }*/
-        return 2
+        if (resultProfile.description == "Perfil actualizado exitosamente" || resultProfile.description == "Perfil creado exitosamente")
+            return CodeResponseLoginUser.PERFIL_DERMATOLOGICO.code
+        return CodeResponseLoginUser.ERROR.code
     }
 }

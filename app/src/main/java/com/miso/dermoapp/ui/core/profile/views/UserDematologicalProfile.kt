@@ -2,10 +2,15 @@ package com.miso.dermoapp.ui.core.profile.views
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Matrix
+import android.media.ExifInterface
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.databinding.DataBindingUtil
@@ -15,6 +20,7 @@ import com.miso.dermoapp.R
 import com.miso.dermoapp.databinding.ActivityUserDematologicalProfileBinding
 import com.miso.dermoapp.domain.models.enumerations.*
 import com.miso.dermoapp.domain.models.utils.sharedPreferences
+import com.miso.dermoapp.ui.core.dashboard.views.Dashboard
 import com.miso.dermoapp.ui.core.profile.viewModels.UserDermatologicalProfileViewModel
 import com.miso.dermoapp.ui.core.profile.viewModels.UserDermatologicalProfileViewModelFactory
 import com.miso.dermoapp.ui.core.utils.CustomSnackBar
@@ -108,8 +114,37 @@ class UserDematologicalProfile : AppCompatActivity() {
                 viewModel.snackBarNavigate.value!!
             )
         })
+
+        viewModel.resultCreateProfileDermatological.observe(this, {
+            when(it){
+                CodeResponseLoginUser.PERFIL_DERMATOLOGICO.code-> loadingDialog.succesful(R.string.agregadoConExito)
+                CodeResponseLoginUser.ERROR.code -> loadingDialog.error()
+            }
+            viewModel.delayScreen(it)
+        })
+
+        viewModel.validateChangeScreen.observe(this, {
+            when(it) {
+                CodeResponseLoginUser.PERFIL_DERMATOLOGICO.code -> {
+                    goToScreen(Intent(
+                            this@UserDematologicalProfile,
+                            Dashboard::class.java
+                        )
+                    )
+                }
+                CodeResponseLoginUser.ERROR.code -> loadingDialog.hideLoadingDialog()
+            }
+        })
+    }
+    private fun goToScreen(intent: Intent) {
+        loadingDialog.hideLoadingDialog()
+        startActivity(intent)
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout)
+        finish()
     }
 
+
+    @RequiresApi(Build.VERSION_CODES.Q)
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -117,9 +152,43 @@ class UserDematologicalProfile : AppCompatActivity() {
             val imgFile = File(sharedPreferences().get(this, KeySharedPreferences.PATH_TIPO_PIEL.value))
             val myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath())
             binding.imageViewPhoto.setBackgroundResource(R.drawable.ic_eye)
-            binding.imageViewPhoto.setImageBitmap(myBitmap)
-            viewModel.validatePhoto(myBitmap)
+            val bitmapAjusted = redimensionarImagen(myBitmap, 1280f, sharedPreferences().get(this, KeySharedPreferences.PATH_TIPO_PIEL.value))!!
+            binding.imageViewPhoto.setImageBitmap(bitmapAjusted)
+            viewModel.validatePhoto(bitmapAjusted)
         }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.Q)
+    @Throws(IOException::class)
+    fun redimensionarImagen(bitmap: Bitmap, anchoNuevo: Float, photoFile: String): Bitmap? {
+        //leemos los parametro de la foto
+        val ancho = bitmap.width
+        val alto = bitmap.height
+        //calculamos la escala de conversion
+        val escala = anchoNuevo / ancho
+        val exif = ExifInterface(photoFile)
+        val rotation: Int =
+            exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
+        val rotationInDegrees: Int = exifToDegrees(rotation)
+        //Creamos la nueva matrix
+        val matrix = Matrix()
+        matrix.postScale(escala, escala)
+        if (rotation.toFloat() != 0f) {
+            matrix.preRotate(rotationInDegrees.toFloat())
+        }
+        //devolvemos
+        return Bitmap.createBitmap(bitmap, 0, 0, ancho, alto, matrix, false)
+    }
+
+    private fun exifToDegrees(exifOrientation: Int): Int {
+        if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_90) {
+            return 90
+        } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_180) {
+            return 180
+        } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_270) {
+            return 270
+        }
+        return 0
     }
 
     @SuppressLint("QueryPermissionsNeeded")

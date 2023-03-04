@@ -16,8 +16,7 @@ import com.miso.dermoapp.domain.models.entities.UserProfileDermatological
 import com.miso.dermoapp.domain.models.enumerations.CodeSnackBarCloseAction
 import com.miso.dermoapp.domain.models.utils.UtilsNetwork
 import com.miso.dermoapp.domain.useCases.UserDermatologicalUseCase
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 /****
  * Project: DermoApp
@@ -41,6 +40,7 @@ class UserDermatologicalProfileViewModel(typeKinRepository: TypeKinRepository, p
     val snackBarTextWarning = MutableLiveData<String>()
     var userProfileDermatological = MutableLiveData<UserProfileDermatological>()
     val resultCreateProfileDermatological = MutableLiveData<Int>()
+    val validateChangeScreen = MutableLiveData<Int>()
 
     init {
         getKinTypeSpinner()
@@ -51,6 +51,7 @@ class UserDermatologicalProfileViewModel(typeKinRepository: TypeKinRepository, p
         snackBarNavigate.value = CodeSnackBarCloseAction.NONE.code
         userProfileDermatological.value = UserProfileDermatological("","","","","","")
         changeEnableButton()
+        validateChangeScreen.value = -1
     }
 
     fun getEmail(context: Context){
@@ -116,6 +117,16 @@ class UserDermatologicalProfileViewModel(typeKinRepository: TypeKinRepository, p
                 userProfileDermatological.value!!.photoTypeKin
             )
             resultCreateProfileDermatological.value = userDermatologicalUseCase.createProfile(userProfile)
+        }
+    }
+
+    @OptIn(DelicateCoroutinesApi::class)
+    fun delayScreen(code: Int){
+        GlobalScope.launch {
+            withContext(Dispatchers.IO) {
+                delay(1500)
+            }
+            validateChangeScreen.postValue(code)
         }
     }
 }

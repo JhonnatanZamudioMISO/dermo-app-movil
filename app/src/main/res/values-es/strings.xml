@@ -69,4 +69,5 @@
     <string name="seleccion_tipo_piel">Tipo de piel</string>
     <string name="separador">&#160;-&#160;</string>
     <string name="problemas_almacenamiento_imagen">Nuestro sistema presenta una falla, intentarlo más tarde</string>
+    <string name="agregadoConExito">Agregado con éxito</string>
 </resources>
