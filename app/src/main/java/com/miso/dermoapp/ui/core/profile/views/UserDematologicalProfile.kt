@@ -135,6 +135,7 @@ class UserDematologicalProfile : AppCompatActivity() {
                             Dashboard::class.java
                         )
                     )
+                    sharedPreferences().set(this, KeySharedPreferences.STATUS_PROFILE.value, CodeResponseLoginUser.DASHBOARD.code.toString())
                 }
                 CodeResponseLoginUser.ERROR.code -> loadingDialog.hideLoadingDialog()
             }
