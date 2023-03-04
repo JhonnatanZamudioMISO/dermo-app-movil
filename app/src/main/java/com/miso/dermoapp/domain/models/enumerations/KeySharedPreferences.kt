@@ -14,5 +14,7 @@ enum class KeySharedPreferences(val value: String) {
     STATUS_PROFILE("perfil"),
     NAME("nombre"),
     AGE("edad"),
-    CITY("ciudad")
+    CITY("ciudad"),
+    EMAIL ("email"),
+    PATH_TIPO_PIEL("tipo_de_piel")
 }

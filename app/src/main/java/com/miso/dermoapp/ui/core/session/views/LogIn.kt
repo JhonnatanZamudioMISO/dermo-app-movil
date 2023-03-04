@@ -123,7 +123,10 @@ class LogIn : AppCompatActivity() {
 
         viewModel.validateChangeScreen.observe(this, {
             when(it) {
-                CodeResponseLoginUser.INICIO_DE_SESION_EXITOSO.code -> viewModel.validateStatusProfile(this)
+                CodeResponseLoginUser.INICIO_DE_SESION_EXITOSO.code -> {
+                    viewModel.validateStatusProfile(this)
+                    sharedPreferences().set(this, KeySharedPreferences.EMAIL.value, viewModel.userAccount.value!!.email)
+                }
                 CodeResponseLoginUser.ERROR.code -> loadingDialog.hideLoadingDialog()
                 CodeResponseLoginUser.LA_CUENTA_NO_EXISTE.code -> goToScreen(
                     Intent(

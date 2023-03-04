@@ -23,15 +23,26 @@ class UserDermatologicalProfileViewModel(typeKinRepository: TypeKinRepository): 
     val typeKinSelectedPosition = MutableLiveData<Int>()
     lateinit var typeKinsList: List<ResponseKinType>
     private val userDermatologicalUseCase = UserDermatologicalUseCase(typeKinRepository)
+    val statusPhoto = MutableLiveData<Boolean>()
+    val email = MutableLiveData<String>()
 
     init {
         getKinTypeSpinner()
+        statusPhoto.value = false
+    }
+
+    fun getEmail(context: Context){
+        email.postValue(userDermatologicalUseCase.getEmail(context))
     }
 
     private fun getKinTypeSpinner() {
         viewModelScope.launch {
             typeKinsList = userDermatologicalUseCase.getDataTypeKin()
         }
+    }
+
+    fun AddPhoto() {
+        statusPhoto.value = true
     }
 }
 

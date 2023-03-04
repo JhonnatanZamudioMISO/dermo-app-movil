@@ -13,6 +13,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import com.miso.dermoapp.R
+import com.miso.dermoapp.domain.models.enumerations.CodeSharedPreferences
 import com.miso.dermoapp.domain.models.enumerations.KeySharedPreferences
 import com.miso.dermoapp.domain.models.utils.sharedPreferences
 import com.miso.dermoapp.ui.core.home.views.Welcome
@@ -66,13 +67,14 @@ class LoadingDialog (val context: Context, val text: String) {
             dialogCerrarSesion?.dismiss()
         }
         buttonPositive.setOnClickListener {
+            sharedPreferences().set(context, KeySharedPreferences.STATUS_PROFILE.value,CodeSharedPreferences.DEFAULT.code)
+            sharedPreferences().set(context, KeySharedPreferences.EMAIL.value, CodeSharedPreferences.DEFAULT.code)
             val intent= Intent(context, Welcome::class.java)
             context.startActivity(intent)
             (context as Activity).overridePendingTransition(
                 R.anim.right_in, R.anim.right_out
             )
             context.finish()
-            sharedPreferences().set(context, KeySharedPreferences.STATUS_PROFILE.value,"0")
         }
     }
 

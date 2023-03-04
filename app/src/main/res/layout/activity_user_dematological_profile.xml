@@ -116,6 +116,7 @@
                 android:drawableEnd="@drawable/ic_camera"
                 android:singleLine="true"
                 android:ellipsize="marquee"
+                android:onClick="@{() -> vModel.AddPhoto()}"
                 android:marqueeRepeatLimit="marquee_forever"
                 android:fontFamily="@font/helveticaltstdroman"
                 android:gravity="center_horizontal|center_vertical"
