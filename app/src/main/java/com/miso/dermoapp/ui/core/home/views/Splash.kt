@@ -19,6 +19,7 @@ import com.google.android.play.core.install.model.AppUpdateType
 import com.miso.dermoapp.R
 import com.miso.dermoapp.databinding.ActivitySplashBinding
 import com.miso.dermoapp.domain.models.enumerations.*
+import com.miso.dermoapp.ui.core.dashboard.views.Dashboard
 import com.miso.dermoapp.ui.core.home.viewModels.SplashViewModel
 import com.miso.dermoapp.ui.core.home.viewModels.SplashViewModelFactory
 import com.miso.dermoapp.ui.core.profile.views.UserDematologicalProfile
@@ -145,6 +146,10 @@ class Splash : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
                             }
                             CodeResponseLoginUser.PERFIL_DERMATOLOGICO.code -> {
                                 intent = Intent(this@Splash, UserDematologicalProfile::class.java)
+                                startActivity(intent)
+                            }
+                            CodeResponseLoginUser.DASHBOARD.code -> {
+                                intent = Intent(this@Splash, Dashboard::class.java)
                                 startActivity(intent)
                             }
                         }

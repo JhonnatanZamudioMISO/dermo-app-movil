@@ -13,5 +13,6 @@ enum class CodeResponseLoginUser (val code: Int) {
     CREDENCIALES_INVALIDAS(0x2),
     ERROR(0x3),
     PERFIL_DE_USUARIO(0x4),
-    PERFIL_DERMATOLOGICO(0x5)
+    PERFIL_DERMATOLOGICO(0x5),
+    DASHBOARD(0x6)
 }

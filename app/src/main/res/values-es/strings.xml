@@ -61,4 +61,13 @@
     <string name="cerrarSesion">¿Está seguro de que desea cerrar sesión?</string>
     <string name="no">NO</string>
     <string name="si">Si</string>
+    <string name="perfil_dermatol_gico">Perfil dermatológico</string>
+    <string name="adicionalmente_dermoapp_requiere_conocer_tu_tipo_de_piel_y_una_foto_de_tu_estado_actual">Adicionalmente DermoApp requiere conocer tu tipo de piel y una foto de tu estado actual</string>
+    <string name="agregar_foto">Agregar foto&#160;&#160;</string>
+    <string name="imagen_tipo_de_piel">Imagen tipo de piel</string>
+    <string name="configurandoPerfilDermatologico">Agregando perfil dermatológico…</string>
+    <string name="seleccion_tipo_piel">Tipo de piel</string>
+    <string name="separador">&#160;-&#160;</string>
+    <string name="problemas_almacenamiento_imagen">Nuestro sistema presenta una falla, intentarlo más tarde</string>
+    <string name="agregadoConExito">Agregado con éxito</string>
 </resources>

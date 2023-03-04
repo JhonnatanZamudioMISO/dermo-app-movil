@@ -11,6 +11,7 @@ import com.miso.dermoapp.R
 import com.miso.dermoapp.databinding.ActivityLogInBinding
 import com.miso.dermoapp.domain.models.enumerations.*
 import com.miso.dermoapp.domain.models.utils.sharedPreferences
+import com.miso.dermoapp.ui.core.dashboard.views.Dashboard
 import com.miso.dermoapp.ui.core.home.views.Welcome
 import com.miso.dermoapp.ui.core.profile.views.UserDematologicalProfile
 import com.miso.dermoapp.ui.core.profile.views.UserProfile
@@ -123,7 +124,10 @@ class LogIn : AppCompatActivity() {
 
         viewModel.validateChangeScreen.observe(this, {
             when(it) {
-                CodeResponseLoginUser.INICIO_DE_SESION_EXITOSO.code -> viewModel.validateStatusProfile(this)
+                CodeResponseLoginUser.INICIO_DE_SESION_EXITOSO.code -> {
+                    viewModel.validateStatusProfile(this)
+                    sharedPreferences().set(this, KeySharedPreferences.EMAIL.value, viewModel.userAccount.value!!.email)
+                }
                 CodeResponseLoginUser.ERROR.code -> loadingDialog.hideLoadingDialog()
                 CodeResponseLoginUser.LA_CUENTA_NO_EXISTE.code -> goToScreen(
                     Intent(
@@ -152,6 +156,15 @@ class LogIn : AppCompatActivity() {
                         )
                     )
                     sharedPreferences().set(this, KeySharedPreferences.STATUS_PROFILE.value, CodeResponseLoginUser.PERFIL_DERMATOLOGICO.code.toString())
+                }
+                CodeResponseLoginUser.DASHBOARD.code -> {
+                    goToScreen(
+                        Intent(
+                            this@LogIn,
+                            Dashboard::class.java
+                        )
+                    )
+                    sharedPreferences().set(this, KeySharedPreferences.STATUS_PROFILE.value, CodeResponseLoginUser.DASHBOARD.code.toString())
                 }
             }
         })
