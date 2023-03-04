@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.util.Base64
 import com.miso.dermoapp.data.attributes.profileDermatological.entitie.RequestProfileDermatological
+import com.miso.dermoapp.data.attributes.profileDermatological.repository.ProfileDermatologicalRepository
 import com.miso.dermoapp.data.attributes.typeKin.entitie.ResponseKinType
 import com.miso.dermoapp.data.attributes.typeKin.repository.TypeKinRepository
 import com.miso.dermoapp.domain.models.enumerations.KeySharedPreferences
@@ -18,7 +19,7 @@ import java.io.ByteArrayOutputStream
  * All rights reserved 2023.
  ****/
 
-class UserDermatologicalUseCase(private val typeKinRepository: TypeKinRepository) {
+class UserDermatologicalUseCase(private val typeKinRepository: TypeKinRepository, private val profileRepository: ProfileDermatologicalRepository) {
 
     suspend fun getDataTypeKin(): List<ResponseKinType> {
         return typeKinRepository.getDataTypeKin().sortedBy { myObject -> myObject.abbreviate }
@@ -52,8 +53,8 @@ class UserDermatologicalUseCase(private val typeKinRepository: TypeKinRepository
     }
 
     suspend fun createProfile(profile: RequestProfileDermatological): Int {
-        /*val resultUser = userRepository.insertUserRemote(user)
-        if (resultUser.description == "Cuenta creada exitosamente"){
+        val resultProfile = profileRepository.insertCreateProfileRemote(profile)
+        /*if (resultUser.description == "Cuenta creada exitosamente"){
             return 0
         } else if (resultUser.description == "El correo ingresado ya esta registrado") {
             return 1

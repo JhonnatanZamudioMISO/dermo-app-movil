@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.miso.dermoapp.R
 import com.miso.dermoapp.data.attributes.profileDermatological.entitie.RequestProfileDermatological
+import com.miso.dermoapp.data.attributes.profileDermatological.repository.ProfileDermatologicalRepository
 import com.miso.dermoapp.data.attributes.typeKin.entitie.ResponseKinType
 import com.miso.dermoapp.data.attributes.typeKin.repository.TypeKinRepository
 import com.miso.dermoapp.domain.injectionOfDependencies.Injection
@@ -25,10 +26,10 @@ import kotlinx.coroutines.launch
  * All rights reserved 2023.
  ****/
 
-class UserDermatologicalProfileViewModel(typeKinRepository: TypeKinRepository): ViewModel() {
+class UserDermatologicalProfileViewModel(typeKinRepository: TypeKinRepository, profileRepository: ProfileDermatologicalRepository): ViewModel() {
     val typeKinSelectedPosition = MutableLiveData<Int>()
     lateinit var typeKinsList: List<ResponseKinType>
-    private val userDermatologicalUseCase = UserDermatologicalUseCase(typeKinRepository)
+    private val userDermatologicalUseCase = UserDermatologicalUseCase(typeKinRepository, profileRepository)
     val statusPhoto = MutableLiveData<Boolean>()
     val buttonContinueDrawable = MutableLiveData<Int>()
     val buttonContinueEnable = MutableLiveData<Boolean>()
@@ -122,7 +123,8 @@ class UserDermatologicalProfileViewModel(typeKinRepository: TypeKinRepository): 
 @DelicateCoroutinesApi
 @Suppress("UNCHECKED_CAST")
 class UserDermatologicalProfileViewModelFactory(
-    private val typeKinRepository: TypeKinRepository
+    private val typeKinRepository: TypeKinRepository,
+    private val profileRepository: ProfileDermatologicalRepository
 ) : ViewModelProvider.NewInstanceFactory() {
 
     companion object {
@@ -131,12 +133,13 @@ class UserDermatologicalProfileViewModelFactory(
         fun getInstance(context: Context): UserDermatologicalProfileViewModelFactory =
             instance ?: synchronized(this) {
                 instance ?: UserDermatologicalProfileViewModelFactory(
-                    Injection.providerTypeKinRepository(context)
+                    Injection.providerTypeKinRepository(context),
+                    Injection.providerProfileRepository()
                 )
             }
     }
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return UserDermatologicalProfileViewModel(typeKinRepository) as T
+        return UserDermatologicalProfileViewModel(typeKinRepository,profileRepository) as T
     }
 }
