@@ -9,6 +9,8 @@ import com.miso.dermoapp.R
 import com.miso.dermoapp.data.attributes.typeKin.entitie.ResponseKinType
 import com.miso.dermoapp.data.attributes.typeKin.repository.TypeKinRepository
 import com.miso.dermoapp.domain.injectionOfDependencies.Injection
+import com.miso.dermoapp.domain.models.enumerations.CodeSnackBarCloseAction
+import com.miso.dermoapp.domain.models.utils.UtilsNetwork
 import com.miso.dermoapp.domain.useCases.UserDermatologicalUseCase
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.launch
@@ -30,12 +32,19 @@ class UserDermatologicalProfileViewModel(typeKinRepository: TypeKinRepository): 
     val buttonContinueEnable = MutableLiveData<Boolean>()
     private var validTipoDePiel = MutableLiveData<Int>()
     private var validFoto = MutableLiveData<Int>()
+    val navigateToDashboard = MutableLiveData<Boolean>()
+    val snackBarAction = MutableLiveData<Int>()
+    val snackBarNavigate = MutableLiveData<Int>()
+    val snackBarTextWarning = MutableLiveData<String>()
+
 
     init {
         getKinTypeSpinner()
         statusPhoto.value = false
         validTipoDePiel.value = 0
         validFoto.value = 0
+        navigateToDashboard.value = false
+        snackBarNavigate.value = CodeSnackBarCloseAction.NONE.code
     }
 
     fun getEmail(context: Context){
@@ -76,6 +85,13 @@ class UserDermatologicalProfileViewModel(typeKinRepository: TypeKinRepository): 
         changeEnableButton()
     }
 
+    fun ContinueProfileDermatological() {
+        navigateToDashboard.value = true
+    }
+
+    fun checkOnline(context: Context): Boolean {
+        return UtilsNetwork().isOnline(context)
+    }
 }
 
 @DelicateCoroutinesApi

@@ -13,12 +13,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import com.miso.dermoapp.R
 import com.miso.dermoapp.databinding.ActivityUserDematologicalProfileBinding
-import com.miso.dermoapp.domain.models.enumerations.CodeTypeSpinner
-import com.miso.dermoapp.domain.models.enumerations.KeySharedPreferences
-import com.miso.dermoapp.domain.models.enumerations.ResponseErrorField
+import com.miso.dermoapp.domain.models.enumerations.*
 import com.miso.dermoapp.domain.models.utils.sharedPreferences
 import com.miso.dermoapp.ui.core.profile.viewModels.UserDermatologicalProfileViewModel
 import com.miso.dermoapp.ui.core.profile.viewModels.UserDermatologicalProfileViewModelFactory
+import com.miso.dermoapp.ui.core.utils.CustomSnackBar
 import com.miso.dermoapp.ui.core.utils.CustomSpinnerAdapter
 import com.miso.dermoapp.ui.core.utils.ListDialog
 import com.miso.dermoapp.ui.core.utils.LoadingDialog
@@ -78,6 +77,35 @@ class UserDematologicalProfile : AppCompatActivity() {
         viewModel.buttonContinueEnable.observe(this, {
             binding.buttonContinue.isEnabled = it
         })
+
+        viewModel.navigateToDashboard.observe(this, {
+            if (it) {
+                loadingDialog.startLoadingDialog()
+                if (viewModel.checkOnline(this))
+                    //viewModel.loginUser()
+                else
+                    viewModel.snackBarAction.value = 0
+            }
+        })
+
+        viewModel.snackBarAction.observe(this, {
+            loadingDialog.hideLoadingDialog()
+            when (it){
+                0 -> viewModel.snackBarTextWarning.postValue(getString(R.string.sin_conexion))
+                1 -> viewModel.snackBarTextWarning.postValue(getString(R.string.problemas_almacenamiento_imagen))
+            }
+            viewModel.snackBarNavigate.postValue(CodeSnackBarCloseAction.NONE.code)
+        })
+
+        viewModel.snackBarTextWarning.observe(this, {
+            CustomSnackBar().showSnackBar(
+                it,
+                binding.constraintLayout,
+                TypeSnackBar.WARNING.code,
+                this,
+                viewModel.snackBarNavigate.value!!
+            )
+        })
     }
 
     @Deprecated("Deprecated in Java")
@@ -99,7 +127,7 @@ class UserDematologicalProfile : AppCompatActivity() {
                 val photoFile: File? = try {
                     createImageFile()
                 } catch (ex: IOException) {
-                    println("SE creo un error")
+                    viewModel.snackBarAction.value = 1
                     null
                 }
                 // Continue only if the File was successfully created

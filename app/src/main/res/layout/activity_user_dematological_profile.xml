@@ -141,6 +141,7 @@
             android:background="@drawable/boton_oscuro_disabled"
             android:fontFamily="@font/helveticaltsdbold"
             android:text="@string/continue_dos"
+            android:onClick="@{() -> vModel.ContinueProfileDermatological()}"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="22sp"
