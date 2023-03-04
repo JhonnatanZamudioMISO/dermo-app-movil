@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.miso.dermoapp.R
 import com.miso.dermoapp.data.attributes.typeKin.entitie.ResponseKinType
 import com.miso.dermoapp.data.attributes.typeKin.repository.TypeKinRepository
 import com.miso.dermoapp.domain.injectionOfDependencies.Injection
@@ -25,10 +26,16 @@ class UserDermatologicalProfileViewModel(typeKinRepository: TypeKinRepository): 
     private val userDermatologicalUseCase = UserDermatologicalUseCase(typeKinRepository)
     val statusPhoto = MutableLiveData<Boolean>()
     val email = MutableLiveData<String>()
+    val buttonContinueDrawable = MutableLiveData<Int>()
+    val buttonContinueEnable = MutableLiveData<Boolean>()
+    private var validTipoDePiel = MutableLiveData<Int>()
+    private var validFoto = MutableLiveData<Int>()
 
     init {
         getKinTypeSpinner()
         statusPhoto.value = false
+        validTipoDePiel.value = 0
+        validFoto.value = 0
     }
 
     fun getEmail(context: Context){
@@ -44,6 +51,31 @@ class UserDermatologicalProfileViewModel(typeKinRepository: TypeKinRepository): 
     fun AddPhoto() {
         statusPhoto.value = true
     }
+
+    fun validateSpinner () {
+        validTipoDePiel.value = 1
+        changeEnableButton()
+    }
+
+    private fun changeEnableButton() {
+        if (userDermatologicalUseCase.changeEnableButton(
+                validTipoDePiel.value!!,
+                validFoto.value!!
+            )
+        ) {
+            buttonContinueDrawable.value = R.drawable.boton_oscuro
+            buttonContinueEnable.value = true
+        } else {
+            buttonContinueDrawable.value = R.drawable.boton_oscuro_disabled
+            buttonContinueEnable.value = false
+        }
+    }
+
+    fun validatePhoto() {
+        validFoto.value = 1
+        changeEnableButton()
+    }
+
 }
 
 @DelicateCoroutinesApi

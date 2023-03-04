@@ -22,4 +22,8 @@ class UserDermatologicalUseCase(private val typeKinRepository: TypeKinRepository
     fun getEmail(context: Context): String {
         return sharedPreferences().get(context, KeySharedPreferences.EMAIL.value)
     }
+
+    fun changeEnableButton(typeKin: Int, photo: Int): Boolean {
+        return typeKin == 1 && photo == 1
+    }
 }

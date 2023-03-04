@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import com.miso.dermoapp.R
 import com.miso.dermoapp.databinding.ActivityUserDematologicalProfileBinding
 import com.miso.dermoapp.domain.models.enumerations.CodeTypeSpinner
@@ -28,7 +29,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-@Suppress("DEPRECATION")
+@Suppress("DEPRECATION", "COMPATIBILITY_WARNING")
 class UserDematologicalProfile : AppCompatActivity() {
     private lateinit var viewModel: UserDermatologicalProfileViewModel
     private lateinit var binding: ActivityUserDematologicalProfileBinding
@@ -56,15 +57,27 @@ class UserDematologicalProfile : AppCompatActivity() {
         }
 
         viewModel.typeKinSelectedPosition.observe(this) {
-            if (it != null)
+            if (it != null) {
                 binding.buttonTypeOfKin.text =
-                    getString(R.string.espacio) + viewModel.typeKinsList[it].abbreviate + getString(R.string.separador) + viewModel.typeKinsList[it].description
+                    getString(R.string.espacio) + viewModel.typeKinsList[it].abbreviate + getString(
+                        R.string.separador
+                    ) + viewModel.typeKinsList[it].description
+                viewModel.validateSpinner()
+            }
         }
 
         viewModel.statusPhoto.observe(this) {
             if (it)
                 TakePhoto()
         }
+
+        viewModel.buttonContinueDrawable.observe(this, {
+            binding.buttonContinue.setBackgroundResource(it)
+        })
+
+        viewModel.buttonContinueEnable.observe(this, {
+            binding.buttonContinue.isEnabled = it
+        })
     }
 
     @Deprecated("Deprecated in Java")
@@ -75,6 +88,7 @@ class UserDematologicalProfile : AppCompatActivity() {
             val myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath())
             binding.imageViewPhoto.setBackgroundResource(R.drawable.ic_eye)
             binding.imageViewPhoto.setImageBitmap(myBitmap)
+            viewModel.validatePhoto()
         }
     }
 
