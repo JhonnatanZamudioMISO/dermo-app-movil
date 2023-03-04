@@ -49,7 +49,7 @@ class LoadingDialog (val context: Context, val text: String) {
         dialog!!.show()
     }
 
-    fun cerrarSesion(titulo: String, msg: String) {
+    fun cerrarSesion(titulo: String, msg: String, code: Int) {
         val builder = AlertDialog.Builder(context,R.style.CustomDialog)
         val factory = LayoutInflater.from(context)
         val loadingDialogView : View = factory.inflate(R.layout.cerrar_sesion, null)
@@ -67,7 +67,7 @@ class LoadingDialog (val context: Context, val text: String) {
             dialogCerrarSesion?.dismiss()
         }
         buttonPositive.setOnClickListener {
-            sharedPreferences().set(context, KeySharedPreferences.STATUS_PROFILE.value,CodeSharedPreferences.DEFAULT.code)
+            sharedPreferences().set(context, KeySharedPreferences.STATUS_PROFILE.value,code.toString())
             sharedPreferences().set(context, KeySharedPreferences.EMAIL.value, CodeSharedPreferences.DEFAULT.code)
             val intent= Intent(context, Welcome::class.java)
             context.startActivity(intent)

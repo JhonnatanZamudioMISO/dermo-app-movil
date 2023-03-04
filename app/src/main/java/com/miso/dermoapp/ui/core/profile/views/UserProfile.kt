@@ -9,10 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import com.miso.dermoapp.R
 import com.miso.dermoapp.databinding.ActivityUserProfileBinding
-import com.miso.dermoapp.domain.models.enumerations.CodeResponseLoginUser
-import com.miso.dermoapp.domain.models.enumerations.CodeSnackBarCloseAction
-import com.miso.dermoapp.domain.models.enumerations.ResponseErrorField
-import com.miso.dermoapp.domain.models.enumerations.TypeSnackBar
+import com.miso.dermoapp.domain.models.enumerations.*
 import com.miso.dermoapp.ui.core.profile.viewModels.UserProfileViewModel
 import com.miso.dermoapp.ui.core.profile.viewModels.UserProfileViewModelFactory
 import com.miso.dermoapp.ui.core.utils.CustomSnackBar
@@ -137,6 +134,6 @@ class UserProfile : AppCompatActivity() {
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
-        loadingDialog.cerrarSesion(getResources().getString(R.string.importante), getResources().getString(R.string.cerrarSesion))
+        loadingDialog.cerrarSesion(getResources().getString(R.string.importante), getResources().getString(R.string.cerrarSesion),CodeResponseLoginUser.ERROR.code)
     }
 }

@@ -61,6 +61,10 @@ class UserDematologicalProfile : AppCompatActivity() {
             createDialogSpinner(viewModel.typeKinsList, CodeTypeSpinner.TYPE_KIN.code)
         }
 
+        binding.imageViewBack.setOnClickListener {
+            onBackPressed()
+        }
+
         viewModel.typeKinSelectedPosition.observe(this) {
             if (it != null) {
                 binding.buttonTypeOfKin.text =
@@ -141,6 +145,11 @@ class UserDematologicalProfile : AppCompatActivity() {
         startActivity(intent)
         overridePendingTransition(R.anim.fadein, R.anim.fadeout)
         finish()
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        loadingDialog.cerrarSesion(getResources().getString(R.string.importante), getResources().getString(R.string.cerrarSesion),CodeResponseLoginUser.PERFIL_DERMATOLOGICO.code)
     }
 
 
