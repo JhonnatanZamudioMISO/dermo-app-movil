@@ -1,6 +1,8 @@
 package com.miso.dermoapp.ui.core.dashboard.viewModels
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import kotlinx.coroutines.DelicateCoroutinesApi
 
 /****
  * Project: DermoApp
@@ -10,4 +12,20 @@ import androidx.lifecycle.ViewModel
  ****/
 
 class DashboardViewModel: ViewModel() {
+}
+
+@DelicateCoroutinesApi
+@Suppress("UNCHECKED_CAST")
+class DashboardViewModelFactory: ViewModelProvider.NewInstanceFactory() {
+    companion object {
+        @Volatile
+        private var instance: DashboardViewModelFactory? = null
+        fun getInstance(): DashboardViewModelFactory = instance ?: synchronized(this) {
+            instance ?: DashboardViewModelFactory()
+        }
+    }
+
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        return DashboardViewModel() as T
+    }
 }
