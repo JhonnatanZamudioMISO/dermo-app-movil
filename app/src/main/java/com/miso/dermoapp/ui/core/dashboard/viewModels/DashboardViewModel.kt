@@ -1,5 +1,6 @@
 package com.miso.dermoapp.ui.core.dashboard.viewModels
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -12,6 +13,21 @@ import kotlinx.coroutines.DelicateCoroutinesApi
  ****/
 
 class DashboardViewModel: ViewModel() {
+    val navigateToInjuries = MutableLiveData<Boolean>()
+    val navigateToDiagnosis = MutableLiveData<Boolean>()
+
+    init {
+        navigateToInjuries.value = false
+        navigateToDiagnosis.value = false
+    }
+
+    fun NavigateToInjuries() {
+        navigateToInjuries.value = true
+    }
+
+    fun NavigateToDiagnosis() {
+        navigateToDiagnosis.value = true
+    }
 }
 
 @DelicateCoroutinesApi
