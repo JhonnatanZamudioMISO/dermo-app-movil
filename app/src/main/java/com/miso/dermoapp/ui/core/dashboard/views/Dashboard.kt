@@ -1,5 +1,6 @@
 package com.miso.dermoapp.ui.core.dashboard.views
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
@@ -8,6 +9,8 @@ import com.miso.dermoapp.R
 import com.miso.dermoapp.databinding.ActivityDashboardBinding
 import com.miso.dermoapp.ui.core.dashboard.viewModels.DashboardViewModel
 import com.miso.dermoapp.ui.core.dashboard.viewModels.DashboardViewModelFactory
+import com.miso.dermoapp.ui.core.diagnosis.views.Diagnosis
+import com.miso.dermoapp.ui.core.injury.views.Injuries
 import kotlinx.coroutines.DelicateCoroutinesApi
 
 class Dashboard : AppCompatActivity() {
@@ -21,5 +24,19 @@ class Dashboard : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_dashboard)
         binding.lifecycleOwner = this
         binding.vModel = viewModel
+
+        viewModel.navigateToInjuries.observe(this,{
+            if (it)
+                goToChangeScreen(Intent(this@Dashboard, Injuries::class.java))
+        })
+        viewModel.navigateToDiagnosis.observe(this,{
+            if (it)
+                goToChangeScreen(Intent(this@Dashboard, Diagnosis::class.java))
+        })
+    }
+
+    private fun goToChangeScreen(intent: Intent) {
+        startActivity(intent)
+        overridePendingTransition(R.anim.left_in, R.anim.left_out)
     }
 }
