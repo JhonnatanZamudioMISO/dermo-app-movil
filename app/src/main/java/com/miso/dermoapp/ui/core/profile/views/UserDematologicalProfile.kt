@@ -162,7 +162,7 @@ class UserDematologicalProfile : AppCompatActivity() {
             val imgFile = File(sharedPreferences().get(this, KeySharedPreferences.PATH_TIPO_PIEL.value))
             val myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath())
             binding.imageViewPhoto.setBackgroundResource(R.drawable.ic_eye)
-            val bitmapAjusted = redimensionarImagen(myBitmap, 1280f, sharedPreferences().get(this, KeySharedPreferences.PATH_TIPO_PIEL.value))!!
+            val bitmapAjusted = redimensionarImagen(myBitmap, 1080f, sharedPreferences().get(this, KeySharedPreferences.PATH_TIPO_PIEL.value))!!
             binding.imageViewPhoto.setImageBitmap(bitmapAjusted)
             viewModel.validatePhoto(bitmapAjusted)
         }

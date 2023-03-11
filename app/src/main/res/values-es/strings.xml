@@ -70,4 +70,8 @@
     <string name="separador">&#160;-&#160;</string>
     <string name="problemas_almacenamiento_imagen">Nuestro sistema presenta una falla, intentarlo más tarde</string>
     <string name="agregadoConExito">Agregado con éxito</string>
+    <string name="servicios_disponibles">Servicios disponibles</string>
+    <string name="a_continuaci_n_puede_seleccionar_el_servicio_de_su_inter_s">A continuación puede seleccionar el servicio de su interés:</string>
+    <string name="lesiones">Lesiones</string>
+    <string name="diagn_stico">Diagnóstico</string>
 </resources>

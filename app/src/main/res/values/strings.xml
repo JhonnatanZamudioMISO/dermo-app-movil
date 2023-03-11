@@ -70,4 +70,8 @@
     <string name="separador">&#160;-&#160;</string>
     <string name="problemas_almacenamiento_imagen">Our system has an error, please try again later</string>
     <string name="agregadoConExito">Added successfully</string>
+    <string name="servicios_disponibles">Available services</string>
+    <string name="a_continuaci_n_puede_seleccionar_el_servicio_de_su_inter_s">Below you can select the service of your interest:</string>
+    <string name="lesiones">Injuries</string>
+    <string name="diagn_stico">Diagnosis</string>
 </resources>
