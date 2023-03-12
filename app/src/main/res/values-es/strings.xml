@@ -90,4 +90,5 @@
     <string name="ampolla">Ampolla</string>
     <string name="lcera">Úlcera</string>
     <string name="ves_cula">Vesícula</string>
+    <string name="messageCloseType">Esta acción no almacenara ningún tipo de información de la lesión. ¿Está seguro que desea salir?</string>
 </resources>

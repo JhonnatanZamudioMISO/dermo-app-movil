@@ -8,14 +8,17 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import com.miso.dermoapp.R
 import com.miso.dermoapp.databinding.ActivityTypeOfInjuryBinding
+import com.miso.dermoapp.domain.models.enumerations.CodeResponseLoginUser
 import com.miso.dermoapp.ui.core.injury.viewModels.TypeOfInjuryViewModel
 import com.miso.dermoapp.ui.core.injury.viewModels.TypeOfInjuryViewModelFactory
+import com.miso.dermoapp.ui.core.utils.LoadingDialog
 import kotlinx.coroutines.DelicateCoroutinesApi
 
 @Suppress("COMPATIBILITY_WARNING", "DEPRECATION")
 class TypeOfInjury : AppCompatActivity() {
     private lateinit var viewModel: TypeOfInjuryViewModel
     private lateinit var binding: ActivityTypeOfInjuryBinding
+    private lateinit var loadingDialog: LoadingDialog
     @OptIn(DelicateCoroutinesApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +27,7 @@ class TypeOfInjury : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_type_of_injury)
         binding.lifecycleOwner = this
         binding.vModel = viewModel
+        loadingDialog = LoadingDialog(this, getString(R.string.configurandoTuPerfilDeUsuario))
 
         binding.checkbox1.setOnClickListener {
             if (it is CheckBox)
@@ -128,5 +132,15 @@ class TypeOfInjury : AppCompatActivity() {
         viewModel.buttonContinueEnable.observe(this, {
             binding.buttonContinue.isEnabled = it
         })
+
+        binding.imageViewBack.setOnClickListener {
+            onBackPressed()
+        }
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        loadingDialog.closeTypeOfInjury(getResources().getString(R.string.importante), getResources().getString(R.string.messageCloseType),
+            CodeResponseLoginUser.ERROR.code)
     }
 }

@@ -90,4 +90,5 @@
     <string name="ampolla">Blister</string>
     <string name="lcera">Sore</string>
     <string name="ves_cula">Vesicle</string>
+    <string name="messageCloseType">This action will not store any information about the injury. Are you sure you want to exit?</string>
 </resources>
