@@ -12,6 +12,7 @@ import com.miso.dermoapp.ui.core.injury.viewModels.InjuriesViewModelFactory
 import com.miso.dermoapp.ui.core.utils.CustomRecyclerViewAdapter
 import kotlinx.coroutines.DelicateCoroutinesApi
 
+@Suppress("DEPRECATION")
 class Injuries : AppCompatActivity() {
     private lateinit var viewModel: InjuriesViewModel
     private lateinit var binding: ActivityInjuriesBinding
@@ -27,6 +28,10 @@ class Injuries : AppCompatActivity() {
 
         binding.recyclerview.adapter = adapter
         binding.textViewMessage.text = getString(R.string.cargando)
+
+        binding.imageViewBack.setOnClickListener {
+            onBackPressed()
+        }
 
         viewModel.injuriesList.observe(this){
             if (it.isEmpty()) {

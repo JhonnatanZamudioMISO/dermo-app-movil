@@ -13,6 +13,7 @@ import com.miso.dermoapp.databinding.AdapterInjuryBinding
  * Created by Jhonnatan E. Zamudio P. on 2/03/2023 at 5:49 a. m.
  * All rights reserved 2023.
  ****/
+
 class CustomRecyclerViewAdapter: RecyclerView.Adapter<MainViewHolder>() {
     var injuries = mutableListOf<Injuries>()
 
