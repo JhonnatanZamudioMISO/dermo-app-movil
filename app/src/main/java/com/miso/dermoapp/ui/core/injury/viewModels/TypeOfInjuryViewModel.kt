@@ -1,6 +1,8 @@
 package com.miso.dermoapp.ui.core.injury.viewModels
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import kotlinx.coroutines.DelicateCoroutinesApi
 
 /****
  * Project: DermoApp
@@ -10,4 +12,21 @@ import androidx.lifecycle.ViewModel
  ****/
 
 class TypeOfInjuryViewModel: ViewModel() {
+
+}
+
+@DelicateCoroutinesApi
+@Suppress("UNCHECKED_CAST")
+class TypeOfInjuryViewModelFactory: ViewModelProvider.NewInstanceFactory() {
+    companion object {
+        @Volatile
+        private var instance: TypeOfInjuryViewModelFactory? = null
+        fun getInstance(): TypeOfInjuryViewModelFactory = instance ?: synchronized(this) {
+            instance ?: TypeOfInjuryViewModelFactory()
+        }
+    }
+
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        return TypeOfInjuryViewModel() as T
+    }
 }
