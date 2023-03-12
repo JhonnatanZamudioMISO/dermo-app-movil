@@ -1,5 +1,6 @@
 package com.miso.dermoapp.ui.core.injury.views
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.CheckBox
@@ -136,6 +137,17 @@ class TypeOfInjury : AppCompatActivity() {
         binding.imageViewBack.setOnClickListener {
             onBackPressed()
         }
+
+        viewModel.navigateToFormOfTheInjury.observe(this){
+            if (it)
+                goToChangeScreen(Intent(this@TypeOfInjury, FormOfTheInjury::class.java))
+        }
+    }
+
+    private fun goToChangeScreen(intent: Intent) {
+        startActivity(intent)
+        overridePendingTransition(R.anim.left_in, R.anim.left_out)
+        finish()
     }
 
     @Deprecated("Deprecated in Java")

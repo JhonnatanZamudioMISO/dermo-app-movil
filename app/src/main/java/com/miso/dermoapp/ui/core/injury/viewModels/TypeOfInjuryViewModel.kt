@@ -20,6 +20,11 @@ class TypeOfInjuryViewModel: ViewModel() {
     val buttonContinueDrawable = MutableLiveData<Int>()
     val buttonContinueEnable = MutableLiveData<Boolean>()
     private val typeOfInjuryUseCase = TypeOfInjuryUseCase()
+    val navigateToFormOfTheInjury = MutableLiveData<Boolean>()
+
+    init {
+        navigateToFormOfTheInjury.value = false
+    }
     fun setTypeOfInjury(context: Context, typeOfInjury: String, checked: Boolean) {
         if (checked)
             typeOfInjuryData.value = typeOfInjury
@@ -39,7 +44,9 @@ class TypeOfInjuryViewModel: ViewModel() {
         }
     }
 
-
+    fun Continue() {
+        navigateToFormOfTheInjury.value = true
+    }
 }
 
 @DelicateCoroutinesApi
