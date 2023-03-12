@@ -74,4 +74,7 @@
     <string name="a_continuaci_n_puede_seleccionar_el_servicio_de_su_inter_s">A continuación puede seleccionar el servicio de su interés:</string>
     <string name="lesiones">Lesiones</string>
     <string name="diagn_stico">Diagnóstico</string>
+    <string name="en_esta_secci_n_se_puede_visualizar_las_lesiones_dermatol_gicas_reportadas_en_la_aplicaci_n">En esta sección se puede visualizar las lesiones dermatológicas reportadas en la aplicación:</string>
+    <string name="agregar_lesi_n">Agregar lesión</string>
+    <string name="actualmente_no_se_ha_registrado_ninguna_lesi_n_dermatol_gica">Actualmente no se ha registrado ninguna lesión dermatológica</string>
 </resources>
