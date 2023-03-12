@@ -1,10 +1,15 @@
 package com.miso.dermoapp.ui.core.injury.viewModels
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
+import com.miso.dermoapp.data.attributes.injury.entitie.Injuries
 import com.miso.dermoapp.data.attributes.injury.repository.InjuryRepository
 import com.miso.dermoapp.domain.injectionOfDependencies.Injection
+import com.miso.dermoapp.domain.useCases.InjuryUseCase
 import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.launch
 
 /****
  * Project: DermoApp
@@ -14,6 +19,17 @@ import kotlinx.coroutines.DelicateCoroutinesApi
  ****/
 
 class InjuriesViewModel(injuryRepository: InjuryRepository): ViewModel() {
+    val injuriesList: MutableLiveData<List<Injuries>> = MutableLiveData<List<Injuries>>()
+    private val injuryUseCase = InjuryUseCase(injuryRepository)
+    init {
+        getDataInjuries()
+    }
+
+    private fun getDataInjuries() {
+        viewModelScope.launch {
+            injuriesList.value = injuryUseCase.getDataInjuries()
+        }
+    }
 
 }
 

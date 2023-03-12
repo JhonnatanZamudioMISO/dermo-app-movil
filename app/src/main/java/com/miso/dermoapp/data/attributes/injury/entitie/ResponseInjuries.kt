@@ -10,7 +10,7 @@ import com.google.gson.annotations.SerializedName
  ****/
 
 data class ResponseInjuries  (
-    @SerializedName("lesiones") val injuries: List<RequestInjury>,
+    @SerializedName("lesiones") val injuries: List<Injuries>,
     @SerializedName("description") val description: String,
     @SerializedName("created_at") val created_at: String,
     @SerializedName("updated_at") val updated_at: String

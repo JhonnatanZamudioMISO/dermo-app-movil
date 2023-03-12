@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">DermoApp</string>
     <string name="logo_dermoapp_fondo_transparente">Logo DermoApp fondo transparente</string>
-    <string name="cargando">Cargando</string>
+    <string name="cargando">Cargando…</string>
     <string name="rationale_write_storage">Esta aplicación necesita acceso a su archivos para que pueda enviar información</string>
     <string name="rationale_camera">Esta aplicación necesita acceso a su cámara para que pueda tomar fotografías</string>
     <string name="rationale_default">Esta aplicación requiere un permiso adicional</string>
@@ -77,4 +77,6 @@
     <string name="en_esta_secci_n_se_puede_visualizar_las_lesiones_dermatol_gicas_reportadas_en_la_aplicaci_n">En esta sección se puede visualizar las lesiones dermatológicas reportadas en la aplicación:</string>
     <string name="agregar_lesi_n">Agregar lesión</string>
     <string name="actualmente_no_se_ha_registrado_ninguna_lesi_n_dermatol_gica">Actualmente no se ha registrado ninguna lesión dermatológica</string>
+    <string name="lesi_n_registrada_el">Lesión registrada el:&#160;</string>
+    <string name="ver_informaci_n">Ver información&#160;&#160;</string>
 </resources>

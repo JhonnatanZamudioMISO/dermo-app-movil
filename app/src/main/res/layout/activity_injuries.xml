@@ -83,19 +83,23 @@
         <LinearLayout
             android:id="@+id/linearLayoutContainerInjuries"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="650dp"
             android:layout_gravity="center_horizontal"
             android:gravity="center_horizontal"
             android:orientation="vertical"
-            app:layout_constraintBottom_toTopOf="@+id/buttonAddInjuries"
+            android:padding="20dp"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/listInjuries"
+                android:id="@+id/recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp" />
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:itemCount="5"
+                tools:listitem="@layout/adapter_injury" />
         </LinearLayout>
 
         <TextView
