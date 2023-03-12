@@ -1,6 +1,10 @@
 package com.miso.dermoapp.ui.core.injury.viewModels
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import com.miso.dermoapp.data.attributes.injury.repository.InjuryRepository
+import com.miso.dermoapp.domain.injectionOfDependencies.Injection
+import kotlinx.coroutines.DelicateCoroutinesApi
 
 /****
  * Project: DermoApp
@@ -9,5 +13,28 @@ import androidx.lifecycle.ViewModel
  * All rights reserved 2023.
  ****/
 
-class InjuriesViewModel: ViewModel() {
+class InjuriesViewModel(injuryRepository: InjuryRepository): ViewModel() {
+
+}
+
+@DelicateCoroutinesApi
+@Suppress("UNCHECKED_CAST")
+class InjuriesViewModelFactory(
+    private val injuryRepository: InjuryRepository
+) : ViewModelProvider.NewInstanceFactory() {
+
+    companion object {
+        @Volatile
+        private var instance: InjuriesViewModelFactory? = null
+        fun getInstance(): InjuriesViewModelFactory =
+            instance ?: synchronized(this) {
+                instance ?: InjuriesViewModelFactory(
+                    Injection.providerInjuryRepository()
+                )
+            }
+    }
+
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        return InjuriesViewModel(injuryRepository) as T
+    }
 }
