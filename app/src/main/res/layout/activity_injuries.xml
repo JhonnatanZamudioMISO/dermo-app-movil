@@ -6,9 +6,6 @@
         <variable
             name="vModel"
             type="com.miso.dermoapp.ui.core.injury.viewModels.InjuriesViewModel" />
-        <variable
-            name="codeField"
-            type="com.miso.dermoapp.domain.models.enumerations.CodeField" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

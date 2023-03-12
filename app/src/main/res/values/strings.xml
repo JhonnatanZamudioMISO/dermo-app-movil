@@ -79,4 +79,15 @@
     <string name="actualmente_no_se_ha_registrado_ninguna_lesi_n_dermatol_gica">Currently, no dermatological lesion has been registered</string>
     <string name="lesi_n_registrada_el">Injury recorded on:&#160;</string>
     <string name="ver_informaci_n">See information&#160;&#160;</string>
+    <string name="lesi_n_dermatol_gica">Skin injury</string>
+    <string name="el_sistema_le_solicitara_una_informaci_n_para_determinar_el_tipo_de_lesi_n_dermatol_gica_presentada_y_ser_m_s_efectivos_en_el_diagn_stico">The system will request information to determine the type of dermatological lesion presented and be more effective in the diagnosis.</string>
+    <string name="_1_tipo_de_lesi_n">1. Type of injury:</string>
+    <string name="p_pula">Papule</string>
+    <string name="m_cula">Taint</string>
+    <string name="parche">Patch</string>
+    <string name="placa">Plate</string>
+    <string name="n_dulo">Nodule</string>
+    <string name="ampolla">Blister</string>
+    <string name="lcera">Sore</string>
+    <string name="ves_cula">Vesicle</string>
 </resources>
