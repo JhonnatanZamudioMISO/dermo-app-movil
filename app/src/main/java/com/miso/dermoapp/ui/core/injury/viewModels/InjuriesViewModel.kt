@@ -1,5 +1,6 @@
 package com.miso.dermoapp.ui.core.injury.viewModels
 
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -21,14 +22,19 @@ import kotlinx.coroutines.launch
 class InjuriesViewModel(injuryRepository: InjuryRepository): ViewModel() {
     val injuriesList: MutableLiveData<List<Injuries>> = MutableLiveData<List<Injuries>>()
     private val injuryUseCase = InjuryUseCase(injuryRepository)
+    val navigateToTypeOfInjury = MutableLiveData<Boolean>()
     init {
-        getDataInjuries()
+        navigateToTypeOfInjury.value = false
     }
 
-    private fun getDataInjuries() {
+    fun getDataInjuries(context: Context) {
         viewModelScope.launch {
-            injuriesList.value = injuryUseCase.getDataInjuries()
+            injuriesList.value = injuryUseCase.getDataInjuries(context)
         }
+    }
+
+    fun NavigateToTypeOfInjury() {
+        navigateToTypeOfInjury.value = true
     }
 
 }

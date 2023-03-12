@@ -1,5 +1,6 @@
 package com.miso.dermoapp.ui.core.injury.views
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -28,6 +29,7 @@ class Injuries : AppCompatActivity() {
 
         binding.recyclerview.adapter = adapter
         binding.textViewMessage.text = getString(R.string.cargando)
+        viewModel.getDataInjuries(this)
 
         binding.imageViewBack.setOnClickListener {
             onBackPressed()
@@ -43,5 +45,16 @@ class Injuries : AppCompatActivity() {
                 adapter.setInjuryList(it)
             }
         }
+
+        viewModel.navigateToTypeOfInjury.observe(this){
+            if(it)
+                goToChangeScreen(Intent(this@Injuries, TypeOfInjury::class.java))
+        }
     }
+    private fun goToChangeScreen(intent: Intent) {
+        startActivity(intent)
+        overridePendingTransition(R.anim.left_in, R.anim.left_out)
+        finish()
+    }
+
 }

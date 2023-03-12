@@ -1,7 +1,10 @@
 package com.miso.dermoapp.domain.useCases
 
+import android.content.Context
 import com.miso.dermoapp.data.attributes.injury.entitie.Injuries
 import com.miso.dermoapp.data.attributes.injury.repository.InjuryRepository
+import com.miso.dermoapp.domain.models.enumerations.KeySharedPreferences
+import com.miso.dermoapp.domain.models.utils.sharedPreferences
 
 /****
  * Project: DermoApp
@@ -12,7 +15,11 @@ import com.miso.dermoapp.data.attributes.injury.repository.InjuryRepository
 
 class InjuryUseCase(val injuryRepository: InjuryRepository) {
 
-    suspend fun getDataInjuries(): List<Injuries> {
-        return injuryRepository.getInjuriesByAccountRemote("mazf1006@gmail.com").injuries
+    suspend fun getDataInjuries(context: Context): List<Injuries> {
+        return injuryRepository.getInjuriesByAccountRemote(getEmail(context)).injuries
+    }
+
+   private fun getEmail(context: Context): String {
+        return sharedPreferences().get(context, KeySharedPreferences.EMAIL.value)
     }
 }
