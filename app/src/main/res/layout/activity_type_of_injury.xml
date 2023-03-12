@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@mipmap/background_sign_up"
-        tools:context=".ui.core.injury.views.Injuries">
+        tools:context=".ui.core.injury.views.TypeOfInjury">
 
         <ImageView
             android:id="@+id/imageViewBack"

@@ -91,4 +91,11 @@
     <string name="lcera">Úlcera</string>
     <string name="ves_cula">Vesícula</string>
     <string name="messageCloseType">Esta acción no almacenara ningún tipo de información de la lesión. ¿Está seguro que desea salir?</string>
+    <string name="_2_forma_de_la_lesi_n">2. Forma de la lesión:</string>
+    <string name="anillo">Anillo</string>
+    <string name="domo">Domo</string>
+    <string name="ovalada">Ovalada</string>
+    <string name="redonda">Redonda</string>
+    <string name="indefinida">Indefinida</string>
+    <string name="enrollada">Enrollada</string>
 </resources>
