@@ -16,5 +16,6 @@ enum class KeySharedPreferences(val value: String) {
     AGE("edad"),
     CITY("ciudad"),
     EMAIL ("email"),
-    PATH_TIPO_PIEL("tipo_de_piel")
+    PATH_TIPO_PIEL("tipo_de_piel"),
+    TYPE_OF_INJURY("tipo_de_lesion")
 }
