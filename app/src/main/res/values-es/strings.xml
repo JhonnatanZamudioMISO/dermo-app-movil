@@ -103,4 +103,9 @@
     <string name="m_ltiple">Múltiple</string>
     <string name="recurrente">Recurrente</string>
     <string name="diseminada">Diseminada</string>
+    <string name="_4_distribuci_n">4. Distribución:</string>
+    <string name="asim_trica">Asimétrica</string>
+    <string name="confluente">Confluente</string>
+    <string name="sim_trica">Simétrica</string>
+    <string name="esparcida">Esparcida</string>
 </resources>
