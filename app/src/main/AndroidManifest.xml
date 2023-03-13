@@ -27,10 +27,15 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".ui.core.injury.views.Distribution"
+            android:name=".ui.core.injury.views.PhotoOfInjury"
             android:exported="false"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"/>
+        <activity
+            android:name=".ui.core.injury.views.Distribution"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".ui.core.injury.views.NumberOfInjuries"
             android:exported="false"
