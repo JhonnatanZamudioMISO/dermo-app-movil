@@ -18,5 +18,6 @@ enum class KeySharedPreferences(val value: String) {
     EMAIL ("email"),
     PATH_TIPO_PIEL("tipo_de_piel"),
     TYPE_OF_INJURY("tipo_de_lesion"),
-    FORM_OF_THE_INJURY("forma_de_la_lesion")
+    FORM_OF_THE_INJURY("forma_de_la_lesion"),
+    NUMBER_OF_INJURIES("numero_de_lesiones")
 }

@@ -5,7 +5,7 @@
     <data>
         <variable
             name="vModel"
-            type="com.miso.dermoapp.ui.core.injury.viewModels.NumberOfInjuries" />
+            type="com.miso.dermoapp.ui.core.injury.viewModels.NumberOfInjuriesViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
