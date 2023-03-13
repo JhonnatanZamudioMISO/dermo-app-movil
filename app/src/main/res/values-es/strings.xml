@@ -108,4 +108,7 @@
     <string name="confluente">Confluente</string>
     <string name="sim_trica">Simétrica</string>
     <string name="esparcida">Esparcida</string>
+    <string name="_5_fotograf_a_de_la_lesi_n">5. Fotografía de la lesión:</string>
+    <string name="creando_lesion_dermatologica">Creando lesión dermatológica…</string>
+    <string name="creada_lesion_exito">Ha sido creada con éxito la lesión</string>
 </resources>
