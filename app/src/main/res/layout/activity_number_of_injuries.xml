@@ -1,9 +1,262 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.core.injury.views.NumberOfInjuries">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <data>
+        <variable
+            name="vModel"
+            type="com.miso.dermoapp.ui.core.injury.viewModels.NumberOfInjuries" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_contain"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@mipmap/background_sign_up"
+        tools:context=".ui.core.injury.views.NumberOfInjuries">
+
+        <ImageView
+            android:id="@+id/imageViewBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/ic_back_arrow"
+            android:contentDescription="@string/Icono_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="RtlCompat,RtlSymmetry" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="250dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/textViewTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/helveticaltsdbold"
+                android:gravity="center_horizontal"
+                android:text="@string/lesi_n_dermatol_gica"
+                android:textColor="@color/blue_dark"
+                android:textSize="30sp"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_editor_absoluteX="0dp" />
+
+            <TextView
+                android:id="@+id/textViewSubTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/helveticaltstdroman"
+                android:gravity="left"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="@string/el_sistema_le_solicitara_una_informaci_n_para_determinar_el_tipo_de_lesi_n_dermatol_gica_presentada_y_ser_m_s_efectivos_en_el_diagn_stico"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewTitle"
+                tools:ignore="RtlHardcoded" />
+
+            <LinearLayout
+                android:id="@+id/separator"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_marginTop="5dp"
+                android:orientation="vertical"
+                android:background="@color/blue_dark"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewSubTitle"/>
+
+            <TextView
+                android:id="@+id/textViewSubTitleCap"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/helveticaltsdbold"
+                android:gravity="left"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="@string/_3_n_mero_de_lesiones"
+                android:textColor="@color/blue_dark"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/separator"
+                tools:ignore="RtlHardcoded" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:background="@drawable/input_card"
+            android:contentDescription="@string/Icono_back"
+            android:gravity="center_horizontal|center_vertical"
+            android:padding="4dp"
+            android:layout_marginEnd="20dp"
+            android:src="@mipmap/ic_15"
+            app:layout_constraintEnd_toStartOf="@+id/imageView2"
+            app:layout_constraintTop_toTopOf="@+id/imageView2" />
+
+        <CheckBox
+            android:id="@+id/checkbox1"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@drawable/checkbox"
+            android:textColor="@color/blue_dark"
+            android:layout_marginTop="5dp"
+            app:layout_constraintStart_toStartOf="@+id/imageView1"
+            app:layout_constraintTop_toBottomOf="@+id/imageView1" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/helveticaltstdroman"
+            android:gravity="center_horizontal"
+            android:text="@string/solitaria"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/blue_dark"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/checkbox1"
+            app:layout_constraintTop_toTopOf="@+id/checkbox1" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:background="@drawable/input_card"
+            android:gravity="center_horizontal|center_vertical"
+            android:src="@mipmap/ic_16"
+            android:padding="4dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+            android:contentDescription="@string/Icono_back" />
+
+        <CheckBox
+            android:id="@+id/checkbox2"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@drawable/checkbox"
+            android:textColor="@color/blue_dark"
+            android:layout_marginTop="5dp"
+            app:layout_constraintStart_toStartOf="@+id/imageView2"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/helveticaltstdroman"
+            android:gravity="center_horizontal"
+            android:text="@string/m_ltiple"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/blue_dark"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/checkbox2"
+            app:layout_constraintTop_toTopOf="@+id/checkbox2" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:background="@drawable/input_card"
+            android:contentDescription="@string/Icono_back"
+            android:gravity="center_horizontal|center_vertical"
+            android:padding="4dp"
+            android:src="@mipmap/ic_17"
+            android:layout_marginStart="20dp"
+            app:layout_constraintStart_toEndOf="@+id/imageView2"
+            app:layout_constraintTop_toTopOf="@+id/imageView2" />
+
+        <CheckBox
+            android:id="@+id/checkbox3"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@drawable/checkbox"
+            android:textColor="@color/blue_dark"
+            android:layout_marginTop="5dp"
+            app:layout_constraintStart_toStartOf="@+id/imageView3"
+            app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/helveticaltstdroman"
+            android:gravity="center_horizontal"
+            android:text="@string/recurrente"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/blue_dark"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/checkbox3"
+            app:layout_constraintTop_toTopOf="@+id/checkbox3" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:background="@drawable/input_card"
+            android:contentDescription="@string/Icono_back"
+            android:gravity="center_horizontal|center_vertical"
+            android:padding="4dp"
+            android:src="@mipmap/ic_18"
+            android:layout_marginTop="20dp"
+            app:layout_constraintStart_toStartOf="@+id/imageView1"
+            app:layout_constraintTop_toBottomOf="@+id/textView1" />
+
+        <CheckBox
+            android:id="@+id/checkbox4"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@drawable/checkbox"
+            android:textColor="@color/blue_dark"
+            android:layout_marginTop="5dp"
+            app:layout_constraintStart_toStartOf="@+id/imageView4"
+            app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/helveticaltstdroman"
+            android:gravity="center_horizontal"
+            android:text="@string/diseminada"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/blue_dark"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/checkbox4"
+            app:layout_constraintTop_toTopOf="@+id/checkbox4" />
+
+        <Button
+            android:id="@+id/buttonContinue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/boton_oscuro_disabled"
+            android:fontFamily="@font/helveticaltsdbold"
+            android:onClick="@{() -> vModel.Continue()}"
+            android:text="@string/continue_dos"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

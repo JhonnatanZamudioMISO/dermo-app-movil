@@ -98,4 +98,9 @@
     <string name="redonda">Redonda</string>
     <string name="indefinida">Indefinida</string>
     <string name="enrollada">Enrollada</string>
+    <string name="_3_n_mero_de_lesiones">3. Número de lesiones:</string>
+    <string name="solitaria">Solitaria</string>
+    <string name="m_ltiple">Múltiple</string>
+    <string name="recurrente">Recurrente</string>
+    <string name="diseminada">Diseminada</string>
 </resources>

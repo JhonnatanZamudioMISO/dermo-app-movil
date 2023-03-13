@@ -98,4 +98,9 @@
     <string name="redonda">Round</string>
     <string name="indefinida">Indefinite</string>
     <string name="enrollada">Rolled up</string>
+    <string name="_3_n_mero_de_lesiones">3. Number of injuries:</string>
+    <string name="solitaria">Lonely</string>
+    <string name="m_ltiple">Multiple</string>
+    <string name="recurrente">Recurrent</string>
+    <string name="diseminada">Disseminated</string>
 </resources>
