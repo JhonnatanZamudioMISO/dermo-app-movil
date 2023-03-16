@@ -14,12 +14,11 @@ import com.miso.dermoapp.databinding.AdapterInjuryBinding
  * All rights reserved 2023.
  ****/
 
-class CustomRecyclerViewAdapter: RecyclerView.Adapter<MainViewHolder>() {
+class CustomRecyclerViewAdapter(private val cellClickListener: CellClickListener): RecyclerView.Adapter<MainViewHolder>() {
     var injuries = mutableListOf<Injuries>()
 
     @SuppressLint("NotifyDataSetChanged")
     fun setInjuryList(injuries: List<Injuries>) {
-
         this.injuries = injuries.toMutableList()
         notifyDataSetChanged()
     }
@@ -31,11 +30,17 @@ class CustomRecyclerViewAdapter: RecyclerView.Adapter<MainViewHolder>() {
         holder.apply {
             bind(injuries[position])
         }
-
+        holder.binding.buttonInjury.setOnClickListener {
+            cellClickListener.onCellClickListener(injuries[position])
+        }
     }
 
     override fun getItemCount(): Int {
         return injuries.size
+    }
+
+    interface CellClickListener {
+        fun onCellClickListener(injuries: Injuries)
     }
 }
 class MainViewHolder(val binding: AdapterInjuryBinding) : RecyclerView.ViewHolder(binding.root) {

@@ -21,6 +21,7 @@ import kotlinx.coroutines.launch
 
 class InjuriesViewModel(injuryRepository: InjuryRepository): ViewModel() {
     val injuriesList: MutableLiveData<List<Injuries>> = MutableLiveData<List<Injuries>>()
+    val diagnosisInjury: MutableLiveData<DiagnosisData> = MutableLiveData<DiagnosisData>()
     private val injuryUseCase = InjuryUseCase(injuryRepository)
     val navigateToTypeOfInjury = MutableLiveData<Boolean>()
     init {
@@ -35,6 +36,12 @@ class InjuriesViewModel(injuryRepository: InjuryRepository): ViewModel() {
 
     fun NavigateToTypeOfInjury() {
         navigateToTypeOfInjury.value = true
+    }
+
+    fun getDataDiagnosis(context: Context, idInjury: String) {
+        viewModelScope.launch {
+            injuriesList.value = injuryUseCase.getDataInjuries(context)
+        }
     }
 
 }
