@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.text.Html
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import com.miso.dermoapp.R
+import com.miso.dermoapp.data.attributes.diagnosis.entitie.ResponseDiagnosis
 import com.miso.dermoapp.domain.models.enumerations.CodeSharedPreferences
 import com.miso.dermoapp.domain.models.enumerations.KeySharedPreferences
 import com.miso.dermoapp.domain.models.utils.sharedPreferences
@@ -27,6 +29,7 @@ import com.miso.dermoapp.ui.core.injury.views.Injuries
  * All rights reserved 2023.
  ****/
 
+@Suppress("DEPRECATION")
 class LoadingDialog (val context: Context, val text: String) {
     private var dialog: AlertDialog? = null
     private var dialogSuccess: AlertDialog? = null
@@ -34,6 +37,7 @@ class LoadingDialog (val context: Context, val text: String) {
     private var dialogError: AlertDialog? = null
     private var dialogCerrarSesion: AlertDialog? = null
     private var dialogCerrarTypeOfInjury: AlertDialog? = null
+    private var dialogDataDiagnosis: AlertDialog?= null
 
     @SuppressLint("MissingInflatedId")
     fun startLoadingDialog() {
@@ -80,6 +84,41 @@ class LoadingDialog (val context: Context, val text: String) {
         }
     }
 
+    @SuppressLint("MissingInflatedId")
+    fun mostrarDataDiagnostico(titulo: String, msg: ResponseDiagnosis) {
+        val builder = AlertDialog.Builder(context,R.style.CustomDialog)
+        val factory = LayoutInflater.from(context)
+        val loadingDialogView : View = factory.inflate(R.layout.mostrar_data_diagnostico, null)
+        val textViewLoadingDialog = loadingDialogView.findViewById<TextView>(R.id.textViewTittle)
+        val textViewMessage = loadingDialogView.findViewById<TextView>(R.id.textViewMensaje)
+        val buttonNegative = loadingDialogView.findViewById<Button>(R.id.buttonClose)
+        textViewLoadingDialog.setText(titulo)
+        val require:String
+        if (msg.requeresTreatment == "true")
+            require = "Si"
+        else
+            require = "No"
+        if (msg.condition.isEmpty())
+            textViewMessage.setText("Actualmente el sistema no tiene un diagnóstico generado para su lesión, por favor comuniquese con DermoApp para mayor información.")
+        else
+            textViewMessage.setText(Html.fromHtml("<p>El diagn&oacute;stico generado por nuestros medicos especialista para esta lesi&oacute;n es:</p>\n" +
+                    "\n" +
+                    "<p><strong>Condici&oacute;n:</strong> <em>"+msg.condition+"</em>&nbsp;<br>\n" +"\n" +
+                    "<strong>Nivel: </strong><em>"+msg.level+"</em><br>\n" +
+                    "<strong>Requiere tratamiento: </strong><em>"+require+"</em><br>\n" +
+                    "<strong>Tiempo del tratamiento: </strong><em>"+msg.treatmentTerm+"</em><br>\n" +
+                    "<strong>Medicamentos: </strong><em>"+msg.medicines+"</em><br>\n" +
+                    "<strong>Control del tratamiento: </strong><em>"+msg.treatmentControl+"</em><br>\n"+
+                    "<strong>Recomendaciones: </strong><em>"+msg.recommendations+"</em></p>"))
+        builder.setView(loadingDialogView)
+        builder.setCancelable(false)
+        dialogCerrarSesion = builder.create()
+        dialogCerrarSesion!!.show()
+        buttonNegative.setOnClickListener {
+            dialogCerrarSesion?.dismiss()
+        }
+    }
+
     fun closeTypeOfInjury(titulo: String, msg: String, code: Int) {
         val builder = AlertDialog.Builder(context,R.style.CustomDialog)
         val factory = LayoutInflater.from(context)
@@ -122,6 +161,7 @@ class LoadingDialog (val context: Context, val text: String) {
         dialogError?.dismiss()
         dialogCerrarSesion?.dismiss()
         dialogCerrarTypeOfInjury?.dismiss()
+        dialogDataDiagnosis?.dismiss()
     }
 
     fun succesful(text: Int) {

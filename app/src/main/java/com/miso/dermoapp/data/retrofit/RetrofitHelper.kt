@@ -46,4 +46,33 @@ object RetrofitHelper {
             .client(httpClientBuilder.build())
             .build()
     }
+
+    fun getRetrofitWEB(): Retrofit {
+        val gson = GsonBuilder()
+            .setDateFormat("yyyy-MM-dd HH:mm:ss")
+            .create()
+
+        val logging = HttpLoggingInterceptor()
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY)
+        val httpClientBuilder = OkHttpClient.Builder().addInterceptor(logging)
+
+        httpClientBuilder.addInterceptor { chain ->
+            val original: Request = chain.request()
+            val requestBuild: Request.Builder = original
+                .newBuilder()
+                .addHeader("dermo-traceability-id", UUID.randomUUID().toString())
+                .method(original.method, original.body)
+            val request: Request = requestBuild.build()
+            chain.proceed(request)
+        }
+        httpClientBuilder.connectTimeout(60, TimeUnit.SECONDS)
+        httpClientBuilder.readTimeout(60, TimeUnit.SECONDS)
+        httpClientBuilder.writeTimeout(60, TimeUnit.SECONDS)
+
+        return Retrofit.Builder()
+            .baseUrl("http://lbn-dermo-app-web-84168d11e474aa03.elb.us-east-1.amazonaws.com:3001/")
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .client(httpClientBuilder.build())
+            .build()
+    }
 }

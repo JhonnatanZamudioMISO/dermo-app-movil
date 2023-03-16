@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.miso.dermoapp.data.attributes.diagnosis.entitie.ResponseDiagnosis
+import com.miso.dermoapp.data.attributes.diagnosis.repository.DiagnosisRepository
 import com.miso.dermoapp.data.attributes.injury.entitie.Injuries
 import com.miso.dermoapp.data.attributes.injury.repository.InjuryRepository
 import com.miso.dermoapp.domain.injectionOfDependencies.Injection
@@ -19,9 +21,10 @@ import kotlinx.coroutines.launch
  * All rights reserved 2023.
  ****/
 
-class InjuriesViewModel(injuryRepository: InjuryRepository): ViewModel() {
+class InjuriesViewModel(injuryRepository: InjuryRepository, diagnosisRepository: DiagnosisRepository): ViewModel() {
     val injuriesList: MutableLiveData<List<Injuries>> = MutableLiveData<List<Injuries>>()
-    private val injuryUseCase = InjuryUseCase(injuryRepository)
+    val diagnosisInjury: MutableLiveData<ResponseDiagnosis> = MutableLiveData<ResponseDiagnosis>()
+    private val injuryUseCase = InjuryUseCase(injuryRepository, diagnosisRepository)
     val navigateToTypeOfInjury = MutableLiveData<Boolean>()
     init {
         navigateToTypeOfInjury.value = false
@@ -37,12 +40,20 @@ class InjuriesViewModel(injuryRepository: InjuryRepository): ViewModel() {
         navigateToTypeOfInjury.value = true
     }
 
+    fun getDataDiagnosis(idInjury: String) {
+        viewModelScope.launch {
+            diagnosisInjury.value = injuryUseCase.getDataDiagnosis(idInjury)
+            println("EL DIAGNOSTICO ES: " + diagnosisInjury.value)
+        }
+    }
+
 }
 
 @DelicateCoroutinesApi
 @Suppress("UNCHECKED_CAST")
 class InjuriesViewModelFactory(
-    private val injuryRepository: InjuryRepository
+    private val injuryRepository: InjuryRepository,
+    private val diagnosisRepository: DiagnosisRepository
 ) : ViewModelProvider.NewInstanceFactory() {
 
     companion object {
@@ -51,12 +62,13 @@ class InjuriesViewModelFactory(
         fun getInstance(): InjuriesViewModelFactory =
             instance ?: synchronized(this) {
                 instance ?: InjuriesViewModelFactory(
-                    Injection.providerInjuryRepository()
+                    Injection.providerInjuryRepository(),
+                    Injection.providerDiagnosisRepository()
                 )
             }
     }
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return InjuriesViewModel(injuryRepository) as T
+        return InjuriesViewModel(injuryRepository,diagnosisRepository) as T
     }
 }

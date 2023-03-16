@@ -17,4 +17,5 @@ data class Injuries(
     @SerializedName("distribucion") var distribution: String,
     @SerializedName("foto_de_lesion") var photoOfInjury: String,
     @SerializedName("created_at") var created_at: String,
+    @SerializedName("id") var id: String
 )
