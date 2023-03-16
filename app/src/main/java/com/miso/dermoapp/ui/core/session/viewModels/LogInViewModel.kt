@@ -64,6 +64,10 @@ class LogInViewModel(userRepository: UserRepository): ViewModel() {
         navigateToSignUp.value = true
     }
 
+    fun validateStatusProfile(context: Context){
+        validateChangeScreen.postValue(loginUseCase.getStatusProfile(context))
+    }
+
     @OptIn(DelicateCoroutinesApi::class)
     fun delayScreen(code: Int){
         GlobalScope.launch {
@@ -180,6 +184,7 @@ class LogInViewModel(userRepository: UserRepository): ViewModel() {
     }
 
     fun checkOnline(context: Context): Boolean {
+
         return UtilsNetwork().isOnline(context)
     }
 }

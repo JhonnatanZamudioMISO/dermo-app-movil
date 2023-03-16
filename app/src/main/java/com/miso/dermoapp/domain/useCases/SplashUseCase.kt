@@ -71,4 +71,8 @@ class SplashUseCase(val versionRepository: VersionRepository) {
     fun getDefaultLanguage(context: Context): Int {
         return sharedPreferences().get(context,KeySharedPreferences.IDIOMA.value).toInt()
     }
+
+    fun getStatusProfile(context: Context): Int {
+            return sharedPreferences().get(context, KeySharedPreferences.STATUS_PROFILE.value).toInt()
+    }
 }

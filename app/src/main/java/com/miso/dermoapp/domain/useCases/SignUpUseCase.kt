@@ -29,7 +29,6 @@ class SignUpUseCase(private val userRepository: UserRepository) {
         } else if (resultUser.description == "El correo ingresado ya esta registrado") {
             return 1
         }
-        println("EERORCONSUMO: " +resultUser.description)
         return 2
     }
 }

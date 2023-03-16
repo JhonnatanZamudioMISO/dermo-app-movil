@@ -10,5 +10,8 @@ package com.miso.dermoapp.domain.models.enumerations
 enum class CodeField (val code: Int) {
     EMAIL_FIELD(0x1),
     PASSWORD_FIELD(0x2),
-    PASSWORD_CONFIRM_FIELD(0x3)
+    PASSWORD_CONFIRM_FIELD(0x3),
+    NAME_FIELD(0x4),
+    AGE_FIELD(0x5),
+    CITY_FIELD(0x6)
 }

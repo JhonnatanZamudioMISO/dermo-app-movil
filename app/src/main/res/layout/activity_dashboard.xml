@@ -1,18 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.core.dashboard.views.Dashboard">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
+    <data>
+        <variable
+            name="vModel"
+            type="com.miso.dermoapp.ui.core.dashboard.viewModels.DashboardViewModel" />
+        <variable
+            name="codeField"
+            type="com.miso.dermoapp.domain.models.enumerations.CodeField" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_contain"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Pantalla principal"
-        android:gravity="center_horizontal"
-        android:textSize="40sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"
+        android:background="@mipmap/background_sign_up"
+        tools:context=".ui.core.profile.views.UserDematologicalProfile">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="250dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/textViewTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/helveticaltsdbold"
+                android:gravity="center_horizontal"
+                android:text="@string/servicios_disponibles"
+                android:textColor="@color/blue_dark"
+                android:textSize="30sp"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_editor_absoluteX="0dp" />
+
+            <TextView
+                android:id="@+id/textViewSubTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/helveticaltstdroman"
+                android:gravity="left"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="@string/a_continuaci_n_puede_seleccionar_el_servicio_de_su_inter_s"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewTitle"
+                tools:ignore="RtlHardcoded" />
+
+            <Button
+                android:id="@+id/buttonWounds"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="35dp"
+                android:background="@drawable/boton_oscuro"
+                android:drawableStart="@drawable/ic_wound"
+                android:ellipsize="marquee"
+                android:fontFamily="@font/helveticaltstdroman"
+                android:gravity="center_horizontal|center_vertical"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:onClick="@{() -> vModel.NavigateToInjuries()}"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:textAllCaps="false"
+                android:textColor="#fff"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewSubTitle" />
+
+            <TextView
+                android:id="@+id/textViewWounds"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/helveticaltsdbold"
+                android:gravity="center_horizontal"
+                android:text="@string/lesiones"
+                android:textColor="@color/blue_dark"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="@+id/buttonWounds"
+                app:layout_constraintTop_toBottomOf="@+id/buttonWounds" />
+
+            <Button
+                android:id="@+id/buttonDiagnostic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:background="@drawable/boton_oscuro"
+                android:drawableStart="@drawable/ic_diagnostic"
+                android:ellipsize="marquee"
+                android:fontFamily="@font/helveticaltstdroman"
+                android:gravity="center_horizontal|center_vertical"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:onClick="@{() -> vModel.NavigateToDiagnosis()}"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:textAllCaps="false"
+                android:textColor="#fff"
+                android:textSize="18sp"
+                app:layout_constraintStart_toEndOf="@+id/buttonWounds"
+                app:layout_constraintTop_toTopOf="@+id/buttonWounds" />
+
+            <TextView
+                android:id="@+id/textViewDiagnostic"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/helveticaltsdbold"
+                android:gravity="center_horizontal"
+                android:text="@string/diagn_stico"
+                android:textColor="@color/blue_dark"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="@+id/buttonDiagnostic"
+                app:layout_constraintTop_toBottomOf="@+id/buttonDiagnostic" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
