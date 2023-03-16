@@ -4,6 +4,8 @@ import android.content.Context
 import com.miso.dermoapp.data.attributes.city.datasource.CityDataSourceLocal
 import com.miso.dermoapp.data.attributes.city.repository.CityRepository
 import com.miso.dermoapp.data.attributes.city.source.CityJSON
+import com.miso.dermoapp.data.attributes.diagnosis.datasource.DiagnosisDataSourceRemote
+import com.miso.dermoapp.data.attributes.diagnosis.repository.DiagnosisRepository
 import com.miso.dermoapp.data.attributes.injury.datasource.InjuryDataSourceRemote
 import com.miso.dermoapp.data.attributes.injury.repository.InjuryRepository
 import com.miso.dermoapp.data.attributes.profileDermatological.datasource.ProfileDataSource
@@ -56,5 +58,10 @@ object Injection {
     fun providerInjuryRepository(): InjuryRepository {
         val injuryDataSource = InjuryDataSourceRemote()
         return InjuryRepository.getInstance(injuryDataSource)
+    }
+
+    fun providerDiagnosisRepository(): DiagnosisRepository {
+        val diagnosisDataSource = DiagnosisDataSourceRemote()
+        return DiagnosisRepository.getInstance(diagnosisDataSource)
     }
 }

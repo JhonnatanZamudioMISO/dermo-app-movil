@@ -4,7 +4,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.miso.dermoapp.R
@@ -60,7 +59,7 @@ class Injuries : AppCompatActivity(), CustomRecyclerViewAdapter.CellClickListene
     }
 
     override fun onCellClickListener(injuries: Injuries) {
-        viewModel.getDataDiagnosis(this,injuries.id)
+        viewModel.getDataDiagnosis(injuries.id)
     }
 
 }
