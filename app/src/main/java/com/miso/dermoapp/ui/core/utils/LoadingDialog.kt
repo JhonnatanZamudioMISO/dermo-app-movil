@@ -13,6 +13,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import com.miso.dermoapp.R
+import com.miso.dermoapp.data.attributes.diagnosis.entitie.ResponseDiagnosis
 import com.miso.dermoapp.domain.models.enumerations.CodeSharedPreferences
 import com.miso.dermoapp.domain.models.enumerations.KeySharedPreferences
 import com.miso.dermoapp.domain.models.utils.sharedPreferences
@@ -34,6 +35,7 @@ class LoadingDialog (val context: Context, val text: String) {
     private var dialogError: AlertDialog? = null
     private var dialogCerrarSesion: AlertDialog? = null
     private var dialogCerrarTypeOfInjury: AlertDialog? = null
+    private var dialogDataDiagnosis: AlertDialog?= null
 
     @SuppressLint("MissingInflatedId")
     fun startLoadingDialog() {
@@ -80,6 +82,28 @@ class LoadingDialog (val context: Context, val text: String) {
         }
     }
 
+    @SuppressLint("MissingInflatedId")
+    fun mostrarDataDiagnostico(titulo: String, msg: ResponseDiagnosis) {
+        val builder = AlertDialog.Builder(context,R.style.CustomDialog)
+        val factory = LayoutInflater.from(context)
+        val loadingDialogView : View = factory.inflate(R.layout.mostrar_data_diagnostico, null)
+        val textViewLoadingDialog = loadingDialogView.findViewById<TextView>(R.id.textViewTittle)
+        val textViewMessage = loadingDialogView.findViewById<TextView>(R.id.textViewMensaje)
+        val buttonNegative = loadingDialogView.findViewById<Button>(R.id.buttonClose)
+        textViewLoadingDialog.setText(titulo)
+        if (msg.condition.isEmpty())
+            textViewMessage.setText("Actualmente el sistema no tiene un diagnóstico generado para su lesión, por favor comuniquese con DermoApp para mayor información.")
+        else
+            textViewMessage.setText(msg.condition)
+        builder.setView(loadingDialogView)
+        builder.setCancelable(false)
+        dialogCerrarSesion = builder.create()
+        dialogCerrarSesion!!.show()
+        buttonNegative.setOnClickListener {
+            dialogCerrarSesion?.dismiss()
+        }
+    }
+
     fun closeTypeOfInjury(titulo: String, msg: String, code: Int) {
         val builder = AlertDialog.Builder(context,R.style.CustomDialog)
         val factory = LayoutInflater.from(context)
@@ -122,6 +146,7 @@ class LoadingDialog (val context: Context, val text: String) {
         dialogError?.dismiss()
         dialogCerrarSesion?.dismiss()
         dialogCerrarTypeOfInjury?.dismiss()
+        dialogDataDiagnosis?.dismiss()
     }
 
     fun succesful(text: Int) {

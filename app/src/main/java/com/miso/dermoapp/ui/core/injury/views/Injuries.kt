@@ -12,12 +12,14 @@ import com.miso.dermoapp.databinding.ActivityInjuriesBinding
 import com.miso.dermoapp.ui.core.injury.viewModels.InjuriesViewModel
 import com.miso.dermoapp.ui.core.injury.viewModels.InjuriesViewModelFactory
 import com.miso.dermoapp.ui.core.utils.CustomRecyclerViewAdapter
+import com.miso.dermoapp.ui.core.utils.LoadingDialog
 import kotlinx.coroutines.DelicateCoroutinesApi
 
 @Suppress("DEPRECATION")
 class Injuries : AppCompatActivity(), CustomRecyclerViewAdapter.CellClickListener {
     private lateinit var viewModel: InjuriesViewModel
     private lateinit var binding: ActivityInjuriesBinding
+    private lateinit var loadingDialog: LoadingDialog
     @OptIn(DelicateCoroutinesApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +29,7 @@ class Injuries : AppCompatActivity(), CustomRecyclerViewAdapter.CellClickListene
         binding.lifecycleOwner = this
         binding.vModel = viewModel
         val adapter = CustomRecyclerViewAdapter(this)
+        loadingDialog = LoadingDialog(this, getString(R.string.configurandoTuPerfilDeUsuario))
 
         binding.recyclerview.adapter = adapter
         binding.textViewMessage.text = getString(R.string.cargando)
@@ -50,6 +53,10 @@ class Injuries : AppCompatActivity(), CustomRecyclerViewAdapter.CellClickListene
         viewModel.navigateToTypeOfInjury.observe(this){
             if(it)
                 goToChangeScreen(Intent(this@Injuries, TypeOfInjury::class.java))
+        }
+
+        viewModel.diagnosisInjury.observe(this) {
+            loadingDialog.mostrarDataDiagnostico(getResources().getString(R.string.importante),it)
         }
     }
     private fun goToChangeScreen(intent: Intent) {
